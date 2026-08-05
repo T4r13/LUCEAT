@@ -1,0 +1,40 @@
+---
+const socialLinks = [
+  { href: 'https://www.instagram.com', label: 'Instagram' },
+  { href: 'https://www.facebook.com', label: 'Facebook' },
+  { href: 'https://www.linkedin.com', label: 'LinkedIn' },
+];
+---
+
+<footer class="border-t border-[#e7e1db] bg-[#f8f4ee]">
+  <div class="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-3 lg:px-8">
+    <div>
+      <img src="/images/logo/logo-luceat.jpg" alt="Logo LUCEAT" class="h-12 w-auto" />
+      <p class="mt-4 max-w-sm text-sm leading-7 text-[#5f6770]">
+        LUCEAT conçoit des soins doux et respectueux pour la peau fragile des bébés et des enfants.
+      </p>
+    </div>
+    <div>
+      <h3 class="text-sm font-semibold uppercase tracking-[0.2em] text-[#5f6770]">Navigation</h3>
+      <ul class="mt-4 space-y-2 text-sm text-[#5f6770]">
+        <li><a href="/" class="hover:text-[#8ca9b8]">Accueil</a></li>
+        <li><a href="/produits" class="hover:text-[#8ca9b8]">Nos produits</a></li>
+        <li><a href="/a-propos" class="hover:text-[#8ca9b8]">À propos</a></li>
+        <li><a href="/contact" class="hover:text-[#8ca9b8]">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-sm font-semibold uppercase tracking-[0.2em] text-[#5f6770]">Contact</h3>
+      <ul class="mt-4 space-y-2 text-sm text-[#5f6770]">
+        <li>Adresse : 18 rue des Lilas, Paris</li>
+        <li>Téléphone : +33 1 00 00 00 00</li>
+        <li>Email : contact@luceat.fr</li>
+      </ul>
+      <div class="mt-4 flex gap-4 text-sm text-[#5f6770]">
+        {socialLinks.map((link) => (
+          <a href={link.href} class="hover:text-[#8ca9b8]" target="_blank" rel="noreferrer">{link.label}</a>
+        ))}
+      </div>
+    </div>
+  </div>
+</footer>

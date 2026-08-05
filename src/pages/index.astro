@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import IntroSection from '../components/IntroSection.astro';
+import ProductCard from '../components/ProductCard.astro';
+import products from '../data/products.json';
+
+const featuredProducts = products.slice(0, 3);
+const features = [
+  { title: 'Hypoallergénique', description: 'Des formules pensées pour une peau sensible et fragile.', icon: '✿' },
+  { title: 'Sans sulfate ni savon agressif', description: 'Un nettoyage doux, respectueux de la peau et des cheveux.', icon: '💧' },
+  { title: 'Formulé par des experts', description: 'Des soins conçus avec rigueur pour le bien-être des bébés.', icon: '🧸' },
+  { title: 'Respect de l’équilibre hydrolipidique', description: 'Un soin attentif à l’hydratation et au confort cutané.', icon: '🌿' },
+];
+const introParagraphs = [
+  'La peau de bébé est une peau fragile qui n\'a pas achevé encore sa maturité. Les glandes sudorales et sébacées des nourrissons sont encore immatures et ne remplissent pas encore parfaitement toutes leurs fonctions. À terme, elles permettent la formation d\'un film hydrolipidique protecteur (à base de sueur et sébum) qui maintient la neutralité du pH de la peau, permet de lutter contre le développement de micro-organismes et de réguler la thermogénèse de l\'organisme.',
+  'Les bébés sont particulièrement sensibles au chaud et au froid, et sont d\'une façon générale très mal protégés contre les agressions du monde extérieur. Enfin, la flore cutanée, qui constitue une barrière naturelle contre les infections, se met en place progressivement à condition de ne pas être détruite par des agents lavants et antibactériens agressifs.',
+  'En attendant cette maturité, il vaut mieux choisir pour eux des produits cosmétiques hypoallergéniques, doux dans leur composition et respectant l\'équilibre hydrolipidique et l\'hydratation de leur peau — c\'est le principal objectif sur lequel a travaillé l\'équipe du laboratoire LUCEAT. D\'autre part, le bain de bébé est certes une mesure d\'hygiène incontournable, mais LUCEAT en crée un véritable moment de plaisir et de communication entre mère et bébé, qui se sent heureux et confiant.',
+  'LUCEAT propose une gamme complète de soins conçus spécialement pour le confort et le bien-être de vos bébés.',
+];
+---
+
+<BaseLayout
+  title="LUCEAT – Soins doux pour bébé et enfant"
+  description="Découvrez LUCEAT, laboratoire spécialisé dans les soins cosmétiques doux pour bébés et enfants."
+>
+  <section class="relative overflow-hidden bg-gradient-to-r from-[#f8f4ee] via-white to-[#eef6f2]">
+    <div class="mx-auto grid max-w-7xl items-center gap-10 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-28">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-[0.3em] text-[#8ca9b8]">Laboratoire LUCEAT</p>
+        <h1 class="mt-4 text-4xl font-semibold leading-tight text-[#4d4a47] sm:text-5xl">
+          Le bien-être et la douceur pour la peau de bébé
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-8 text-[#5f6770]">
+          Des soins hypoallergéniques et respectueux de l’équilibre hydrolipidique pour accompagner chaque moment de douceur.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a href="/produits" class="rounded-full bg-[#8ca9b8] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#7695a3]">
+            Découvrir nos produits
+          </a>
+          <a href="/a-propos" class="rounded-full border border-[#d7cfc5] bg-white px-6 py-3 text-sm font-semibold text-[#4d4a47] transition hover:border-[#8ca9b8]">
+            En savoir plus
+          </a>
+        </div>
+      </div>
+      <div>
+        <img src="/images/hero/acceuil.jpg" alt="Bébé en douceur avec des produits LUCEAT" class="h-[480px] w-full rounded-[2rem] object-cover shadow-xl" />
+      </div>
+    </div>
+  </section>
+
+  <IntroSection title="Notre philosophie" eyebrow="Introduction" text={introParagraphs} />
+
+  <section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-16">
+    <div class="mb-10 flex items-end justify-between gap-4">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-[0.3em] text-[#8ca9b8]">Produits</p>
+        <h2 class="mt-2 text-3xl font-semibold text-[#4d4a47]">Nos produits phares</h2>
+      </div>
+      <a href="/produits" class="text-sm font-semibold text-[#8ca9b8] hover:text-[#7695a3]">Voir tous les produits</a>
+    </div>
+    <div class="grid gap-6 md:grid-cols-3">
+      {featuredProducts.map((product) => <ProductCard product={product} />)}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+    <div class="rounded-[2rem] bg-[#f8f4ee] p-8 sm:p-10 lg:p-14">
+      <div class="mb-10 max-w-2xl">
+        <p class="text-sm font-semibold uppercase tracking-[0.3em] text-[#8ca9b8]">Pourquoi choisir LUCEAT</p>
+        <h2 class="mt-2 text-3xl font-semibold text-[#4d4a47]">Des soins conçus pour la sensibilité de la peau de bébé</h2>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        {features.map((feature) => (
+          <div class="rounded-[1.25rem] border border-[#e7e1db] bg-white p-6">
+            <div class="text-3xl">{feature.icon}</div>
+            <h3 class="mt-4 text-lg font-semibold text-[#4d4a47]">{feature.title}</h3>
+            <p class="mt-3 text-sm leading-7 text-[#5f6770]">{feature.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+    <div class="rounded-[2rem] bg-[#eef6f2] p-8 text-center sm:p-10 lg:p-14">
+      <h2 class="text-3xl font-semibold text-[#4d4a47]">Besoin d’un conseil personnalisé ?</h2>
+      <p class="mx-auto mt-4 max-w-2xl text-lg leading-8 text-[#5f6770]">
+        Notre équipe vous accompagne pour choisir le soin le plus adapté à votre enfant.
+      </p>
+      <a href="/contact" class="mt-8 inline-flex rounded-full bg-[#8ca9b8] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#7695a3]">
+        Nous contacter
+      </a>
+    </div>
+  </section>
+</BaseLayout>

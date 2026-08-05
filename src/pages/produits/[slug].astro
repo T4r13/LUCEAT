@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductGallery from '../../components/ProductGallery.astro';
+import products from '../../data/products.json';
+
+export async function getStaticPaths() {
+  return products.map((product) => ({ params: { slug: product.slug }, props: { product } }));
+}
+
+const { product } = Astro.props;
+---
+
+<BaseLayout title={`${product.name} – LUCEAT`} description={product.shortDescription}>
+  <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+    <div class="mb-8">
+      <a href="/produits" class="inline-flex items-center gap-2 rounded-full border border-[#d7cfc5] bg-white px-4 py-2 text-sm font-semibold text-[#4d4a47] transition hover:bg-[#f8f4ee] hover:text-[#8ca9b8]">
+        ← Retour à nos produits
+      </a>
+    </div>
+    <div class="grid gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-[0.3em] text-[#8ca9b8]">Produit</p>
+        <h1 class="mt-4 text-4xl font-semibold text-[#4d4a47] sm:text-5xl">{product.name}</h1>
+        <p class="mt-6 text-lg leading-8 text-[#5f6770]">{product.fullDescription}</p>
+        <div class="mt-8">
+          <ProductGallery images={product.images} altPrefix={product.name} />
+        </div>
+      </div>
+      <div class="space-y-8">
+        <div class="rounded-[1.5rem] border border-[#e7e1db] bg-white p-8 shadow-sm">
+          <h2 class="text-2xl font-semibold text-[#4d4a47]">Points clés</h2>
+          <ul class="mt-4 space-y-3 text-sm leading-7 text-[#5f6770]">
+            {(product.keyPoints || []).map((point) => <li class="flex gap-3"><span class="text-[#8ca9b8]">•</span><span>{point}</span></li>)}
+          </ul>
+        </div>
+        <div class="rounded-[1.5rem] border border-[#e7e1db] bg-[#f8f4ee] p-8 shadow-sm">
+          <h2 class="text-2xl font-semibold text-[#4d4a47]">Mode d’emploi</h2>
+          <p class="mt-4 text-sm leading-7 text-[#5f6770]">{product.usage}</p>
+        </div>
+        <div class="rounded-[1.5rem] border border-[#e7e1db] bg-white p-8 shadow-sm">
+          <h2 class="text-2xl font-semibold text-[#4d4a47]">Ingrédients</h2>
+          <p class="mt-4 text-sm leading-7 text-[#5f6770]">{product.ingredients}</p>
+        </div>
+        <div class="rounded-[1.5rem] border border-[#e7e1db] bg-white p-8 shadow-sm">
+          <h2 class="text-2xl font-semibold text-[#4d4a47]">Contenance disponible</h2>
+          <p class="mt-4 text-sm leading-7 text-[#5f6770]">{product.sizes?.length ? `Disponible en ${product.sizes.join(' et ')}` : 'Contenance à venir'}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

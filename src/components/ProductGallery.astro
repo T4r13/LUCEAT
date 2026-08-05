@@ -1,0 +1,24 @@
+---
+const { images, altPrefix } = Astro.props;
+---
+
+<div class="grid gap-4 md:grid-cols-2">
+  {images && images.length > 0 ? (
+    images.map((image, index) => (
+      <div class="overflow-hidden rounded-[1.5rem] bg-[#fcfaf7] p-4">
+        <div class="mx-auto flex h-[420px] max-w-[520px] items-center justify-center rounded-[1.5rem] bg-white">
+          <img
+            src={image}
+            alt={`${altPrefix} - photo ${index + 1}`}
+            loading="lazy"
+            class="h-full w-full max-w-full object-contain"
+          />
+        </div>
+      </div>
+    ))
+  ) : (
+    <div class="flex h-72 items-center justify-center rounded-[1.5rem] border border-dashed border-[#cbbeb3] bg-[#f8f4ee] text-sm text-[#5f6770]">
+      Image produit à venir
+    </div>
+  )}
+</div>
