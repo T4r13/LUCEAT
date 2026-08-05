@@ -1,0 +1,36 @@
+# LUCEAT
+
+Site vitrine statique développé avec Astro + Tailwind CSS, prévu pour un déploiement Vercel.
+
+## Installation locale
+
+```bash
+npm install
+npm run dev
+```
+
+Le site sera disponible sur http://localhost:4321.
+
+## Déploiement Vercel
+
+1. Connectez votre dépôt GitHub à Vercel.
+2. Sélectionnez ce projet comme application Vercel.
+3. Déployez avec la configuration par défaut.
+
+## Structure principale
+
+- src/pages : pages du site (accueil, produits, à propos, contact)
+- src/components : composants réutilisables (navbar, footer, cartes produits, galerie, intro)
+- src/data/products.json : données produit centralisées
+- public/images : emplacement prévu pour le logo, le favicon, l’hero et les images produits
+
+## Remplacer les images
+
+- Logo : public/images/logo/logo-luceat.png
+- Favicon : public/images/logo/favicon.png
+- Hero : public/images/hero/hero-bebe.jpg
+- Produits : public/images/products/{slug}/1.jpg, 2.jpg, 3.jpg
+
+## Ajouter un produit
+
+Ajoutez un nouvel objet dans src/data/products.json avec les champs attendus. Le rendu se mettra à jour automatiquement sur les pages produits et détail.
