@@ -1,14 +1,14 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Icon from '../components/ui/Icon.astro';
-import { site } from '../data/site.ts';
-import { useTranslations } from '../i18n/ui';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/ui/Icon.astro';
+import { site } from '../../data/site.ts';
+import { useTranslations } from '../../i18n/ui';
 
-const locale = 'fr' as const;
+const locale = 'en' as const;
 const t = useTranslations(locale);
 ---
 
-<BaseLayout title="Contact – LUCEAT" description="Contactez LUCEAT pour des conseils ou des informations sur ses soins pour bébé et enfant.">
+<BaseLayout title="Contact – LUCEAT" description="Get in touch with LUCEAT for advice or information about its care for babies and children.">
   <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
     <div class="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
       <div>

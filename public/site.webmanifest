@@ -1,0 +1,10 @@
+{
+  "name": "LUCEAT — Laboratoire dermo-cosmétique",
+  "short_name": "LUCEAT",
+  "icons": [
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ],
+  "theme_color": "#0B2C4F",
+  "background_color": "#FBF8F2",
+  "display": "standalone"
+}

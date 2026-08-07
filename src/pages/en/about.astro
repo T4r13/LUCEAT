@@ -1,12 +1,12 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { useTranslations } from '../i18n/ui';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations } from '../../i18n/ui';
 
-const locale = 'fr' as const;
+const locale = 'en' as const;
 const t = useTranslations(locale);
 ---
 
-<BaseLayout title="À propos – LUCEAT" description="Découvrez le laboratoire LUCEAT et sa philosophie de soins doux pour bébé et enfant.">
+<BaseLayout title="About – LUCEAT" description="Discover the LUCEAT laboratory and its philosophy of gentle care for babies and children.">
   <section class="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
     <div class="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
       <div>
@@ -17,6 +17,9 @@ const t = useTranslations(locale);
         </p>
       </div>
       <div class="rounded-[2rem] border border-[#e7e1db] bg-white p-8 shadow-sm">
+        <p class="mb-4 rounded-[0.75rem] border border-dashed border-[#cbbeb3] bg-[#f8f4ee] px-4 py-3 text-sm text-[#5f6770]">
+          {t.about.pendingNotice}
+        </p>
         <p class="text-lg leading-8 text-[#5f6770]">
           La peau de bébé est naturellement plus fragile. C’est pourquoi chaque formulation est pensée pour être douce, hypoallergénique et respectueuse du film hydrolipidique protecteur.
         </p>

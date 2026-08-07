@@ -1,20 +1,23 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/Hero.astro';
-import TrustStrip from '../components/TrustStrip.astro';
-import IntroSection from '../components/IntroSection.astro';
-import ProductCard from '../components/ProductCard.astro';
-import Icon from '../components/ui/Icon.astro';
-import IconBadge from '../components/ui/IconBadge.astro';
-import { products } from '../data/products';
-import { useTranslations } from '../i18n/ui';
-import { path } from '../i18n/routes';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import TrustStrip from '../../components/TrustStrip.astro';
+import IntroSection from '../../components/IntroSection.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import Icon from '../../components/ui/Icon.astro';
+import IconBadge from '../../components/ui/IconBadge.astro';
+import { products } from '../../data/products';
+import { useTranslations } from '../../i18n/ui';
+import { path } from '../../i18n/routes';
 
-const locale = 'fr' as const;
+const locale = 'en' as const;
 const t = useTranslations(locale);
 const featuredProducts = products.filter((product) => product.featured);
 
-const introParagraphs = [
+// Pending review (see src/i18n/translations — dermatological explanation,
+// not yet reviewed for accurate English translation). Shown in French with
+// a visible notice rather than an invented translation.
+const introParagraphsFr = [
   'La peau de bébé est une peau fragile qui n\'a pas achevé encore sa maturité. Les glandes sudorales et sébacées des nourrissons sont encore immatures et ne remplissent pas encore parfaitement toutes leurs fonctions. À terme, elles permettent la formation d\'un film hydrolipidique protecteur (à base de sueur et sébum) qui maintient la neutralité du pH de la peau, permet de lutter contre le développement de micro-organismes et de réguler la thermogénèse de l\'organisme.',
   'Les bébés sont particulièrement sensibles au chaud et au froid, et sont d\'une façon générale très mal protégés contre les agressions du monde extérieur. Enfin, la flore cutanée, qui constitue une barrière naturelle contre les infections, se met en place progressivement à condition de ne pas être détruite par des agents lavants et antibactériens agressifs.',
   'En attendant cette maturité, il vaut mieux choisir pour eux des produits cosmétiques hypoallergéniques, doux dans leur composition et respectant l\'équilibre hydrolipidique et l\'hydratation de leur peau — c\'est le principal objectif sur lequel a travaillé l\'équipe du laboratoire LUCEAT. D\'autre part, le bain de bébé est certes une mesure d\'hygiène incontournable, mais LUCEAT en crée un véritable moment de plaisir et de communication entre mère et bébé, qui se sent heureux et confiant.',
@@ -30,13 +33,13 @@ const features = [
 ---
 
 <BaseLayout
-  title="LUCEAT – Soins doux pour bébé et enfant"
-  description="Découvrez LUCEAT, laboratoire spécialisé dans les soins cosmétiques doux pour bébés et enfants."
+  title="LUCEAT – Gentle care for babies and children"
+  description="Discover LUCEAT, a laboratory specialising in gentle cosmetic care for babies and children."
 >
   <Hero />
   <TrustStrip />
 
-  <IntroSection title={t.philosophy.heading} eyebrow={t.philosophy.eyebrow} text={introParagraphs} />
+  <IntroSection title={t.philosophy.heading} eyebrow={t.philosophy.eyebrow} text={introParagraphsFr} pendingNotice={t.philosophy.pendingNotice} />
 
   <section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-16">
     <div class="mb-10 flex items-end justify-between gap-4">

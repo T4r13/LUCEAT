@@ -1,0 +1,12 @@
+---
+interface Props {
+  size?: 'md' | 'lg';
+  class?: string;
+}
+const { size = 'md', class: className = '' } = Astro.props;
+const sizes = { md: 'h-10 w-10', lg: 'h-12 w-12' };
+---
+
+<span class={`inline-flex shrink-0 items-center justify-center rounded-full bg-surface-soft-blue text-brand-navy ${sizes[size]} ${className}`}>
+  <slot />
+</span>

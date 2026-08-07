@@ -1,5 +1,14 @@
 ---
+import { detectLocale } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  images: string[];
+  altPrefix: string;
+}
 const { images, altPrefix } = Astro.props;
+const locale = detectLocale(Astro.url.pathname);
+const t = useTranslations(locale);
 ---
 
 <div class="grid gap-4 md:grid-cols-2">
@@ -18,7 +27,7 @@ const { images, altPrefix } = Astro.props;
     ))
   ) : (
     <div class="flex h-72 items-center justify-center rounded-[1.5rem] border border-dashed border-[#cbbeb3] bg-[#f8f4ee] text-sm text-[#5f6770]">
-      Image produit à venir
+      {t.productCard.imageComingSoon}
     </div>
   )}
 </div>

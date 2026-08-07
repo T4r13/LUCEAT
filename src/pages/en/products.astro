@@ -1,15 +1,15 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import ProductCard from '../components/ProductCard.astro';
-import { products } from '../data/products';
-import { useTranslations } from '../i18n/ui';
-import { path } from '../i18n/routes';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { products } from '../../data/products';
+import { useTranslations } from '../../i18n/ui';
+import { path } from '../../i18n/routes';
 
-const locale = 'fr' as const;
+const locale = 'en' as const;
 const t = useTranslations(locale);
 ---
 
-<BaseLayout title="Nos produits – LUCEAT" description="Découvrez la gamme de soins LUCEAT pour bébé et enfant.">
+<BaseLayout title="Our products – LUCEAT" description="Discover the LUCEAT range of care for babies and children.">
   <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
     <div class="max-w-3xl">
       <p class="text-sm font-semibold uppercase tracking-[0.3em] text-[#8ca9b8]">{t.productsPage.eyebrow}</p>

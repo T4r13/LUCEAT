@@ -1,11 +1,22 @@
 ---
-const { title, text, eyebrow } = Astro.props;
+interface Props {
+  title: string;
+  text: string[];
+  eyebrow?: string;
+  pendingNotice?: string;
+}
+const { title, text, eyebrow, pendingNotice } = Astro.props;
 ---
 
 <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
   <div class="rounded-[2rem] border border-[#e7e1db] bg-white p-8 shadow-sm sm:p-10 lg:p-14">
     {eyebrow && <p class="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-[#8ca9b8]">{eyebrow}</p>}
     <h2 class="text-3xl font-semibold text-[#4d4a47] sm:text-4xl">{title}</h2>
+    {pendingNotice && (
+      <p class="mt-4 rounded-[0.75rem] border border-dashed border-[#cbbeb3] bg-[#f8f4ee] px-4 py-3 text-sm text-[#5f6770]">
+        {pendingNotice}
+      </p>
+    )}
     <div class="mt-8 space-y-6 text-lg leading-8 text-[#5f6770]">
       {text.map((paragraph) => <p>{paragraph}</p>)}
     </div>

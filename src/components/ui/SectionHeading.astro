@@ -1,0 +1,17 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  align?: 'left' | 'center';
+  size?: 'section' | 'page';
+  class?: string;
+}
+const { eyebrow, title, align = 'left', size = 'section', class: className = '' } = Astro.props;
+const alignClass = align === 'center' ? 'text-center mx-auto' : 'text-left';
+const titleSize = size === 'page' ? 'text-page-title' : 'text-section-heading';
+---
+
+<div class={`${alignClass} ${className}`}>
+  {eyebrow && <p class="mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-brand-blue">{eyebrow}</p>}
+  <h2 class={`${titleSize} font-display font-medium text-text-primary`}>{title}</h2>
+</div>

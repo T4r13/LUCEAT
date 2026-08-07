@@ -1,0 +1,39 @@
+---
+import { detectLocale, getAlternateUrl } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+import type { Locale } from '../i18n/config';
+
+const locale = detectLocale(Astro.url.pathname);
+const t = useTranslations(locale);
+
+const options: { code: Locale; label: string }[] = [
+  { code: 'fr', label: 'FR' },
+  { code: 'en', label: 'EN' },
+];
+
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<nav aria-label={t.languageSwitcher.label} class={`flex items-center gap-1 text-sm font-semibold ${className}`}>
+  {options.map((option, index) => (
+    <>
+      {index > 0 && <span class="text-border-soft" aria-hidden="true">/</span>}
+      {option.code === locale ? (
+        <span aria-current="true" class="rounded-sm px-1.5 py-1 text-brand-blue">
+          {option.label}
+        </span>
+      ) : (
+        <a
+          href={getAlternateUrl(Astro.url.pathname, option.code)}
+          class="rounded-sm px-1.5 py-1 text-text-muted transition-colors hover:text-brand-navy"
+          aria-label={t.languageSwitcher.switchTo(option.label)}
+        >
+          {option.label}
+        </a>
+      )}
+    </>
+  ))}
+</nav>

@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations } from '../../i18n/ui';
+import { path } from '../../i18n/routes';
+
+const locale = 'en' as const;
+const t = useTranslations(locale);
+---
+
+<BaseLayout title={t.notFound.title} description={t.notFound.text}>
+  <section class="mx-auto flex max-w-3xl flex-col items-center px-4 py-24 text-center sm:px-6 lg:px-8">
+    <p class="text-sm font-semibold uppercase tracking-[0.3em] text-[#8ca9b8]">{t.notFound.eyebrow}</p>
+    <h1 class="mt-4 text-4xl font-semibold text-[#4d4a47] sm:text-5xl">{t.notFound.heading}</h1>
+    <p class="mt-6 text-lg leading-8 text-[#5f6770]">{t.notFound.text}</p>
+    <div class="mt-8 flex flex-wrap justify-center gap-4">
+      <a href={path('home', locale)} class="inline-flex rounded-full bg-[#8ca9b8] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#7695a3]">
+        {t.buttons.backToHome}
+      </a>
+      <a href={path('products', locale)} class="inline-flex rounded-full border border-[#d7cfc5] bg-white px-6 py-3 text-sm font-semibold text-[#4d4a47] transition hover:border-[#8ca9b8]">
+        {t.nav.products}
+      </a>
+    </div>
+  </section>
+</BaseLayout>

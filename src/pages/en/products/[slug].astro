@@ -1,17 +1,17 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import ProductGallery from '../../components/ProductGallery.astro';
-import { products } from '../../data/products';
-import { getProductContent } from '../../i18n/product';
-import { useTranslations } from '../../i18n/ui';
-import { path } from '../../i18n/routes';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ProductGallery from '../../../components/ProductGallery.astro';
+import { products } from '../../../data/products';
+import { getProductContent } from '../../../i18n/product';
+import { useTranslations } from '../../../i18n/ui';
+import { path } from '../../../i18n/routes';
 
 export async function getStaticPaths() {
   return products.map((product) => ({ params: { slug: product.slug }, props: { product } }));
 }
 
 const { product } = Astro.props;
-const locale = 'fr' as const;
+const locale = 'en' as const;
 const t = useTranslations(locale);
 const content = getProductContent(product, locale);
 ---
@@ -23,6 +23,11 @@ const content = getProductContent(product, locale);
         ← {t.buttons.backToProducts}
       </a>
     </div>
+    {content.isPending && (
+      <p class="mb-8 rounded-[0.75rem] border border-dashed border-[#cbbeb3] bg-[#f8f4ee] px-4 py-3 text-sm text-[#5f6770]">
+        {t.productDetail.pendingNotice}
+      </p>
+    )}
     <div class="grid gap-12 lg:grid-cols-[1.1fr_0.9fr]">
       <div>
         <p class="text-sm font-semibold uppercase tracking-[0.3em] text-[#8ca9b8]">{t.productDetail.eyebrow}</p>

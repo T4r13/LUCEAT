@@ -2,20 +2,44 @@
 import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import { detectLocale, getAlternateUrl, path } from '../i18n/routes';
+import { useTranslations } from '../i18n/ui';
+
 const { title, description } = Astro.props;
+
+const locale = detectLocale(Astro.url.pathname);
+const t = useTranslations(locale);
+
+const ogLocale = locale === 'fr' ? 'fr_TN' : 'en_TN';
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const frAlternate = new URL(getAlternateUrl(Astro.url.pathname, 'fr'), Astro.site);
+const enAlternate = new URL(getAlternateUrl(Astro.url.pathname, 'en'), Astro.site);
+const defaultAlternate = new URL(path('home', 'fr'), Astro.site);
 ---
 
-<html lang="fr">
+<html lang={locale}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <link rel="icon" href="/images/logo/favicon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0B2C4F" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="fr" href={frAlternate} />
+    <link rel="alternate" hreflang="en" href={enAlternate} />
+    <link rel="alternate" hreflang="x-default" href={defaultAlternate} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
     <title>{title}</title>
   </head>
   <body>
+    <a href="#main" class="skip-link">{t.a11y.skipToContent}</a>
     <Navbar />
-    <main class="min-h-screen">
+    <main id="main" class="min-h-screen">
       <slot />
     </main>
     <Footer />

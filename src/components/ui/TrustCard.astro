@@ -1,0 +1,16 @@
+---
+import IconBadge from './IconBadge.astro';
+
+interface Props {
+  label: string;
+  class?: string;
+}
+const { label, class: className = '' } = Astro.props;
+---
+
+<div class={`flex items-center gap-3 ${className}`}>
+  <IconBadge>
+    <slot name="icon" />
+  </IconBadge>
+  <span class="text-sm font-semibold text-brand-navy">{label}</span>
+</div>
