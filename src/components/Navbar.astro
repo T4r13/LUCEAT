@@ -6,7 +6,6 @@ import { useTranslations } from '../i18n/ui';
 
 const locale = detectLocale(Astro.url.pathname);
 const t = useTranslations(locale);
-
 const links = [
   { href: path('home', locale), label: t.nav.home },
   { href: path('products', locale), label: t.nav.products },
@@ -18,163 +17,38 @@ const homeHref = path('home', locale);
 const isActive = (href: string) => (href === homeHref ? currentPath === href : currentPath.startsWith(href));
 ---
 
-<header id="site-header" class="sticky top-0 z-50 border-b border-border-subtle bg-surface-white/95 backdrop-blur transition-shadow duration-200" data-scrolled="false">
-  <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-    <a href={homeHref} class="shrink-0">
-      <img
-        src="/images/logo/logo-luceat.jpg"
-        alt="LUCEAT — Laboratoire dermo-cosmétique"
-        class="h-10 w-auto object-contain sm:h-11"
-        width="180"
-        height="135"
-      />
+<header id="site-header" class="sticky top-0 z-50 border-b border-[#c6e6f5] bg-white/45 backdrop-blur-xl transition-shadow duration-300">
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-2.5 sm:px-6 lg:px-8">
+    <a href={homeHref} class="shrink-0 transition-opacity hover:opacity-80">
+      <img src="/images/brand/gentle-care.png" alt="Gentle care" class="h-10 w-auto max-w-[260px] -translate-x-3 object-contain object-left sm:h-12 sm:max-w-[300px]" />
     </a>
 
-    <nav aria-label={t.nav.mainNav} class="hidden items-center gap-8 text-sm font-semibold text-brand-navy md:flex">
-      {links.map((link) => (
-        <a
-          href={link.href}
-          aria-current={isActive(link.href) ? 'page' : undefined}
-          class:list={[
-            'relative py-2 transition-colors hover:text-brand-blue',
-            'after:absolute after:-bottom-[1px] after:left-0 after:h-[2px] after:bg-brand-blue after:transition-all',
-            isActive(link.href) ? 'text-brand-blue after:w-full' : 'after:w-0 hover:after:w-full',
-          ]}
-        >
-          {link.label}
-        </a>
-      ))}
-      <LanguageSwitcher class="ml-2 border-l border-border-subtle pl-6" />
+    <nav aria-label={t.nav.mainNav} class="hidden items-center gap-1 rounded-full border border-[#c6e6f5] bg-white/80 p-1 text-sm font-semibold text-brand-navy shadow-[0_4px_18px_rgba(0,127,198,0.08)] md:flex">
+      {links.map((link) => <a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined} class:list={['rounded-full px-4 py-2 transition-all duration-200', isActive(link.href) ? 'bg-[#007fc6] text-white shadow-sm' : 'hover:bg-[#eaf7fb] hover:text-[#007fc6]']}>{link.label}</a>)}
+      <LanguageSwitcher class="ml-1 rounded-full bg-[#eef8fb] px-2 py-1" />
     </nav>
 
-    <button
-      type="button"
-      id="menu-open"
-      class="flex h-11 w-11 items-center justify-center rounded-md text-brand-navy md:hidden"
-      aria-label={t.nav.openMenu}
-      aria-expanded="false"
-      aria-controls="mobile-menu"
-    >
-      <Icon name="menu" size={26} />
-    </button>
+    <button type="button" id="menu-open" class="flex h-11 w-11 items-center justify-center rounded-full border border-[#c6e6f5] bg-white/80 text-[#007fc6] shadow-sm transition hover:bg-[#eaf7fb] md:hidden" aria-label={t.nav.openMenu} aria-expanded="false" aria-controls="mobile-menu"><Icon name="menu" size={23} /></button>
   </div>
 </header>
 
-<div
-  id="mobile-menu"
-  class="fixed inset-0 z-[60] hidden flex-col bg-surface-white md:!hidden"
-  role="dialog"
-  aria-modal="true"
-  aria-label={t.nav.menuDialog}
->
-  <div class="flex items-center justify-between border-b border-border-subtle px-4 py-3 sm:px-6">
-    <a href={homeHref} class="shrink-0">
-      <img
-        src="/images/logo/logo-luceat.jpg"
-        alt="LUCEAT — Laboratoire dermo-cosmétique"
-        class="h-10 w-auto object-contain"
-        width="180"
-        height="135"
-      />
-    </a>
-    <button
-      type="button"
-      id="menu-close"
-      class="flex h-11 w-11 items-center justify-center rounded-md text-brand-navy"
-      aria-label={t.nav.closeMenu}
-    >
-      <Icon name="x" size={26} />
-    </button>
+<div id="mobile-menu" class="fixed inset-0 z-[60] hidden flex-col bg-[#fbfdfe]/95 backdrop-blur-xl md:!hidden" role="dialog" aria-modal="true" aria-label={t.nav.menuDialog}>
+  <div class="flex items-center justify-between border-b border-[#c6e6f5] px-4 py-2.5 sm:px-6">
+    <a href={homeHref} class="shrink-0"><img src="/images/brand/gentle-care.png" alt="Gentle care" class="h-10 w-auto max-w-[240px] -translate-x-3 object-contain object-left" /></a>
+    <button type="button" id="menu-close" class="flex h-11 w-11 items-center justify-center rounded-full border border-[#c6e6f5] bg-white text-[#007fc6] shadow-sm" aria-label={t.nav.closeMenu}><Icon name="x" size={23} /></button>
   </div>
-
-  <nav aria-label={t.nav.mainNav} class="flex flex-1 flex-col overflow-y-auto px-4 py-2 sm:px-6">
-    {links.map((link) => (
-      <a
-        href={link.href}
-        aria-current={isActive(link.href) ? 'page' : undefined}
-        class:list={[
-          'flex min-h-[44px] items-center border-b border-border-subtle py-4 text-lg font-display font-medium',
-          isActive(link.href) ? 'text-brand-blue' : 'text-brand-navy',
-        ]}
-      >
-        {link.label}
-      </a>
-    ))}
-    <LanguageSwitcher class="mt-6 min-h-[44px]" />
-  </nav>
+  <nav aria-label={t.nav.mainNav} class="flex flex-1 flex-col gap-2 overflow-y-auto px-4 py-6 sm:px-6">{links.map((link) => <a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined} class:list={['flex min-h-[52px] items-center rounded-xl px-4 text-lg font-display font-medium transition-colors', isActive(link.href) ? 'bg-[#007fc6] text-white shadow-sm' : 'text-brand-navy hover:bg-[#eaf7fb] hover:text-[#007fc6]']}>{link.label}</a>)}<LanguageSwitcher class="mt-5 min-h-[44px] rounded-full bg-[#eef8fb] px-3 py-2" /></nav>
 </div>
 
 <script>
   const header = document.getElementById('site-header');
-  if (header) {
-    const onScroll = () => {
-      const scrolled = window.scrollY > 8;
-      header.classList.toggle('shadow-lift', scrolled);
-      header.dataset.scrolled = String(scrolled);
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-  }
-
+  window.addEventListener('scroll', () => header?.classList.toggle('shadow-lift', window.scrollY > 8), { passive: true });
   const openBtn = document.getElementById('menu-open') as HTMLButtonElement | null;
   const closeBtn = document.getElementById('menu-close') as HTMLButtonElement | null;
   const menu = document.getElementById('mobile-menu') as HTMLDivElement | null;
-
-  if (openBtn && closeBtn && menu) {
-    let lastFocused: HTMLElement | null = null;
-
-    // Scoped to close button + nav links only (skips the panel's logo link)
-    // so the trap boundaries match where openMenu() actually sends focus.
-    const getFocusable = () => [closeBtn!, ...Array.from(menu!.querySelectorAll<HTMLElement>('nav a[href]'))];
-
-    const onKeydown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        closeMenu();
-        return;
-      }
-      if (event.key === 'Tab') {
-        const focusable = getFocusable();
-        if (focusable.length === 0) return;
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        if (event.shiftKey && document.activeElement === first) {
-          event.preventDefault();
-          last.focus();
-        } else if (!event.shiftKey && document.activeElement === last) {
-          event.preventDefault();
-          first.focus();
-        }
-      }
-    };
-
-    function openMenu() {
-      lastFocused = document.activeElement as HTMLElement | null;
-      menu!.classList.remove('hidden');
-      menu!.classList.add('flex');
-      document.body.style.overflow = 'hidden';
-      openBtn!.setAttribute('aria-expanded', 'true');
-      closeBtn!.focus();
-      document.addEventListener('keydown', onKeydown);
-    }
-
-    function closeMenu() {
-      menu!.classList.add('hidden');
-      menu!.classList.remove('flex');
-      document.body.style.overflow = '';
-      openBtn!.setAttribute('aria-expanded', 'false');
-      document.removeEventListener('keydown', onKeydown);
-      (lastFocused ?? openBtn!).focus();
-    }
-
-    openBtn.addEventListener('click', openMenu);
-    closeBtn.addEventListener('click', closeMenu);
-    menu.querySelectorAll('nav a').forEach((link) => link.addEventListener('click', closeMenu));
-
-    // Keep desktop layout honest if the viewport crosses the md breakpoint
-    // while the menu happens to be open (e.g. rotating a tablet).
-    const mq = window.matchMedia('(min-width: 768px)');
-    mq.addEventListener('change', (e) => {
-      if (e.matches && menu!.classList.contains('flex')) closeMenu();
-    });
-  }
+  const openMenu = () => { menu?.classList.replace('hidden', 'flex'); document.body.style.overflow = 'hidden'; openBtn?.setAttribute('aria-expanded', 'true'); closeBtn?.focus(); };
+  const closeMenu = () => { menu?.classList.replace('flex', 'hidden'); document.body.style.overflow = ''; openBtn?.setAttribute('aria-expanded', 'false'); openBtn?.focus(); };
+  openBtn?.addEventListener('click', openMenu); closeBtn?.addEventListener('click', closeMenu);
+  menu?.querySelectorAll('nav a').forEach((link) => link.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && menu?.classList.contains('flex')) closeMenu(); });
 </script>

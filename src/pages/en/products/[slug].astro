@@ -38,27 +38,27 @@ const content = getProductContent(product, locale);
         </div>
       </div>
       <div class="space-y-8">
-        <div class="rounded-[1.5rem] border border-[#e7e1db] bg-white p-8 shadow-sm">
+        <div class="rounded-xl border border-[#e7e1db] bg-white p-8 shadow-sm">
           <h2 class="text-2xl font-semibold text-[#4d4a47]">{t.productDetail.keyPoints}</h2>
           <ul class="mt-4 space-y-3 text-sm leading-7 text-[#5f6770]">
             {(content.benefits || []).map((point) => <li class="flex gap-3"><span class="text-[#8ca9b8]">•</span><span>{point}</span></li>)}
           </ul>
         </div>
-        <div class="rounded-[1.5rem] border border-[#e7e1db] bg-[#f8f4ee] p-8 shadow-sm">
+        <div class="rounded-xl border border-[#e7e1db] bg-[#f8f4ee] p-8 shadow-sm">
           <h2 class="text-2xl font-semibold text-[#4d4a47]">{t.productDetail.usage}</h2>
           <p class="mt-4 text-sm leading-7 text-[#5f6770]">{content.usage}</p>
         </div>
-        <div class="rounded-[1.5rem] border border-[#e7e1db] bg-white p-8 shadow-sm">
+        <div class="rounded-xl border border-[#e7e1db] bg-white p-8 shadow-sm">
           <h2 class="text-2xl font-semibold text-[#4d4a47]">{t.productDetail.ingredients}</h2>
           <p class="mt-4 text-sm leading-7 text-[#5f6770]">{product.ingredients}</p>
         </div>
         {content.precautions && (
-          <div class="rounded-[1.5rem] border border-[#e7e1db] bg-white p-8 shadow-sm">
+          <div class="rounded-xl border border-[#e7e1db] bg-white p-8 shadow-sm">
             <h2 class="text-2xl font-semibold text-[#4d4a47]">{t.productDetail.precautions}</h2>
             <p class="mt-4 text-sm leading-7 text-[#5f6770]">{content.precautions}</p>
           </div>
         )}
-        <div class="rounded-[1.5rem] border border-[#e7e1db] bg-white p-8 shadow-sm">
+        <div class="rounded-xl border border-[#e7e1db] bg-white p-8 shadow-sm">
           <h2 class="text-2xl font-semibold text-[#4d4a47]">{t.productDetail.availableSizes}</h2>
           <p class="mt-4 text-sm leading-7 text-[#5f6770]">{product.sizes?.length ? t.productDetail.sizesAvailable(product.sizes) : t.productDetail.sizesComingSoon}</p>
         </div>

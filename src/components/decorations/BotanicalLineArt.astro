@@ -1,0 +1,42 @@
+---
+interface Props {
+  variant?: 'flower' | 'leaves';
+  class?: string;
+}
+
+const { variant = 'flower', class: className = '' } = Astro.props;
+---
+
+<svg
+  aria-hidden="true"
+  focusable="false"
+  viewBox="0 0 320 320"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  class={`pointer-events-none select-none ${className}`}
+>
+  {variant === 'flower' ? (
+    <g stroke="#9CCFE5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 300C90 257 134 203 157 124C172 73 212 36 286 14" />
+      <path d="M145 154C107 144 81 115 83 73C120 80 146 108 145 154Z" />
+      <path d="M161 120C186 88 226 79 259 103C236 136 198 141 161 120Z" />
+      <path d="M113 211C78 215 46 196 34 163C70 154 103 172 113 211Z" />
+      <path d="M157 124C129 94 132 51 165 29C190 59 184 98 157 124Z" />
+      <path d="M103 49C130 61 146 87 139 116C110 105 96 78 103 49Z" />
+      <path d="M264 51C245 58 230 77 231 100C253 95 268 74 264 51Z" />
+      <circle cx="157" cy="124" r="5" />
+      <path d="M151 124H163M157 118V130" />
+    </g>
+  ) : (
+    <g stroke="#9CCFE5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13 287C84 249 139 190 173 109C193 62 235 30 305 13" />
+      <path d="M78 248C42 239 23 211 26 174C63 177 87 207 78 248Z" />
+      <path d="M116 202C82 186 66 153 77 119C111 132 126 167 116 202Z" />
+      <path d="M151 142C124 112 124 76 149 49C177 74 177 110 151 142Z" />
+      <path d="M184 94C203 61 237 48 272 63C254 96 220 108 184 94Z" />
+      <path d="M207 187C224 157 258 143 290 158C273 188 239 200 207 187Z" />
+      <path d="M152 142C170 158 179 178 180 199" />
+      <path d="M111 201C124 216 129 233 128 249" />
+    </g>
+  )}
+</svg>

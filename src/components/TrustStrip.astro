@@ -15,7 +15,7 @@ const locale = detectLocale(Astro.url.pathname);
 const t = useTranslations(locale);
 ---
 
-<div class="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-12 gap-y-4 border-t border-border-subtle px-4 py-6 sm:px-6 lg:px-8">
+<div class="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-12 gap-y-4 border-t border-border-subtle px-4 py-6 sm:px-6 lg:px-8" data-reveal>
   <TrustCard label={t.trust.expertise}>
     <Icon slot="icon" name="microscope" size={20} />
   </TrustCard>

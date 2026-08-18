@@ -1,11 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import TrustStrip from '../components/TrustStrip.astro';
 import IntroSection from '../components/IntroSection.astro';
 import ProductCard from '../components/ProductCard.astro';
 import Icon from '../components/ui/Icon.astro';
 import IconBadge from '../components/ui/IconBadge.astro';
+import BotanicalLineArt from '../components/decorations/BotanicalLineArt.astro';
 import { products } from '../data/products';
 import { useTranslations } from '../i18n/ui';
 import { path } from '../i18n/routes';
@@ -34,52 +34,67 @@ const features = [
   description="Découvrez LUCEAT, laboratoire spécialisé dans les soins cosmétiques doux pour bébés et enfants."
 >
   <Hero />
-  <TrustStrip />
 
   <IntroSection title={t.philosophy.heading} eyebrow={t.philosophy.eyebrow} text={introParagraphs} />
 
-  <section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-16">
+  <section class="relative isolate overflow-hidden px-4 py-8 sm:px-6 lg:px-8 lg:py-16">
+    <BotanicalLineArt variant="flower" class="absolute -right-36 top-0 h-80 w-80 opacity-[0.07] sm:-right-20 sm:h-[440px] sm:w-[440px]" />
+    <div class="relative z-10 mx-auto max-w-7xl" data-reveal>
     <div class="mb-10 flex items-end justify-between gap-4">
       <div>
-        <p class="text-sm font-semibold uppercase tracking-[0.3em] text-[#8ca9b8]">{t.featured.eyebrow}</p>
-        <h2 class="mt-2 text-3xl font-semibold text-[#4d4a47]">{t.featured.heading}</h2>
+        <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-blue">{t.featured.eyebrow}</p>
+        <h2 class="mt-2 text-3xl font-semibold text-[#007fc6]">{t.featured.heading}</h2>
       </div>
-      <a href={path('products', locale)} class="text-sm font-semibold text-[#8ca9b8] hover:text-[#7695a3]">{t.buttons.seeAllProducts}</a>
+      <a href={path('products', locale)} class="inline-flex items-center text-sm font-semibold text-brand-blue transition-all duration-200 hover:translate-x-1 hover:text-brand-navy">{t.buttons.seeAllProducts}</a>
     </div>
     <div class="grid gap-6 md:grid-cols-3">
-      {featuredProducts.map((product) => <ProductCard product={product} />)}
+      {featuredProducts.map((product, index) => (
+        <div data-reveal style={`--reveal-delay: ${index * 110}ms`}>
+          <ProductCard product={product} />
+        </div>
+      ))}
+    </div>
     </div>
   </section>
 
   <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-    <div class="rounded-[2rem] bg-[#f8f4ee] p-8 sm:p-10 lg:p-14">
+    <div class="relative isolate overflow-hidden rounded-xl bg-[linear-gradient(135deg,#007fc6_0%,#1597c7_54%,#7cdcf1_100%)] p-8 sm:p-10 lg:p-14" data-reveal>
+      <BotanicalLineArt variant="leaves" class="absolute -left-28 -top-24 h-72 w-72 opacity-[0.08] sm:-left-20 sm:h-96 sm:w-96" />
+      <div class="relative z-10">
       <div class="mb-10 max-w-2xl">
-        <p class="text-sm font-semibold uppercase tracking-[0.3em] text-[#8ca9b8]">{t.why.eyebrow}</p>
-        <h2 class="mt-2 text-3xl font-semibold text-[#4d4a47]">{t.why.heading}</h2>
+        <p class="text-sm font-semibold uppercase tracking-[0.3em] text-white/80">{t.why.eyebrow}</p>
+        <h2 class="mt-2 text-3xl font-semibold text-white">{t.why.heading}</h2>
       </div>
       <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-        {features.map((feature) => (
-          <div class="rounded-[1.25rem] border border-border-subtle bg-surface-white p-6">
-            <IconBadge size="lg">
-              <Icon name={feature.icon} size={26} />
-            </IconBadge>
-            <h3 class="mt-4 text-lg font-semibold text-text-primary">{feature.title}</h3>
-            <p class="mt-3 text-sm leading-7 text-text-body">{feature.description}</p>
+        {features.map((feature, index) => (
+          <div class="group relative overflow-hidden rounded-sm border border-border-subtle bg-surface-white p-6 transition duration-300 hover:-translate-y-1 hover:border-white hover:shadow-[0_16px_34px_rgba(255,255,255,0.42)]" data-reveal style={`--reveal-delay: ${index * 110}ms`}>
+            <img src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="pointer-events-none absolute left-1/2 top-1/2 w-[28rem] max-w-none -translate-x-1/2 -translate-y-1/2 select-none opacity-[0.18]" />
+            <div class="relative z-10">
+              <IconBadge size="lg" class="transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 group-hover:bg-[#007fc6] group-hover:text-white">
+                <Icon name={feature.icon} size={26} />
+              </IconBadge>
+              <h3 class="mt-4 text-lg font-semibold text-text-primary">{feature.title}</h3>
+              <p class="mt-3 text-sm leading-7 text-text-body">{feature.description}</p>
+            </div>
           </div>
         ))}
+      </div>
       </div>
     </div>
   </section>
 
   <section class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
-    <div class="rounded-[2rem] bg-[#eef6f2] p-8 text-center sm:p-10 lg:p-14">
-      <h2 class="text-3xl font-semibold text-[#4d4a47]">{t.adviceCta.heading}</h2>
-      <p class="mx-auto mt-4 max-w-2xl text-lg leading-8 text-[#5f6770]">
-        {t.adviceCta.text}
-      </p>
-      <a href={path('contact', locale)} class="mt-8 inline-flex rounded-full bg-[#8ca9b8] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#7695a3]">
-        {t.buttons.contactUs}
-      </a>
+    <div class="relative isolate overflow-hidden rounded-xl bg-[linear-gradient(135deg,#007fc6_0%,#1597c7_54%,#7cdcf1_100%)] p-8 text-center sm:p-10 lg:p-14" data-reveal>
+      <img src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="pointer-events-none absolute -bottom-16 -right-24 w-[36rem] max-w-none select-none opacity-[0.18]" />
+      <div class="relative z-10">
+        <h2 class="text-3xl font-semibold text-white">{t.adviceCta.heading}</h2>
+        <p class="mx-auto mt-4 max-w-2xl text-lg leading-8 text-white/90">
+          {t.adviceCta.text}
+        </p>
+        <a href={path('contact', locale)} class="mt-8 inline-flex rounded-full bg-brand-navy px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-blue hover:shadow-lift active:translate-y-0">
+          {t.buttons.contactUs}
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>

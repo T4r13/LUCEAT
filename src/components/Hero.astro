@@ -1,5 +1,6 @@
 ---
 import Button from './ui/Button.astro';
+import BotanicalLineArt from './decorations/BotanicalLineArt.astro';
 import { detectLocale, path } from '../i18n/routes';
 import { useTranslations } from '../i18n/ui';
 
@@ -7,14 +8,36 @@ const locale = detectLocale(Astro.url.pathname);
 const t = useTranslations(locale);
 ---
 
-<section class="bg-surface-ivory">
-  <div class="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1fr_1fr] lg:gap-16 lg:px-8 lg:py-24">
-    <div>
-      <p class="text-sm font-semibold uppercase tracking-[0.22em] text-brand-blue">{t.hero.eyebrow}</p>
-      <h1 class="mt-5 text-hero font-display font-medium text-brand-navy">
-        {t.hero.title}
-      </h1>
-      <p class="mt-6 max-w-md text-body-lg text-text-body">
+<section class="relative isolate overflow-hidden bg-transparent">
+  <BotanicalLineArt variant="flower" class="absolute -bottom-28 -left-28 h-[360px] w-[360px] opacity-[0.1] sm:-bottom-20 sm:-left-16 sm:h-[460px] sm:w-[460px]" />
+  <div class="mx-auto max-w-[1440px] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+    <img
+      src="/images/logo/logo-luceat.jpg"
+      alt="LUCEAT — Laboratoire dermo-cosmétique"
+      class="mb-0 h-36 w-auto object-contain sm:h-44 lg:ml-16"
+      width="220"
+      height="165"
+    />
+    <div class="relative overflow-hidden shadow-lift" data-reveal style="width: 100vw; margin-left: calc(50% - 50vw);">
+      <img
+        src="/images/hero/x1.png"
+        alt={t.hero.imageAlt}
+        class="h-[250px] w-full object-cover opacity-70 transition-transform duration-700 ease-out sm:h-[300px] lg:h-auto"
+        data-hero-slideshow
+        width="1366"
+        height="236"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <div aria-hidden="true" class="absolute inset-y-0 left-0 w-1/2 bg-[#007fc6]/30"></div>
+      <div class="absolute inset-y-0 left-0 flex w-1/2 items-center px-6 sm:px-10 lg:px-16">
+        <h1 class="text-4xl font-display font-medium leading-tight text-white sm:text-5xl lg:text-hero">
+          {t.hero.title}
+        </h1>
+      </div>
+    </div>
+    <div class="relative px-2 pt-8 sm:px-6 lg:px-16" data-reveal style="--reveal-delay: 140ms">
+      <p class="max-w-md text-body-lg text-text-body">
         {t.hero.subtitle}
       </p>
       <div class="mt-9 flex flex-wrap gap-4">
@@ -22,16 +45,32 @@ const t = useTranslations(locale);
         <Button href={path('about', locale)} variant="secondary">{t.buttons.ourExpertise}</Button>
       </div>
     </div>
-    <div class="overflow-hidden rounded-lg shadow-lift">
-      <img
-        src="/images/hero/acceuil-refined.jpg"
-        alt={t.hero.imageAlt}
-        class="h-[420px] w-full object-cover object-[75%_35%] sm:h-[480px] lg:h-[520px]"
-        width="1800"
-        height="1012"
-        loading="eager"
-        fetchpriority="high"
-      />
-    </div>
   </div>
 </section>
+
+<script>
+  const heroImage = document.querySelector<HTMLImageElement>('[data-hero-slideshow]');
+  const heroImages = [
+    '/images/hero/x1.png',
+    '/images/hero/x2.png',
+    '/images/hero/x3.png',
+    '/images/hero/x4.png',
+  ];
+
+  if (heroImage && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    heroImages.slice(1).forEach((src) => {
+      const image = new Image();
+      image.src = src;
+    });
+
+    let currentImage = 0;
+    window.setInterval(() => {
+      currentImage = (currentImage + 1) % heroImages.length;
+      heroImage.classList.add('translate-x-full');
+      heroImage.src = heroImages[currentImage];
+      window.requestAnimationFrame(() => {
+        heroImage.classList.remove('translate-x-full');
+      });
+    }, 4000);
+  }
+</script>

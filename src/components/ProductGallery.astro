@@ -5,8 +5,9 @@ import { useTranslations } from '../i18n/ui';
 interface Props {
   images: string[];
   altPrefix: string;
+  alignRight?: boolean;
 }
-const { images, altPrefix } = Astro.props;
+const { images, altPrefix, alignRight = false } = Astro.props;
 const locale = detectLocale(Astro.url.pathname);
 const t = useTranslations(locale);
 ---
@@ -14,20 +15,52 @@ const t = useTranslations(locale);
 <div class="grid gap-4 md:grid-cols-2">
   {images && images.length > 0 ? (
     images.map((image, index) => (
-      <div class="overflow-hidden rounded-[1.5rem] bg-[#fcfaf7] p-4">
-        <div class="mx-auto flex h-[420px] max-w-[520px] items-center justify-center rounded-[1.5rem] bg-white">
+      <div class={alignRight ? 'flex justify-end overflow-hidden rounded-xl bg-white/50 p-4 group' : 'overflow-hidden rounded-xl bg-white/50 p-4 group'}>
+        <div class={alignRight ? 'ml-auto flex h-[420px] max-w-[520px] items-center justify-center rounded-xl overflow-hidden relative' : 'mx-auto flex h-[420px] max-w-[520px] items-center justify-center rounded-xl overflow-hidden relative'} data-zoom-container>
           <img
             src={image}
             alt={`${altPrefix} - photo ${index + 1}`}
             loading="lazy"
-            class="h-full w-full max-w-full object-contain"
+            class={`h-full w-full max-w-full ${alignRight ? 'translate-x-8' : 'translate-x-0'} object-contain transition-transform duration-200 ease-out`}
+            data-zoom-img
           />
         </div>
       </div>
     ))
   ) : (
-    <div class="flex h-72 items-center justify-center rounded-[1.5rem] border border-dashed border-[#cbbeb3] bg-[#f8f4ee] text-sm text-[#5f6770]">
+    <div class="flex h-72 items-center justify-center rounded-xl border border-dashed border-[#cbbeb3] bg-[#f8f4ee] text-sm text-[#5f6770]">
       {t.productCard.imageComingSoon}
     </div>
   )}
 </div>
+
+<script>
+  if (typeof window !== 'undefined') {
+    const containers = document.querySelectorAll('[data-zoom-container]');
+    
+    containers.forEach((container) => {
+      const img = container.querySelector('[data-zoom-img]') as HTMLImageElement;
+      
+      container.addEventListener('mouseenter', () => {
+        img.style.transform = 'scale(1.2)';
+      });
+      
+      container.addEventListener('mousemove', (e: MouseEvent) => {
+        const rect = container.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const percentX = (x / rect.width) * 100;
+        const percentY = (y / rect.height) * 100;
+        
+        img.style.transformOrigin = `${percentX}% ${percentY}%`;
+        img.style.transform = 'scale(1.3)';
+      });
+      
+      container.addEventListener('mouseleave', () => {
+        img.style.transform = 'scale(1)';
+        img.style.transformOrigin = '50% 50%';
+      });
+    });
+  }
+</script>

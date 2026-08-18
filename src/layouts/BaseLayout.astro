@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import LuceatPageBackground from '../components/decorations/LuceatPageBackground.astro';
 import { detectLocale, getAlternateUrl, path } from '../i18n/routes';
 import { useTranslations } from '../i18n/ui';
 
@@ -22,7 +23,7 @@ const defaultAlternate = new URL(path('home', 'fr'), Astro.site);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" href="/images/hero/tlogo.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#0B2C4F" />
@@ -34,14 +35,34 @@ const defaultAlternate = new URL(path('home', 'fr'), Astro.site);
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <title>{title}</title>
   </head>
   <body>
     <a href="#main" class="skip-link">{t.a11y.skipToContent}</a>
     <Navbar />
-    <main id="main" class="min-h-screen">
+    <main id="main" class="relative isolate min-h-screen overflow-hidden">
+      <LuceatPageBackground />
       <slot />
     </main>
     <Footer />
+    <script>
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const revealItems = document.querySelectorAll<HTMLElement>('[data-reveal]');
+
+      if (reducedMotion || !('IntersectionObserver' in window)) {
+        revealItems.forEach((item) => item.classList.add('is-revealed'));
+      } else {
+        const observer = new IntersectionObserver((entries, activeObserver) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-revealed');
+              activeObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -36px' });
+        revealItems.forEach((item) => observer.observe(item));
+      }
+    </script>
   </body>
 </html>

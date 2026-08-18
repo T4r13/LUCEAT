@@ -104,6 +104,10 @@ export const en = {
     brandBlurb: 'LUCEAT creates gentle, respectful care for the delicate skin of babies and children.',
     navHeading: 'Navigation',
     contactHeading: 'Contact',
+    partnersHeading: 'Our partners',
+    previousPartners: 'View previous partners',
+    nextPartners: 'View next partners',
+    partnerAlt: 'LUCEAT partner',
   },
   form: {
     nameLabel: 'Name',

@@ -9,16 +9,22 @@ const { title, text, eyebrow, pendingNotice } = Astro.props;
 ---
 
 <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-  <div class="rounded-[2rem] border border-[#e7e1db] bg-white p-8 shadow-sm sm:p-10 lg:p-14">
-    {eyebrow && <p class="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-[#8ca9b8]">{eyebrow}</p>}
-    <h2 class="text-3xl font-semibold text-[#4d4a47] sm:text-4xl">{title}</h2>
-    {pendingNotice && (
-      <p class="mt-4 rounded-[0.75rem] border border-dashed border-[#cbbeb3] bg-[#f8f4ee] px-4 py-3 text-sm text-[#5f6770]">
-        {pendingNotice}
-      </p>
-    )}
-    <div class="mt-8 space-y-6 text-lg leading-8 text-[#5f6770]">
-      {text.map((paragraph) => <p>{paragraph}</p>)}
+  <div class="group relative isolate overflow-hidden rounded-xl border border-[#e7e1db] bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-[#007fc6]/50 hover:shadow-[0_20px_48px_-20px_rgba(0,127,198,0.48)]" data-reveal>
+    <img src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="pointer-events-none absolute left-1/2 top-1/2 w-[42rem] -translate-x-1/2 -translate-y-1/2 select-none opacity-[0.30] transition-transform duration-700 group-hover:scale-105 group-hover:rotate-1 sm:w-[56rem]" />
+    <div class="relative z-10 bg-[#007fc6] px-8 py-5 sm:px-10 lg:px-14">
+      <h2 class="text-3xl font-semibold text-white sm:text-4xl">{title}</h2>
     </div>
+    <div class="relative z-10 px-8 py-8 sm:px-10 sm:py-10 lg:px-14 lg:py-12">
+      {eyebrow && <p class="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-[#8ca9b8]">{eyebrow}</p>}
+      {pendingNotice && (
+        <p class="rounded-[0.75rem] border border-dashed border-[#cbbeb3] bg-[#f8f4ee] px-4 py-3 text-sm text-[#5f6770]">
+          {pendingNotice}
+        </p>
+      )}
+      <div class:list={['space-y-6 text-lg leading-8 text-[#5f6770]', pendingNotice && 'mt-8']}>
+        {text.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+  </div>
   </div>
 </section>

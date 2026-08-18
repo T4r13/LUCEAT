@@ -37,8 +37,8 @@ export const products: Product[] = [
     category: 'bath',
     featured: true,
     images: [
-      '/images/products/shampoing-bebe-enfant-sans-sulfate-2en1/11.png',
-      '/images/products/shampoing-bebe-enfant-sans-sulfate-2en1/12.png',
+      '/images/products/LE SHAMPOING BEBE ET ENFANT SANS SULFATE 2 EN 1/LE SHAMPOING BEBE ET ENFANT SANS SULFATE 2 EN 1.png',
+      '/images/products/LE SHAMPOING BEBE ET ENFANT SANS SULFATE 2 EN 1/LE SHAMPOING BEBE ET ENFANT SANS SULFATE 2 EN 1-1.png',
     ],
     sizes: ['250ml', '400ml'],
     ingredients: 'WATER, COCAMIDOPROPYL BETAINE, SODIUM LAUROYL SARCOSINATE, COCO-GLUCOSIDE, PEG-150 DISTEARATE, PROPYLENE GLYCOL, POLYQUATERNIUM-7, BENZOIC ACID, BENZYL ALCOHOL, DEHYDROACETIC ACID, FRAGRANCE.',
@@ -64,7 +64,8 @@ export const products: Product[] = [
   {
     slug: 'eau-de-senteur',
     category: 'hydration',
-    images: ['/images/products/eau-de-senteur/2.png'],
+    featured: true,
+    images: ['/images/products/EAU DE SENTEUR/EAU DE SENTEUR.png'],
     sizes: ['250ml'],
     ingredients: 'WATER, PEG-40 HYDROGENATED CASTOR OIL (AND) TRIDECETH-9 (AND) WATER, FRAGRANCE, PROPYLENE GLYCOL, BENZOIC ACID, BENZYL ALCOHOL, DEHYDROACETIC ACID.',
     translations: {
@@ -89,9 +90,10 @@ export const products: Product[] = [
   {
     slug: 'liniment-oleo-calcaire',
     category: 'change',
+    featured: true,
     images: [
-      '/images/products/liniment-oleo-calcaire/31.png',
-      '/images/products/liniment-oleo-calcaire/32.png',
+      '/images/products/LINIMENT OLEO CALCAIRE/LINIMENT OLEO CALCAIRE.png',
+      '/images/products/LINIMENT OLEO CALCAIRE/LINIMENT OLEO CALCAIRE1.png',
     ],
     sizes: ['200ml', '400ml'],
     ingredients: 'WATER, CALCIUM HYDROXIDE, OLEA EUROPAEA FRUIT OIL, GLYCERYL STEARATE SE, CERA ALBA, XANTHAN GUM, BENZOIC ACID, BENZYL ALCOHOL, DEHYDROACETIC ACID.',
@@ -116,7 +118,7 @@ export const products: Product[] = [
   {
     slug: 'creme-de-change',
     category: 'change',
-    images: ['/images/products/creme-de-change/4.png'],
+    images: ['/images/products/CREME DE CHANGE/CREME DE CHANGE.png'],
     sizes: ['40gr'],
     ingredients: 'WATER, PETROLATUM, GLYCERYL OLEATE, LANOLIN ALCOHOL, MINERAL OIL (PARAFFINUM LIQUIDUM), OZOKERITE, ZINC OXIDE, PROPYLENE GLYCOL, PRUNUS AMYGDALUS DULCIS OIL, CALENDULA OFFICINALIS FLOWER EXTRACT, BENZOIC ACID, BENZYL ALCOHOL, DEHYDROACETIC ACID.',
     translations: {
@@ -140,7 +142,7 @@ export const products: Product[] = [
   {
     slug: 'lait-de-corps',
     category: 'hydration',
-    images: ['/images/products/lait-de-corps/5.png'],
+    images: ['/images/products/LAIT DE CORPS/LAIT DE CORPS.png'],
     sizes: ['200ml'],
     ingredients: 'WATER, DIBUTYL ADIPATE, GLYCERYL STEARATE SE, PROPYLENE GLYCOL, PRUNUS AMYGDALUS DULCIS OIL, CERA ALBA, XANTHAN GUM, BENZOIC ACID, BENZYL ALCOHOL, DEHYDROACETIC ACID.',
     translations: {
@@ -164,7 +166,7 @@ export const products: Product[] = [
   {
     slug: 'lotion-anti-poux',
     category: 'lice',
-    images: ['/images/products/lotion-anti-poux/6.png'],
+    images: ['/images/products/LOTION ANTI POUX/LOTION ANTI POUX.png'],
     sizes: ['200ml'],
     ingredients: 'DIBUTYL ADIPATE, LAVENDULA HYBRIDA OIL, CYMBOPOGON WINTERIANUS HERB OIL, TOCOPHEROL.',
     translations: {
@@ -188,7 +190,7 @@ export const products: Product[] = [
   {
     slug: 'shampoing-anti-poux-assainissant',
     category: 'lice',
-    images: ['/images/products/shampoing-anti-poux-assainissant/7.png'],
+    images: ['/images/products/SHAMPOING ANTI POUX ASSAINISSANT/SHAMPOING ANTI POUX ASSAINISSANT.png'],
     sizes: ['250ml'],
     ingredients: 'WATER, COCAMIDOPROPYL BETAINE, SODIUM LAUROYL SARCOSINATE, COCO-GLUCOSIDE, PEG-150 DISTEARATE, PROPYLENE GLYCOL, POLYQUATERNIUM-7, BENZOIC ACID, BENZYL ALCOHOL, DEHYDROACETIC ACID, LAVENDULA HYBRIDA OIL, CYMBOPOGON WINTERIANUS HERB OIL.',
     translations: {
@@ -212,7 +214,7 @@ export const products: Product[] = [
   {
     slug: 'talc',
     category: 'change',
-    images: ['/images/products/talc/8.png'],
+    images: ['/images/products/TALC/TALC.png'],
     sizes: ['100g'],
     ingredients: 'MAGNESIUM SILICATE.',
     translations: {
@@ -235,7 +237,10 @@ export const products: Product[] = [
   {
     slug: 'trousse-bebe-3-2',
     category: 'travel',
-    images: ['/images/products/trousse-bebe-3-2/9.png'],
+    images: [
+      '/images/products/TROUSSE BEBE 3+2/TROUSSE BEBE 3+2.png',
+      '/images/products/TROUSSE BEBE 3+2/TROUSSE BEBE 3+2-1.png',
+    ],
     sizes: ['coffret'],
     ingredients: 'Contient plusieurs produits, voir étiquettes individuelles.',
     translations: {
@@ -259,7 +264,10 @@ export const products: Product[] = [
   {
     slug: 'savon-doux-hypoallergenique',
     category: 'bath',
-    images: ['/images/products/savon-doux-hypoallergenique/10.png'],
+    images: [
+      '/images/products/SAVON DOUX HYPOALLERGENIQUE/SAVON DOUX HYPOALLERGENIQUE.png',
+      '/images/products/SAVON DOUX HYPOALLERGENIQUE/SAVON DOUX HYPOALLERGENIQUE1.png',
+    ],
     sizes: ['100g'],
     ingredients: 'SODIUM PALMITATE, SODIUM PALM KERNELATE, PRUNUS AMYGDALUS DULCIS OIL, GLYCERIN, WATER, TITANIUM DIOXIDE, FRAGRANCE.',
     translations: {
@@ -284,7 +292,7 @@ export const products: Product[] = [
     slug: 'huile-de-massage-anti-colique',
     category: 'comfort',
     featured: false,
-    images: ['/images/products/huile-de-massage-anti-colique/11.png'],
+    images: ['/images/products/COLLYSE® Huile de massage anti-colique/COLLYSE® Huile de massage anti-colique.png'],
     sizes: ['30ml'],
     ingredients: 'PARAFFINUM LIQUIDUM, HELIANTHUS ANNUUS SEED OIL, PRUNUS AMYGDALUS DULCIS OIL, CALENDULA OFFICINALIS FLOWER EXTRACT, FOENICULUM VULGARE FRUIT EXTRACT, CHAMOMILLA RECUTITA EXTRACT, ORIGANUM MAJORANA LEAF EXTRACT, LAVANDULA ANGUSTIFOLIA EXTRACT, TOCOPHEROL.',
     translations: {
