@@ -1,11 +1,14 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductGallery from '../../components/ProductGallery.astro';
-import Icon from '../../components/ui/Icon.astro';
-import { products } from '../../data/products';
+import IconHighlights from '../../components/product/IconHighlights.astro';
+import InfoCard from '../../components/product/InfoCard.astro';
+import KitComposition from '../../components/product/KitComposition.astro';
+import SizesRow from '../../components/product/SizesRow.astro';
+import { products, getProductBySlug } from '../../data/products';
 import { getProductContent } from '../../i18n/product';
 import { useTranslations } from '../../i18n/ui';
-import { path } from '../../i18n/routes';
+import { path, productPath } from '../../i18n/routes';
 
 export async function getStaticPaths() {
   return products.map((product) => ({ params: { slug: product.slug }, props: { product } }));
@@ -15,6 +18,21 @@ const { product } = Astro.props;
 const locale = 'fr' as const;
 const t = useTranslations(locale);
 const content = getProductContent(product, locale);
+
+const cardClass = 'relative overflow-hidden rounded-2xl border border-brand-blue/20 bg-white p-8 shadow-sm transition-shadow hover:shadow-md';
+const headingClass = 'text-2xl font-semibold text-brand-blue';
+
+// A kit bundles finished products, so the usage / ingredients / sizes cards —
+// all of which describe a single formula — are replaced by its composition.
+const kitItems = (product.kit ?? []).map((item) => {
+  const source = getProductBySlug(item.slug);
+  return {
+    name: source ? getProductContent(source, locale).name : item.slug,
+    size: item.size,
+    href: source ? productPath(source.slug, locale) : undefined,
+    free: item.free,
+  };
+});
 ---
 
 <BaseLayout title={`${content.name} – LUCEAT`} description={content.shortDescription}>
@@ -24,99 +42,61 @@ const content = getProductContent(product, locale);
         ← {t.buttons.backToProducts}
       </a>
     </div>
-    
-    <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
-      <div class="space-y-8">
-        <div>
-          <h1 class="text-4xl font-semibold text-brand-blue sm:text-5xl">{content.name}</h1>
-          <p class="mt-6 text-lg leading-8 text-text-body">{content.description}</p>
-        </div>
 
-        {/* Benefits section - 3 columns */}
-        <div class="grid gap-6 grid-cols-3">
-          <div class="relative overflow-hidden rounded-2xl border border-brand-blue/20 bg-gradient-to-br from-white to-surface-ivory p-8 shadow-sm hover:shadow-lg hover:border-brand-blue/40 transition-all duration-300 group">
-            <div class="absolute inset-0 opacity-20">
-              <img src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="w-full h-full object-cover" />
-            </div>
-            <div class="relative z-10 flex flex-col items-center gap-4 text-center">
-              <div class="p-3 rounded-full bg-brand-blue/10 group-hover:bg-brand-blue/20 transition-colors">
-                <Icon name="droplets" size={32} class="text-brand-blue" />
-              </div>
-              <span class="font-semibold text-text-primary text-base">Nettoie en douceur</span>
-            </div>
-          </div>
-          <div class="relative overflow-hidden rounded-2xl border border-brand-blue/20 bg-gradient-to-br from-white to-surface-ivory p-8 shadow-sm hover:shadow-lg hover:border-brand-blue/40 transition-all duration-300 group">
-            <div class="absolute inset-0 opacity-20">
-              <img src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="w-full h-full object-cover" />
-            </div>
-            <div class="relative z-10 flex flex-col items-center gap-4 text-center">
-              <div class="p-3 rounded-full bg-brand-blue/10 group-hover:bg-brand-blue/20 transition-colors">
-                <Icon name="flask-conical" size={32} class="text-brand-blue" />
-              </div>
-              <span class="font-semibold text-text-primary text-base">Hydratant</span>
-            </div>
-          </div>
-          <div class="relative overflow-hidden rounded-2xl border border-brand-blue/20 bg-gradient-to-br from-white to-surface-ivory p-8 shadow-sm hover:shadow-lg hover:border-brand-blue/40 transition-all duration-300 group">
-            <div class="absolute inset-0 opacity-20">
-              <img src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="w-full h-full object-cover" />
-            </div>
-            <div class="relative z-10 flex flex-col items-center gap-4 text-center">
-              <div class="p-3 rounded-full bg-brand-blue/10 group-hover:bg-brand-blue/20 transition-colors">
-                <Icon name="scale" size={32} class="text-brand-blue" />
-              </div>
-              <span class="font-semibold text-text-primary text-base">Demelant</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="relative overflow-hidden rounded-2xl border border-brand-blue/20 bg-gradient-to-br from-surface-ivory via-white to-white p-8 shadow-sm hover:shadow-md transition-shadow">
-          <div class="relative z-10">
-            <div class="mb-4 flex items-center gap-3">
-              <img src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="h-12 w-12 object-contain opacity-80" />
-              <h2 class="text-2xl font-semibold text-brand-blue">{t.productDetail.usage}</h2>
-            </div>
-            <p class="mt-4 text-sm leading-7 text-text-body">{content.usage}</p>
-          </div>
-        </div>
+    {/* Hero row: product story on the left, product image(s) on the right */}
+    <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-12">
+      <div>
+        <h1 class="text-4xl font-semibold text-brand-blue sm:text-5xl">{content.name}</h1>
+        <p class="mt-6 text-lg leading-8 text-text-body">{content.description}</p>
       </div>
-      <div
-        class="space-y-8"
-        style={product.slug === 'eau-de-senteur' ? 'transform: translateX(4.5rem); transition: transform 0.2s ease;' : undefined}
-      >
-        <ProductGallery
-          images={product.images}
-          altPrefix={content.name}
-          alignRight={product.slug === 'eau-de-senteur'}
-        />
-        <div class="relative overflow-hidden rounded-2xl border border-brand-blue/20 bg-white p-8 shadow-sm hover:shadow-md transition-shadow">
-          <div class="relative z-10">
-            <div class="mb-4 flex items-center gap-3">
-              <img src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="h-12 w-12 object-contain opacity-80" />
-              <h2 class="text-2xl font-semibold text-brand-blue">{t.productDetail.ingredients}</h2>
-            </div>
-            <p class="mt-4 text-sm leading-7 text-text-body">{product.ingredients}</p>
-          </div>
-        </div>
-        {content.precautions && (
-          <div class="relative overflow-hidden rounded-2xl border border-brand-blue/20 bg-white p-8 shadow-sm hover:shadow-md transition-shadow">
-            <div class="relative z-10">
-              <div class="mb-4 flex items-center gap-3">
-                <img src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="h-12 w-12 object-contain opacity-80" />
-                <h2 class="text-2xl font-semibold text-brand-blue">{t.productDetail.precautions}</h2>
-              </div>
-              <p class="mt-4 text-sm leading-7 text-text-body">{content.precautions}</p>
-            </div>
-          </div>
-        )}
-        <div class="relative overflow-hidden rounded-2xl border border-brand-blue/20 bg-white p-8 shadow-sm hover:shadow-md transition-shadow">
-          <div class="relative z-10">
-            <div class="mb-4 flex items-center gap-3">
-              <img src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="h-12 w-12 object-contain opacity-80" />
-              <h2 class="text-2xl font-semibold text-brand-blue">{t.productDetail.availableSizes}</h2>
-            </div>
-            <p class="mt-4 text-sm leading-7 text-text-body">{product.sizes?.length ? t.productDetail.sizesAvailable(product.sizes) : t.productDetail.sizesComingSoon}</p>
-          </div>
-        </div>
+      <div>
+        <ProductGallery images={product.images} altPrefix={content.name} />
+      </div>
     </div>
+
+    <IconHighlights class="mt-10 lg:mt-12" items={content.highlights} />
+
+    {kitItems.length > 0 ? (
+      <KitComposition
+        title={t.productDetail.composition}
+        freeLabel={t.productDetail.freeItem}
+        items={kitItems}
+        showMark
+        class={`mt-10 lg:mt-12 ${cardClass}`}
+        headingClass={headingClass}
+      />
+    ) : (
+      <>
+        {/* Detailed information: usage + ingredients share a row; precautions
+            (only documented for one product today) gets its own full-width row
+            rather than being force-paired with an unrelated third card. */}
+        <div class="mt-10 grid gap-6 lg:mt-12 lg:grid-cols-2">
+          <InfoCard title={t.productDetail.usage} showMark class={cardClass} headingClass={headingClass}>
+            <p class="text-sm leading-7 text-text-body">{content.usage}</p>
+          </InfoCard>
+
+          <InfoCard title={t.productDetail.ingredients} showMark class={cardClass} headingClass={headingClass}>
+            <p class="text-sm leading-7 text-text-body">{product.ingredients}</p>
+          </InfoCard>
+
+          {content.precautions && (
+            <InfoCard title={t.productDetail.precautions} showMark class={`${cardClass} lg:col-span-2`} headingClass={headingClass}>
+              <p class="text-sm leading-7 text-text-body">{content.precautions}</p>
+            </InfoCard>
+          )}
+        </div>
+
+        {/* Available sizes: compact metadata row, not a full-height card. */}
+        <SizesRow
+          sizes={product.sizes}
+          label={t.productDetail.availableSizes}
+          comingSoonLabel={t.productDetail.sizesComingSoon}
+          showMark
+          class="mt-6 rounded-2xl border border-brand-blue/20 bg-white px-6 py-5 shadow-sm"
+          headingClass="text-base font-semibold text-brand-blue"
+          pillClass="rounded-full border border-brand-blue/20 bg-surface-ivory px-4 py-1.5 text-sm font-medium text-text-primary"
+        />
+      </>
+    )}
   </section>
 </BaseLayout>

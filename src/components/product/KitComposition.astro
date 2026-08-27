@@ -1,0 +1,69 @@
+---
+import Icon from '../ui/Icon.astro';
+
+interface KitEntry {
+  name: string;
+  size: string;
+  href?: string;
+  free?: boolean;
+}
+
+interface Props {
+  title: string;
+  freeLabel: string;
+  items: KitEntry[];
+  class?: string;
+  headingClass?: string;
+  showMark?: boolean;
+}
+const {
+  title,
+  freeLabel,
+  items,
+  class: className = '',
+  headingClass = '',
+  showMark = false,
+} = Astro.props;
+---
+
+<div class={`relative overflow-hidden ${className}`}>
+  <div class="relative z-10">
+    <div class="flex items-center gap-3">
+      {showMark && (
+        <img src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="h-10 w-10 shrink-0 object-contain opacity-80" />
+      )}
+      <h2 class={headingClass}>{title}</h2>
+    </div>
+
+    <ul class="mt-6 grid gap-4 sm:grid-cols-2">
+      {items.map((item) => {
+        const Tag = item.href ? 'a' : 'div';
+        return (
+          <li class="contents">
+            <Tag
+              href={item.href}
+              class="flex h-full items-center gap-4 rounded-xl border border-brand-blue/20 bg-surface-ivory px-5 py-4 transition hover:border-brand-blue/40 hover:bg-white hover:shadow-sm"
+            >
+              <span class="shrink-0 rounded-full bg-brand-blue/10 p-2.5">
+                <Icon name={item.free ? 'gift' : 'droplet'} size={20} class="text-brand-blue" />
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="block text-sm font-semibold leading-6 text-text-primary">{item.name}</span>
+                <span class="mt-1 flex flex-wrap items-center gap-2">
+                  <span class="rounded-full border border-brand-blue/20 bg-white px-3 py-0.5 text-xs font-medium text-text-primary">
+                    {item.size}
+                  </span>
+                  {item.free && (
+                    <span class="rounded-full bg-brand-blue px-3 py-0.5 text-xs font-semibold text-white">
+                      {freeLabel}
+                    </span>
+                  )}
+                </span>
+              </span>
+            </Tag>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</div>

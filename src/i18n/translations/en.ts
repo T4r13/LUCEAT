@@ -40,8 +40,10 @@ export const en = {
     madeInTunisia: 'Made in Tunisia',
   },
   philosophy: {
-    eyebrow: 'Introduction',
-    heading: 'Our philosophy',
+    // Mirrors the French page, which leads with the bare "Mission" banner and
+    // no eyebrow above it.
+    eyebrow: '',
+    heading: 'Mission',
     pendingNotice: 'This detailed section is being translated and reviewed. The content below is shown in French pending validation.',
   },
   featured: {
@@ -79,6 +81,8 @@ export const en = {
     availableSizes: 'Available sizes',
     sizesAvailable: (sizes: string[]) => `Available in ${sizes.join(' and ')}`,
     sizesComingSoon: 'Sizes coming soon',
+    composition: 'What the kit contains',
+    freeItem: 'Free',
     pendingNotice: "This product's full listing is being translated and reviewed. The content below is shown in French pending validation.",
   },
   about: {
@@ -95,10 +99,12 @@ export const en = {
     phoneLabel: 'Phone:',
     addressLabel: 'Address:',
     facebookLabel: 'Facebook:',
+    instagramLabel: 'Instagram:',
     ourAddress: 'Our address',
     emailAria: (email: string) => `Send an email to ${email}`,
     phoneAria: (phone: string) => `Call LUCEAT at ${phone}`,
     facebookAria: 'Follow LUCEAT on Facebook',
+    instagramAria: 'Follow LUCEAT on Instagram',
   },
   footer: {
     brandBlurb: 'LUCEAT creates gentle, respectful care for the delicate skin of babies and children.',
@@ -108,6 +114,8 @@ export const en = {
     previousPartners: 'View previous partners',
     nextPartners: 'View next partners',
     partnerAlt: 'LUCEAT partner',
+    goToPartnerPage: (page: number) => `Go to partner group ${page}`,
+    rightsReserved: 'All rights reserved.',
   },
   form: {
     nameLabel: 'Name',

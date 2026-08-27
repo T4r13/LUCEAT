@@ -1,0 +1,50 @@
+---
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  items: { icon: string; label: string }[];
+  class?: string;
+}
+const { items, class: className = '' } = Astro.props;
+
+const count = items.length;
+
+// One row on desktop whatever the count (2 to 5), so the key points always read
+// as a single band instead of an orphaned last tile. Class strings are written
+// out in full rather than interpolated: Tailwind scans the source literally and
+// would not generate `lg:grid-cols-${count}`.
+const columnClass =
+  {
+    1: 'sm:grid-cols-1 lg:grid-cols-1',
+    2: 'sm:grid-cols-2 lg:grid-cols-2',
+    3: 'sm:grid-cols-3 lg:grid-cols-3',
+    4: 'sm:grid-cols-2 lg:grid-cols-4',
+    5: 'sm:grid-cols-3 lg:grid-cols-5',
+  }[count] ?? 'sm:grid-cols-3 lg:grid-cols-3';
+
+// Four or five across leaves each tile much narrower, so the padding, gap and
+// label step down to keep the text off the edges instead of overflowing.
+const dense = count >= 4;
+const gapClass = dense ? 'gap-4 lg:gap-5' : 'gap-6';
+const padClass = dense ? 'p-5 lg:p-6' : 'p-8';
+const labelClass = dense ? 'text-sm lg:text-base' : 'text-base';
+const iconPadClass = dense ? 'p-2.5 lg:p-3' : 'p-3';
+---
+
+{count > 0 && (
+  <div class={`grid grid-cols-1 ${columnClass} ${gapClass} ${className}`}>
+    {items.map((item) => (
+      <div class={`group relative flex min-h-[9.5rem] overflow-hidden rounded-2xl border border-brand-blue/20 bg-gradient-to-br from-white to-surface-ivory ${padClass} shadow-sm transition-all duration-300 hover:border-brand-blue/40 hover:shadow-lg`}>
+        <div class="absolute inset-0 opacity-20">
+          <img src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="h-full w-full object-cover" />
+        </div>
+        <div class="relative z-10 flex w-full flex-col items-center justify-center gap-4 text-center">
+          <div class={`rounded-full bg-brand-blue/10 ${iconPadClass} transition-colors group-hover:bg-brand-blue/20`}>
+            <Icon name={item.icon} size={32} class="text-brand-blue" />
+          </div>
+          <span class={`${labelClass} font-semibold leading-snug text-text-primary`}>{item.label}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+)}

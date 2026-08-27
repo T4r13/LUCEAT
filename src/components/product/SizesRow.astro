@@ -1,0 +1,38 @@
+---
+interface Props {
+  sizes: string[];
+  label: string;
+  comingSoonLabel: string;
+  class?: string;
+  headingClass?: string;
+  pillClass?: string;
+  showMark?: boolean;
+}
+const {
+  sizes,
+  label,
+  comingSoonLabel,
+  class: className = '',
+  headingClass = '',
+  pillClass = '',
+  showMark = false,
+} = Astro.props;
+---
+
+<div class={`flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6 ${className}`}>
+  <div class="flex shrink-0 items-center gap-3">
+    {showMark && (
+      <img src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="h-9 w-9 shrink-0 object-contain opacity-80" />
+    )}
+    <h2 class={headingClass}>{label}</h2>
+  </div>
+  {sizes?.length ? (
+    <div class="flex flex-wrap gap-2 sm:justify-end">
+      {sizes.map((size) => (
+        <span class={pillClass}>{size}</span>
+      ))}
+    </div>
+  ) : (
+    <p class="text-sm text-text-body">{comingSoonLabel}</p>
+  )}
+</div>

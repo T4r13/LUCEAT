@@ -79,6 +79,8 @@ export const fr = {
     availableSizes: 'Contenance disponible',
     sizesAvailable: (sizes: string[]) => `Disponible en ${sizes.join(' et ')}`,
     sizesComingSoon: 'Contenance à venir',
+    composition: 'Composition de la trousse',
+    freeItem: 'Offert',
     pendingNotice: "La fiche complète de ce produit est en cours de traduction et de relecture. Le contenu ci-dessous est affiché en français en attendant validation.",
   },
   about: {
@@ -95,10 +97,12 @@ export const fr = {
     phoneLabel: 'Téléphone :',
     addressLabel: 'Adresse :',
     facebookLabel: 'Facebook :',
+    instagramLabel: 'Instagram :',
     ourAddress: 'Notre adresse',
     emailAria: (email: string) => `Envoyer un e-mail à ${email}`,
     phoneAria: (phone: string) => `Appeler LUCEAT au ${phone}`,
     facebookAria: 'Suivre LUCEAT sur Facebook',
+    instagramAria: 'Suivre LUCEAT sur Instagram',
   },
   footer: {
     brandBlurb: 'LUCEAT conçoit des soins doux et respectueux pour la peau fragile des bébés et des enfants.',
@@ -108,6 +112,8 @@ export const fr = {
     previousPartners: 'Voir les partenaires précédents',
     nextPartners: 'Voir les partenaires suivants',
     partnerAlt: 'Partenaire LUCEAT',
+    goToPartnerPage: (page: number) => `Aller au groupe de partenaires ${page}`,
+    rightsReserved: 'Tous droits réservés.',
   },
   form: {
     nameLabel: 'Nom',

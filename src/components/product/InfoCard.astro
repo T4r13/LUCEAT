@@ -1,0 +1,23 @@
+---
+interface Props {
+  title: string;
+  class?: string;
+  headingClass?: string;
+  showMark?: boolean;
+}
+const { title, class: className = '', headingClass = '', showMark = false } = Astro.props;
+---
+
+<div class={`relative overflow-hidden ${className}`}>
+  <div class="relative z-10">
+    <div class="flex items-center gap-3">
+      {showMark && (
+        <img src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="h-10 w-10 shrink-0 object-contain opacity-80" />
+      )}
+      <h2 class={headingClass}>{title}</h2>
+    </div>
+    <div class="mt-4">
+      <slot />
+    </div>
+  </div>
+</div>

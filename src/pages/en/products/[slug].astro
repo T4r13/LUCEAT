@@ -1,10 +1,14 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import ProductGallery from '../../../components/ProductGallery.astro';
-import { products } from '../../../data/products';
+import IconHighlights from '../../../components/product/IconHighlights.astro';
+import InfoCard from '../../../components/product/InfoCard.astro';
+import KitComposition from '../../../components/product/KitComposition.astro';
+import SizesRow from '../../../components/product/SizesRow.astro';
+import { products, getProductBySlug } from '../../../data/products';
 import { getProductContent } from '../../../i18n/product';
 import { useTranslations } from '../../../i18n/ui';
-import { path } from '../../../i18n/routes';
+import { path, productPath } from '../../../i18n/routes';
 
 export async function getStaticPaths() {
   return products.map((product) => ({ params: { slug: product.slug }, props: { product } }));
@@ -14,55 +18,94 @@ const { product } = Astro.props;
 const locale = 'en' as const;
 const t = useTranslations(locale);
 const content = getProductContent(product, locale);
+
+const cardClass = 'relative overflow-hidden rounded-2xl border border-brand-blue/20 bg-white p-8 shadow-sm transition-shadow hover:shadow-md';
+const headingClass = 'text-2xl font-semibold text-brand-blue';
+
+// A kit bundles finished products, so the usage / ingredients / sizes cards —
+// all of which describe a single formula — are replaced by its composition.
+const kitItems = (product.kit ?? []).map((item) => {
+  const source = getProductBySlug(item.slug);
+  return {
+    name: source ? getProductContent(source, locale).name : item.slug,
+    size: item.size,
+    href: source ? productPath(source.slug, locale) : undefined,
+    free: item.free,
+  };
+});
 ---
 
 <BaseLayout title={`${content.name} – LUCEAT`} description={content.shortDescription}>
   <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
     <div class="mb-8">
-      <a href={path('products', locale)} class="inline-flex items-center gap-2 rounded-full border border-[#d7cfc5] bg-white px-4 py-2 text-sm font-semibold text-[#4d4a47] transition hover:bg-[#f8f4ee] hover:text-[#8ca9b8]">
+      <a href={path('products', locale)} class="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-white px-4 py-2 text-sm font-semibold text-text-primary transition hover:bg-surface-ivory hover:text-brand-blue">
         ← {t.buttons.backToProducts}
       </a>
     </div>
+
+    {/* Product copy falls back to French until the dermatological claims have
+        been reviewed (see src/data/products.ts) — say so rather than shipping
+        an invented translation. */}
     {content.isPending && (
-      <p class="mb-8 rounded-[0.75rem] border border-dashed border-[#cbbeb3] bg-[#f8f4ee] px-4 py-3 text-sm text-[#5f6770]">
+      <p class="mb-8 rounded-[0.75rem] border border-dashed border-brand-blue/30 bg-surface-ivory px-4 py-3 text-sm text-text-body">
         {t.productDetail.pendingNotice}
       </p>
     )}
-    <div class="grid gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+
+    {/* Hero row: product story on the left, product image(s) on the right */}
+    <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-12">
       <div>
-        <p class="text-sm font-semibold uppercase tracking-[0.3em] text-[#8ca9b8]">{t.productDetail.eyebrow}</p>
-        <h1 class="mt-4 text-4xl font-semibold text-[#4d4a47] sm:text-5xl">{content.name}</h1>
-        <p class="mt-6 text-lg leading-8 text-[#5f6770]">{content.description}</p>
-        <div class="mt-8">
-          <ProductGallery images={product.images} altPrefix={content.name} />
-        </div>
+        <h1 class="text-4xl font-semibold text-brand-blue sm:text-5xl">{content.name}</h1>
+        <p class="mt-6 text-lg leading-8 text-text-body">{content.description}</p>
       </div>
-      <div class="space-y-8">
-        <div class="rounded-xl border border-[#e7e1db] bg-white p-8 shadow-sm">
-          <h2 class="text-2xl font-semibold text-[#4d4a47]">{t.productDetail.keyPoints}</h2>
-          <ul class="mt-4 space-y-3 text-sm leading-7 text-[#5f6770]">
-            {(content.benefits || []).map((point) => <li class="flex gap-3"><span class="text-[#8ca9b8]">•</span><span>{point}</span></li>)}
-          </ul>
-        </div>
-        <div class="rounded-xl border border-[#e7e1db] bg-[#f8f4ee] p-8 shadow-sm">
-          <h2 class="text-2xl font-semibold text-[#4d4a47]">{t.productDetail.usage}</h2>
-          <p class="mt-4 text-sm leading-7 text-[#5f6770]">{content.usage}</p>
-        </div>
-        <div class="rounded-xl border border-[#e7e1db] bg-white p-8 shadow-sm">
-          <h2 class="text-2xl font-semibold text-[#4d4a47]">{t.productDetail.ingredients}</h2>
-          <p class="mt-4 text-sm leading-7 text-[#5f6770]">{product.ingredients}</p>
-        </div>
-        {content.precautions && (
-          <div class="rounded-xl border border-[#e7e1db] bg-white p-8 shadow-sm">
-            <h2 class="text-2xl font-semibold text-[#4d4a47]">{t.productDetail.precautions}</h2>
-            <p class="mt-4 text-sm leading-7 text-[#5f6770]">{content.precautions}</p>
-          </div>
-        )}
-        <div class="rounded-xl border border-[#e7e1db] bg-white p-8 shadow-sm">
-          <h2 class="text-2xl font-semibold text-[#4d4a47]">{t.productDetail.availableSizes}</h2>
-          <p class="mt-4 text-sm leading-7 text-[#5f6770]">{product.sizes?.length ? t.productDetail.sizesAvailable(product.sizes) : t.productDetail.sizesComingSoon}</p>
-        </div>
+      <div>
+        <ProductGallery images={product.images} altPrefix={content.name} />
       </div>
     </div>
+
+    <IconHighlights class="mt-10 lg:mt-12" items={content.highlights} />
+
+    {kitItems.length > 0 ? (
+      <KitComposition
+        title={t.productDetail.composition}
+        freeLabel={t.productDetail.freeItem}
+        items={kitItems}
+        showMark
+        class={`mt-10 lg:mt-12 ${cardClass}`}
+        headingClass={headingClass}
+      />
+    ) : (
+      <>
+        {/* Detailed information: usage + ingredients share a row; precautions
+            (only documented for one product today) gets its own full-width row
+            rather than being force-paired with an unrelated third card. */}
+        <div class="mt-10 grid gap-6 lg:mt-12 lg:grid-cols-2">
+          <InfoCard title={t.productDetail.usage} showMark class={cardClass} headingClass={headingClass}>
+            <p class="text-sm leading-7 text-text-body">{content.usage}</p>
+          </InfoCard>
+
+          <InfoCard title={t.productDetail.ingredients} showMark class={cardClass} headingClass={headingClass}>
+            <p class="text-sm leading-7 text-text-body">{product.ingredients}</p>
+          </InfoCard>
+
+          {content.precautions && (
+            <InfoCard title={t.productDetail.precautions} showMark class={`${cardClass} lg:col-span-2`} headingClass={headingClass}>
+              <p class="text-sm leading-7 text-text-body">{content.precautions}</p>
+            </InfoCard>
+          )}
+        </div>
+
+        {/* Available sizes: compact metadata row, not a full-height card. */}
+        <SizesRow
+          sizes={product.sizes}
+          label={t.productDetail.availableSizes}
+          comingSoonLabel={t.productDetail.sizesComingSoon}
+          showMark
+          class="mt-6 rounded-2xl border border-brand-blue/20 bg-white px-6 py-5 shadow-sm"
+          headingClass="text-base font-semibold text-brand-blue"
+          pillClass="rounded-full border border-brand-blue/20 bg-surface-ivory px-4 py-1.5 text-sm font-medium text-text-primary"
+        />
+      </>
+    )}
   </section>
 </BaseLayout>

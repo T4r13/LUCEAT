@@ -1,12 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProductCard from '../components/ProductCard.astro';
-import { products } from '../data/products';
+import { getCatalogueProducts } from '../data/products';
 import { useTranslations } from '../i18n/ui';
 import { path } from '../i18n/routes';
 
 const locale = 'fr' as const;
 const t = useTranslations(locale);
+const products = getCatalogueProducts();
 ---
 
 <BaseLayout title="Nos produits – LUCEAT" description="Découvrez la gamme de soins LUCEAT pour bébé et enfant.">

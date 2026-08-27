@@ -12,6 +12,18 @@ const locale = detectLocale(Astro.url.pathname);
 const t = useTranslations(locale);
 const content = getProductContent(product, locale);
 const href = productPath(product.slug, locale);
+
+// Some product photos carry noticeably more transparent padding than others,
+// so equal container sizing alone doesn't yield an equal visible bottle size.
+// `imageScale` trims the image's max-height so its rendered bottle height
+// lines up with the rest of the grid.
+const imageMaxHeight: Record<NonNullable<Product['imageScale']>, string> = {
+  small: '85%',
+  medium: '90%',
+  large: '100%',
+  wide: '100%',
+};
+const imageStyle = product.imageScale ? `max-height: ${imageMaxHeight[product.imageScale]}` : undefined;
 ---
 
 <a href={href} class="group block overflow-hidden rounded-2xl border border-brand-blue/20 bg-gradient-to-br from-white via-white to-[#f0fafe] shadow-[0_8px_24px_-6px_rgba(12,47,69,0.08)] transition-all duration-500 hover:border-brand-blue/40 hover:shadow-[0_24px_48px_-12px_rgba(21,151,199,0.25)] hover:-translate-y-2 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2" data-reveal>
@@ -19,7 +31,7 @@ const href = productPath(product.slug, locale);
     {/* Decorative gradient overlay */}
     <div class="absolute inset-0 bg-gradient-to-br from-[#e8f7fc]/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
     
-    <div class="relative mx-auto flex h-[340px] max-w-[340px] items-center justify-center rounded-xl bg-gradient-to-b from-white/60 to-[#fafbfc]/40 overflow-hidden">
+    <div class="relative mx-auto flex h-[340px] max-w-[340px] items-center justify-center rounded-xl bg-gradient-to-b from-white/60 to-[#fafbfc]/40 overflow-hidden p-8">
       {/* Subtle background pattern */}
       <div class="absolute inset-0 opacity-20">
         <div class="absolute top-0 right-0 w-40 h-40 bg-brand-blue/5 rounded-full blur-2xl -mr-20 -mt-20"></div>
@@ -31,7 +43,8 @@ const href = productPath(product.slug, locale);
           src={product.images[0]}
           alt={content.name}
           loading="lazy"
-          class="relative z-10 h-full w-full max-w-full object-contain transition-transform duration-700 ease-out group-hover:scale-105"
+          style={imageStyle}
+          class="relative z-10 mx-auto h-auto max-h-full w-auto max-w-full object-contain transition-transform duration-700 ease-out group-hover:scale-105"
         />
       ) : (
         <div class="relative z-10 flex h-full w-full items-center justify-center rounded-lg border-2 border-dashed border-[#b9dce7]/50 text-center text-sm text-text-body">
@@ -48,10 +61,10 @@ const href = productPath(product.slug, locale);
     {/* Top border gradient */}
     <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-blue/20 to-transparent"></div>
     
-    <h3 class="relative z-10 text-lg font-semibold text-brand-navy leading-snug line-clamp-2 transition-colors duration-300 group-hover:text-brand-blue">
+    <h3 class="relative z-10 min-h-[3.1rem] text-lg font-semibold text-brand-navy leading-snug line-clamp-2 transition-colors duration-300 group-hover:text-brand-blue">
       {content.name}
     </h3>
-    <p class="relative z-10 mt-2 text-sm leading-6 text-text-body/80 line-clamp-2 transition-colors duration-300 group-hover:text-text-body">
+    <p class="relative z-10 mt-2 min-h-12 text-sm leading-6 text-text-body/80 line-clamp-2 transition-colors duration-300 group-hover:text-text-body">
       {content.shortDescription}
     </p>
     

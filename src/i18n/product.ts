@@ -21,14 +21,17 @@ export function getProductContent(product: Product, locale: Locale): ResolvedPro
   const merged = { ...fallback } as ProductTranslation;
 
   if (locale !== 'fr') {
+    const filled = (value: unknown) => (Array.isArray(value) ? value.length > 0 : Boolean(value));
+
     for (const key of Object.keys(fallback) as (keyof ProductTranslation)[]) {
       const value = primary?.[key];
-      const hasValue = Array.isArray(value) ? value.length > 0 : Boolean(value);
-      if (hasValue) {
+      if (filled(value)) {
         (merged as any)[key] = value;
-      } else if (key !== 'precautions') {
-        // Empty precautions is a legitimate "none documented" state in French
-        // too (see products.ts) — don't flag it as a pending translation.
+      } else if (filled(fallback[key])) {
+        // Only a field that actually has French copy can be awaiting
+        // translation. Fields left empty in French too (undocumented
+        // precautions, a kit's empty highlight list) have nothing to translate,
+        // so they must not flag the whole page as pending.
         isPending = true;
       }
     }

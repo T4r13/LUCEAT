@@ -5,6 +5,7 @@ import IntroSection from '../../components/IntroSection.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import Icon from '../../components/ui/Icon.astro';
 import IconBadge from '../../components/ui/IconBadge.astro';
+import BotanicalLineArt from '../../components/decorations/BotanicalLineArt.astro';
 import { products } from '../../data/products';
 import { useTranslations } from '../../i18n/ui';
 import { path } from '../../i18n/routes';
@@ -13,14 +14,13 @@ const locale = 'en' as const;
 const t = useTranslations(locale);
 const featuredProducts = products.filter((product) => product.featured);
 
-// Pending review (see src/i18n/translations — dermatological explanation,
-// not yet reviewed for accurate English translation). Shown in French with
-// a visible notice rather than an invented translation.
-const introParagraphsFr = [
-  'La peau de bébé est une peau fragile qui n\'a pas achevé encore sa maturité. Les glandes sudorales et sébacées des nourrissons sont encore immatures et ne remplissent pas encore parfaitement toutes leurs fonctions. À terme, elles permettent la formation d\'un film hydrolipidique protecteur (à base de sueur et sébum) qui maintient la neutralité du pH de la peau, permet de lutter contre le développement de micro-organismes et de réguler la thermogénèse de l\'organisme.',
-  'Les bébés sont particulièrement sensibles au chaud et au froid, et sont d\'une façon générale très mal protégés contre les agressions du monde extérieur. Enfin, la flore cutanée, qui constitue une barrière naturelle contre les infections, se met en place progressivement à condition de ne pas être détruite par des agents lavants et antibactériens agressifs.',
-  'En attendant cette maturité, il vaut mieux choisir pour eux des produits cosmétiques hypoallergéniques, doux dans leur composition et respectant l\'équilibre hydrolipidique et l\'hydratation de leur peau — c\'est le principal objectif sur lequel a travaillé l\'équipe du laboratoire LUCEAT. D\'autre part, le bain de bébé est certes une mesure d\'hygiène incontournable, mais LUCEAT en crée un véritable moment de plaisir et de communication entre mère et bébé, qui se sent heureux et confiant.',
-  'LUCEAT propose une gamme complète de soins conçus spécialement pour le confort et le bien-être de vos bébés.',
+// English rendering of the French mission text — same statements, same order,
+// nothing added or strengthened.
+const introParagraphs = [
+  "A baby's skin is fragile and has not yet reached full maturity. An infant's sweat and sebaceous glands are still developing and do not yet perform all of their functions perfectly. In time, they allow a protective hydrolipidic film to form — made of sweat and sebum — which keeps the skin's pH neutral, helps fight the growth of micro-organisms and regulates the body's heat production.",
+  'Babies are particularly sensitive to heat and cold, and are generally poorly protected against the stresses of the outside world. Their skin flora, a natural barrier against infection, establishes itself gradually — provided it is not destroyed by harsh cleansing and antibacterial agents.',
+  'Until that maturity is reached, it is best to choose hypoallergenic cosmetics with gentle compositions that respect the hydrolipidic balance and the hydration of their skin — the central goal the LUCEAT laboratory team has worked towards. Bath time is of course an essential part of hygiene, but LUCEAT turns it into a genuine moment of pleasure and connection between mother and baby, who feels happy and confident.',
+  'LUCEAT offers a complete range of care designed specifically for the comfort and well-being of your babies.',
 ];
 
 const features = [
@@ -37,9 +37,11 @@ const features = [
 >
   <Hero />
 
-  <IntroSection title={t.philosophy.heading} eyebrow={t.philosophy.eyebrow} text={introParagraphsFr} pendingNotice={t.philosophy.pendingNotice} />
+  <IntroSection title={t.philosophy.heading} eyebrow={t.philosophy.eyebrow} text={introParagraphs} />
 
-  <section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-16">
+  <section class="relative isolate overflow-hidden px-4 py-8 sm:px-6 lg:px-8 lg:py-16">
+    <BotanicalLineArt variant="flower" class="absolute -right-36 top-0 h-80 w-80 opacity-[0.07] sm:-right-20 sm:h-[440px] sm:w-[440px]" />
+    <div class="relative z-10 mx-auto max-w-7xl" data-reveal>
     <div class="mb-10 flex items-end justify-between gap-4">
       <div>
         <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-blue">{t.featured.eyebrow}</p>
@@ -54,10 +56,13 @@ const features = [
         </div>
       ))}
     </div>
+    </div>
   </section>
 
   <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-    <div class="rounded-xl bg-[linear-gradient(135deg,#007fc6_0%,#1597c7_54%,#7cdcf1_100%)] p-8 sm:p-10 lg:p-14">
+    <div class="relative isolate overflow-hidden rounded-xl bg-[linear-gradient(135deg,#007fc6_0%,#1597c7_54%,#7cdcf1_100%)] p-8 sm:p-10 lg:p-14" data-reveal>
+      <BotanicalLineArt variant="leaves" class="absolute -left-28 -top-24 h-72 w-72 opacity-[0.08] sm:-left-20 sm:h-96 sm:w-96" />
+      <div class="relative z-10">
       <div class="mb-10 max-w-2xl">
         <p class="text-sm font-semibold uppercase tracking-[0.3em] text-white/80">{t.why.eyebrow}</p>
         <h2 class="mt-2 text-3xl font-semibold text-white">{t.why.heading}</h2>
@@ -76,11 +81,12 @@ const features = [
           </div>
         ))}
       </div>
+      </div>
     </div>
   </section>
 
   <section class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
-    <div class="relative isolate overflow-hidden rounded-xl bg-[linear-gradient(135deg,#007fc6_0%,#1597c7_54%,#7cdcf1_100%)] p-8 text-center sm:p-10 lg:p-14">
+    <div class="relative isolate overflow-hidden rounded-xl bg-[linear-gradient(135deg,#007fc6_0%,#1597c7_54%,#7cdcf1_100%)] p-8 text-center sm:p-10 lg:p-14" data-reveal>
       <img src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="pointer-events-none absolute -bottom-16 -right-24 w-[36rem] max-w-none select-none opacity-[0.18]" />
       <div class="relative z-10">
         <h2 class="text-3xl font-semibold text-white">{t.adviceCta.heading}</h2>
@@ -91,6 +97,17 @@ const features = [
           {t.buttons.contactUs}
         </a>
       </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+    <div class="flex flex-col items-center gap-5 py-6 text-center" data-reveal>
+      <img
+        src="/images/brand/gentle-care.png"
+        alt="Gentle care"
+        class="signature-mark h-14 w-auto object-contain sm:h-16"
+      />
+      <span class="signature-underline block h-px w-0 bg-gradient-to-r from-transparent via-brand-blue/50 to-transparent" aria-hidden="true"></span>
     </div>
   </section>
 </BaseLayout>
