@@ -1,13 +1,6 @@
-/* Fraunces: headings only, so we load a narrow, deliberate weight range */
-@import '@fontsource/fraunces/400.css';
-@import '@fontsource/fraunces/500.css';
-@import '@fontsource/fraunces/600.css';
-@import '@fontsource/fraunces/600-italic.css';
-
 @import '@fontsource/manrope/400.css';
 @import '@fontsource/manrope/500.css';
 @import '@fontsource/manrope/600.css';
-@import '@fontsource/manrope/700.css';
 
 @tailwind base;
 @tailwind components;
@@ -22,12 +15,83 @@ html {
 }
 
 body {
-  @apply bg-[#fafbfc] text-text-body antialiased font-sans;
+  @apply bg-[#fafbfc] font-sans text-body text-text-body antialiased;
+  font-feature-settings: "kern" 1, "liga" 1;
 }
 
 h1, h2, h3, h4 {
-  @apply font-display text-text-primary;
+  @apply font-sans text-text-primary tracking-normal;
   text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+@layer components {
+  .type-display {
+    @apply font-sans text-h3 font-semibold tracking-normal text-text-primary sm:text-h1 lg:text-display;
+  }
+
+  .type-page-title {
+    @apply font-sans text-h1 font-semibold tracking-normal text-text-primary;
+  }
+
+  .type-section-title {
+    @apply font-sans text-h2 font-semibold tracking-normal text-text-primary;
+  }
+
+  .type-card-title {
+    @apply font-sans text-h3 font-semibold tracking-normal text-text-primary;
+  }
+
+  .type-product-title {
+    @apply font-sans text-h2 font-semibold tracking-normal text-text-primary sm:text-h1;
+  }
+
+  .type-product-card-title {
+    @apply font-sans text-h4 font-semibold tracking-normal text-text-primary;
+  }
+
+  .type-key-point {
+    @apply text-body-sm font-semibold leading-snug tracking-normal text-text-primary sm:text-body;
+  }
+
+  .type-key-point-dense {
+    @apply text-body-sm font-semibold leading-snug tracking-normal text-text-primary;
+  }
+
+  .type-subtitle {
+    @apply text-body-lg font-normal tracking-normal text-text-body;
+  }
+
+  .type-body {
+    @apply text-body font-normal tracking-normal text-text-body;
+  }
+
+  .type-body-sm {
+    @apply text-body-sm font-normal tracking-normal text-text-body;
+  }
+
+  .type-label {
+    @apply text-label font-medium uppercase text-brand-blue;
+  }
+
+  .type-nav {
+    @apply text-nav font-medium tracking-normal;
+  }
+
+  .type-button {
+    @apply text-button font-semibold tracking-normal;
+  }
+
+  .type-caption {
+    @apply text-caption font-normal tracking-normal;
+  }
+
+  .type-footer-heading {
+    @apply text-label font-medium uppercase text-white;
+  }
 }
 
 /* Visible, brand-colored focus ring on every interactive element,
@@ -39,7 +103,7 @@ h1, h2, h3, h4 {
 }
 
 .skip-link {
-  @apply fixed left-4 top-4 z-[100] -translate-y-24 rounded-md bg-brand-navy px-4 py-2 text-sm font-semibold text-text-inverse transition-transform;
+  @apply fixed left-4 top-4 z-[100] -translate-y-24 rounded-md bg-brand-navy px-4 py-2 text-button font-semibold text-text-inverse transition-transform;
 }
 .skip-link:focus-visible {
   @apply translate-y-0;

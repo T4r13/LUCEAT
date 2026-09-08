@@ -17,7 +17,7 @@ interface Props {
 const { class: className = '' } = Astro.props;
 ---
 
-<nav aria-label={t.languageSwitcher.label} class={`flex items-center gap-1 text-sm font-semibold ${className}`}>
+<nav aria-label={t.languageSwitcher.label} class={`type-nav flex items-center gap-1 ${className}`}>
   {options.map((option, index) => (
     <>
       {index > 0 && <span class="text-border-soft" aria-hidden="true">/</span>}

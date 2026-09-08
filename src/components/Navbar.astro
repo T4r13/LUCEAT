@@ -23,21 +23,21 @@ const isActive = (href: string) => (href === homeHref ? currentPath === href : c
       <img src="/images/brand/gentle-care.png" alt="Gentle care" class="h-10 w-auto max-w-[260px] -translate-x-3 object-contain object-left sm:h-12 sm:max-w-[300px]" />
     </a>
 
-    <nav aria-label={t.nav.mainNav} class="hidden items-center gap-1 rounded-full border border-[#c6e6f5] bg-white/80 p-1 text-sm font-semibold text-brand-navy shadow-[0_4px_18px_rgba(0,127,198,0.08)] md:flex">
+    <nav aria-label={t.nav.mainNav} class="type-nav hidden items-center gap-1 rounded-full border border-[#c6e6f5] bg-white/80 p-1 text-brand-navy shadow-[0_4px_18px_rgba(0,127,198,0.08)] lg:flex">
       {links.map((link) => <a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined} class:list={['rounded-full px-4 py-2 transition-all duration-200', isActive(link.href) ? 'bg-[#007fc6] text-white shadow-sm' : 'hover:bg-[#eaf7fb] hover:text-[#007fc6]']}>{link.label}</a>)}
       <LanguageSwitcher class="ml-1 rounded-full bg-[#eef8fb] px-2 py-1" />
     </nav>
 
-    <button type="button" id="menu-open" class="flex h-11 w-11 items-center justify-center rounded-full border border-[#c6e6f5] bg-white/80 text-[#007fc6] shadow-sm transition hover:bg-[#eaf7fb] md:hidden" aria-label={t.nav.openMenu} aria-expanded="false" aria-controls="mobile-menu"><Icon name="menu" size={23} /></button>
+    <button type="button" id="menu-open" class="flex h-11 w-11 items-center justify-center rounded-full border border-[#c6e6f5] bg-white/80 text-[#007fc6] shadow-sm transition hover:bg-[#eaf7fb] lg:hidden" aria-label={t.nav.openMenu} aria-expanded="false" aria-controls="mobile-menu"><Icon name="menu" size={23} /></button>
   </div>
 </header>
 
-<div id="mobile-menu" class="fixed inset-0 z-[60] hidden flex-col bg-[#fbfdfe]/95 backdrop-blur-xl md:!hidden" role="dialog" aria-modal="true" aria-label={t.nav.menuDialog}>
+<div id="mobile-menu" class="fixed inset-0 z-[60] hidden flex-col bg-[#fbfdfe]/95 backdrop-blur-xl lg:!hidden" role="dialog" aria-modal="true" aria-label={t.nav.menuDialog}>
   <div class="flex items-center justify-between border-b border-[#c6e6f5] px-4 py-2.5 sm:px-6">
     <a href={homeHref} class="shrink-0"><img src="/images/brand/gentle-care.png" alt="Gentle care" class="h-10 w-auto max-w-[240px] -translate-x-3 object-contain object-left" /></a>
     <button type="button" id="menu-close" class="flex h-11 w-11 items-center justify-center rounded-full border border-[#c6e6f5] bg-white text-[#007fc6] shadow-sm" aria-label={t.nav.closeMenu}><Icon name="x" size={23} /></button>
   </div>
-  <nav aria-label={t.nav.mainNav} class="flex flex-1 flex-col gap-2 overflow-y-auto px-4 py-6 sm:px-6">{links.map((link) => <a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined} class:list={['flex min-h-[52px] items-center rounded-xl px-4 text-lg font-display font-medium transition-colors', isActive(link.href) ? 'bg-[#007fc6] text-white shadow-sm' : 'text-brand-navy hover:bg-[#eaf7fb] hover:text-[#007fc6]']}>{link.label}</a>)}<LanguageSwitcher class="mt-5 min-h-[44px] rounded-full bg-[#eef8fb] px-3 py-2" /></nav>
+  <nav aria-label={t.nav.mainNav} class="flex flex-1 flex-col gap-2 overflow-y-auto px-4 py-6 sm:px-6">{links.map((link) => <a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined} class:list={['type-nav flex min-h-[52px] items-center rounded-xl px-4 transition-colors', isActive(link.href) ? 'bg-[#007fc6] text-white shadow-sm' : 'text-brand-navy hover:bg-[#eaf7fb] hover:text-[#007fc6]']}>{link.label}</a>)}<LanguageSwitcher class="mt-5 min-h-[44px] rounded-full bg-[#eef8fb] px-3 py-2" /></nav>
 </div>
 
 <script>

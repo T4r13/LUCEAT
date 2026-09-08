@@ -12,28 +12,36 @@ const t = useTranslations(locale);
   <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
     <div class="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
       <div>
-        <h1 class="text-4xl font-semibold text-[#4d4a47] sm:text-5xl">{t.contact.heading}</h1>
-        <p class="mt-6 text-lg leading-8 text-[#5f6770]">
+        <h1 class="type-page-title text-[#4d4a47]">{t.contact.heading}</h1>
+        <p class="type-subtitle mt-6 text-[#5f6770]">
           {t.contact.intro}
         </p>
         <div class="mt-8 space-y-1 rounded-xl border border-[#e7e1db] bg-white p-8 shadow-sm">
           <a
             href={`mailto:${site.email}`}
-            class="flex min-h-[44px] items-center gap-3 text-[#5f6770] hover:text-[#8ca9b8]"
+            class="type-body flex min-h-[44px] items-center gap-3 text-[#5f6770] hover:text-[#8ca9b8]"
             aria-label={t.contact.emailAria(site.email)}
           >
             <Icon name="mail" size={20} class="shrink-0 text-[#4d4a47]" />
             <span><span class="font-semibold text-[#4d4a47]">{t.contact.emailLabel}</span> {site.email}</span>
           </a>
-          <a
-            href={`tel:${site.phone.href}`}
-            class="flex min-h-[44px] items-center gap-3 text-[#5f6770] hover:text-[#8ca9b8]"
-            aria-label={t.contact.phoneAria(site.phone.display)}
-          >
+          <div class="type-body flex min-h-[44px] items-center gap-3 text-[#5f6770]">
             <Icon name="phone" size={20} class="shrink-0 text-[#4d4a47]" />
-            <span><span class="font-semibold text-[#4d4a47]">{t.contact.phoneLabel}</span> {site.phone.display}</span>
-          </a>
-          <div class="flex items-start gap-3 py-2 text-[#5f6770]">
+            <span>
+              <span class="font-semibold text-[#4d4a47]">{t.contact.phoneLabel}</span>
+              <span class="inline-flex flex-wrap items-center gap-x-2">
+                {site.phones.map((phone, index) => (
+                  <>
+                    {index > 0 && <span class="text-[#8ca9b8]" aria-hidden="true">/</span>}
+                    <a href={`tel:${phone.href}`} class="hover:text-[#8ca9b8]" aria-label={t.contact.phoneAria(phone.display)}>
+                      {phone.display}
+                    </a>
+                  </>
+                ))}
+              </span>
+            </span>
+          </div>
+          <div class="type-body flex items-start gap-3 py-2 text-[#5f6770]">
             <Icon name="map-pin" size={20} class="mt-0.5 shrink-0 text-[#4d4a47]" />
             <p>
               <span class="font-semibold text-[#4d4a47]">{t.contact.addressLabel}</span><br />
@@ -47,7 +55,7 @@ const t = useTranslations(locale);
             target="_blank"
             rel="noopener noreferrer"
             aria-label={t.contact.facebookAria}
-            class="flex min-h-[44px] items-center gap-3 text-[#5f6770] hover:text-[#8ca9b8]"
+            class="type-body flex min-h-[44px] items-center gap-3 text-[#5f6770] hover:text-[#8ca9b8]"
           >
             <Icon name="facebook" size={20} class="shrink-0 text-[#4d4a47]" />
             <span><span class="font-semibold text-[#4d4a47]">{t.contact.facebookLabel}</span> LUCEAT</span>
@@ -57,7 +65,7 @@ const t = useTranslations(locale);
             target="_blank"
             rel="noopener noreferrer"
             aria-label={t.contact.instagramAria}
-            class="flex min-h-[44px] items-center gap-3 text-[#5f6770] hover:text-[#8ca9b8]"
+            class="type-body flex min-h-[44px] items-center gap-3 text-[#5f6770] hover:text-[#8ca9b8]"
           >
             <Icon name="instagram" size={20} class="shrink-0 text-[#4d4a47]" />
             <span><span class="font-semibold text-[#4d4a47]">{t.contact.instagramLabel}</span> LUCEAT</span>

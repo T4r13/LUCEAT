@@ -27,7 +27,7 @@ const columnClass =
 const dense = count >= 4;
 const gapClass = dense ? 'gap-4 lg:gap-5' : 'gap-6';
 const padClass = dense ? 'p-5 lg:p-6' : 'p-8';
-const labelClass = dense ? 'text-sm lg:text-base' : 'text-base';
+const labelClass = dense ? 'type-key-point-dense' : 'type-key-point';
 const iconPadClass = dense ? 'p-2.5 lg:p-3' : 'p-3';
 ---
 
@@ -42,7 +42,7 @@ const iconPadClass = dense ? 'p-2.5 lg:p-3' : 'p-3';
           <div class={`rounded-full bg-brand-blue/10 ${iconPadClass} transition-colors group-hover:bg-brand-blue/20`}>
             <Icon name={item.icon} size={32} class="text-brand-blue" />
           </div>
-          <span class={`${labelClass} font-semibold leading-snug text-text-primary`}>{item.label}</span>
+          <span class={labelClass}>{item.label}</span>
         </div>
       </div>
     ))}

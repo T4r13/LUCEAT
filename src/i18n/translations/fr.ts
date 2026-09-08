@@ -85,7 +85,7 @@ export const fr = {
   },
   about: {
     eyebrow: 'À propos',
-    heading: 'LUCEAT, un laboratoire dédié au confort des peaux les plus sensibles',
+    heading: 'LUCEAT, dédié au confort des peaux les plus sensibles',
     intro: 'LUCEAT développe des soins doux, rassurants et adaptés au quotidien des bébés et des enfants, avec une attention particulière à l’hydratation et au respect de l’équilibre cutané.',
     pendingNotice: "Cette section est en cours de traduction et de relecture. Le contenu ci-dessous est affiché en français en attendant validation.",
   },

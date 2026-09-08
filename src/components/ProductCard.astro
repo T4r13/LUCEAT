@@ -47,7 +47,7 @@ const imageStyle = product.imageScale ? `max-height: ${imageMaxHeight[product.im
           class="relative z-10 mx-auto h-auto max-h-full w-auto max-w-full object-contain transition-transform duration-700 ease-out group-hover:scale-105"
         />
       ) : (
-        <div class="relative z-10 flex h-full w-full items-center justify-center rounded-lg border-2 border-dashed border-[#b9dce7]/50 text-center text-sm text-text-body">
+        <div class="type-body-sm relative z-10 flex h-full w-full items-center justify-center rounded-lg border-2 border-dashed border-[#b9dce7]/50 text-center">
           {t.productCard.imageComingSoon}
         </div>
       )}
@@ -61,10 +61,10 @@ const imageStyle = product.imageScale ? `max-height: ${imageMaxHeight[product.im
     {/* Top border gradient */}
     <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-blue/20 to-transparent"></div>
     
-    <h3 class="relative z-10 min-h-[3.1rem] text-lg font-semibold text-brand-navy leading-snug line-clamp-2 transition-colors duration-300 group-hover:text-brand-blue">
+    <h3 class="type-product-card-title relative z-10 min-h-[3.1rem] line-clamp-2 text-brand-navy transition-colors duration-300 group-hover:text-brand-blue">
       {content.name}
     </h3>
-    <p class="relative z-10 mt-2 min-h-12 text-sm leading-6 text-text-body/80 line-clamp-2 transition-colors duration-300 group-hover:text-text-body">
+    <p class="type-body-sm relative z-10 mt-2 min-h-12 line-clamp-2 text-text-body/80 transition-colors duration-300 group-hover:text-text-body">
       {content.shortDescription}
     </p>
     

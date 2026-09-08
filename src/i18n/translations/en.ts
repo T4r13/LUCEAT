@@ -87,7 +87,7 @@ export const en = {
   },
   about: {
     eyebrow: 'About',
-    heading: 'LUCEAT, a laboratory dedicated to the comfort of the most sensitive skin',
+    heading: 'LUCEAT, dedicated to the comfort of the most sensitive skin',
     intro: "LUCEAT develops gentle, reassuring care suited to the daily lives of babies and children, with particular attention to hydration and skin balance.",
     pendingNotice: 'This section is being translated and reviewed. The content below is shown in French pending validation.',
   },

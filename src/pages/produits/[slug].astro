@@ -20,7 +20,7 @@ const t = useTranslations(locale);
 const content = getProductContent(product, locale);
 
 const cardClass = 'relative overflow-hidden rounded-2xl border border-brand-blue/20 bg-white p-8 shadow-sm transition-shadow hover:shadow-md';
-const headingClass = 'text-2xl font-semibold text-brand-blue';
+const headingClass = 'type-card-title text-brand-blue';
 
 // A kit bundles finished products, so the usage / ingredients / sizes cards —
 // all of which describe a single formula — are replaced by its composition.
@@ -38,7 +38,7 @@ const kitItems = (product.kit ?? []).map((item) => {
 <BaseLayout title={`${content.name} – LUCEAT`} description={content.shortDescription}>
   <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
     <div class="mb-8">
-      <a href={path('products', locale)} class="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-white px-4 py-2 text-sm font-semibold text-text-primary transition hover:bg-surface-ivory hover:text-brand-blue">
+      <a href={path('products', locale)} class="type-button inline-flex items-center gap-2 rounded-full border border-border-subtle bg-white px-4 py-2 text-text-primary transition hover:bg-surface-ivory hover:text-brand-blue">
         ← {t.buttons.backToProducts}
       </a>
     </div>
@@ -46,11 +46,16 @@ const kitItems = (product.kit ?? []).map((item) => {
     {/* Hero row: product story on the left, product image(s) on the right */}
     <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-12">
       <div>
-        <h1 class="text-4xl font-semibold text-brand-blue sm:text-5xl">{content.name}</h1>
-        <p class="mt-6 text-lg leading-8 text-text-body">{content.description}</p>
+        <h1 class="type-product-title text-brand-blue">{content.name}</h1>
+        <p class="type-subtitle mt-6 max-w-prose">{content.description}</p>
       </div>
       <div>
-        <ProductGallery images={product.images} altPrefix={content.name} />
+        <ProductGallery
+          images={product.images}
+          altPrefix={content.name}
+          sizes={product.sizes}
+          presentationBySize={product.galleryImagePresentation}
+        />
       </div>
     </div>
 
@@ -72,16 +77,16 @@ const kitItems = (product.kit ?? []).map((item) => {
             rather than being force-paired with an unrelated third card. */}
         <div class="mt-10 grid gap-6 lg:mt-12 lg:grid-cols-2">
           <InfoCard title={t.productDetail.usage} showMark class={cardClass} headingClass={headingClass}>
-            <p class="text-sm leading-7 text-text-body">{content.usage}</p>
+            <p class="type-body-sm">{content.usage}</p>
           </InfoCard>
 
           <InfoCard title={t.productDetail.ingredients} showMark class={cardClass} headingClass={headingClass}>
-            <p class="text-sm leading-7 text-text-body">{product.ingredients}</p>
+            <p class="type-body-sm">{product.ingredients}</p>
           </InfoCard>
 
           {content.precautions && (
             <InfoCard title={t.productDetail.precautions} showMark class={`${cardClass} lg:col-span-2`} headingClass={headingClass}>
-              <p class="text-sm leading-7 text-text-body">{content.precautions}</p>
+              <p class="type-body-sm">{content.precautions}</p>
             </InfoCard>
           )}
         </div>
@@ -93,8 +98,8 @@ const kitItems = (product.kit ?? []).map((item) => {
           comingSoonLabel={t.productDetail.sizesComingSoon}
           showMark
           class="mt-6 rounded-2xl border border-brand-blue/20 bg-white px-6 py-5 shadow-sm"
-          headingClass="text-base font-semibold text-brand-blue"
-          pillClass="rounded-full border border-brand-blue/20 bg-surface-ivory px-4 py-1.5 text-sm font-medium text-text-primary"
+          headingClass="type-body-sm font-semibold text-brand-blue"
+          pillClass="type-body-sm rounded-full border border-brand-blue/20 bg-surface-ivory px-4 py-1.5 font-medium text-text-primary"
         />
       </>
     )}

@@ -1,10 +1,16 @@
 export const site = {
   name: 'LUCEAT',
   email: 'contact@luceat.tn',
-  phone: {
-    display: '+216 58 881 106',
-    href: '+21658881106',
-  },
+  phones: [
+    {
+      display: '+216 58 881 106',
+      href: '+21658881106',
+    },
+    {
+      display: '70 527 138',
+      href: '+21670527138',
+    },
+  ],
   address: {
     street: 'Cité El Bokri',
     city: 'Sidi Thabet',
