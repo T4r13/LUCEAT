@@ -1,33 +1,49 @@
 ---
 import Button from './ui/Button.astro';
+import OptimizedImage from './ui/OptimizedImage.astro';
 import BotanicalLineArt from './decorations/BotanicalLineArt.astro';
 import { detectLocale, path } from '../i18n/routes';
 import { useTranslations } from '../i18n/ui';
+import { optimized } from '../data/images';
 
 const locale = detectLocale(Astro.url.pathname);
 const t = useTranslations(locale);
+
+// The hero band cross-fades between four 1366x236 photos. Resolve every frame
+// at build time so the client swaps between optimized WebPs rather than the
+// original PNGs, and hand the list to the script through a data attribute
+// (an inline define:vars block would need its own CSP hash on every page).
+const heroSlides = await Promise.all(
+  ['/images/hero/x1.png', '/images/hero/x2.png', '/images/hero/x3.png', '/images/hero/x4.png'].map(
+    (src) => optimized(src, { width: 1366 }),
+  ),
+);
+const [firstSlide] = heroSlides;
 ---
 
 <section class="relative isolate overflow-hidden bg-transparent">
   <BotanicalLineArt variant="flower" class="absolute -bottom-28 -left-28 h-[360px] w-[360px] opacity-[0.1] sm:-bottom-20 sm:-left-16 sm:h-[460px] sm:w-[460px]" />
   <div class="mx-auto max-w-[1440px] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
-    <img
+    <OptimizedImage
       src="/images/logo/logo-luceat.jpg"
-      alt="LUCEAT — Laboratoire dermo-cosmétique"
+      alt={t.hero.logoAlt}
       class="mb-0 h-36 w-auto object-contain sm:h-44 lg:ml-16"
-      width="220"
-      height="165"
+      width={560}
+      loading="eager"
+      fetchpriority="high"
     />
     <div class="relative overflow-hidden shadow-lift" data-reveal style="width: 100vw; margin-left: calc(50% - 50vw);">
       <img
-        src="/images/hero/x1.png"
+        src={firstSlide.src}
         alt={t.hero.imageAlt}
         class="h-[250px] w-full object-cover opacity-70 transition-transform duration-700 ease-out sm:h-[300px] lg:h-auto"
         data-hero-slideshow
-        width="1366"
-        height="236"
+        data-hero-slides={JSON.stringify(heroSlides.map((slide) => slide.src))}
+        width={firstSlide.width}
+        height={firstSlide.height}
         loading="eager"
         fetchpriority="high"
+        decoding="sync"
       />
       <div aria-hidden="true" class="absolute inset-y-0 left-0 w-1/2 bg-[#007fc6]/30"></div>
       <div class="absolute inset-y-0 left-0 flex w-1/2 items-center px-6 sm:px-10 lg:px-16">
@@ -50,14 +66,9 @@ const t = useTranslations(locale);
 
 <script>
   const heroImage = document.querySelector<HTMLImageElement>('[data-hero-slideshow]');
-  const heroImages = [
-    '/images/hero/x1.png',
-    '/images/hero/x2.png',
-    '/images/hero/x3.png',
-    '/images/hero/x4.png',
-  ];
+  const heroImages: string[] = JSON.parse(heroImage?.dataset.heroSlides ?? '[]');
 
-  if (heroImage && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (heroImage && heroImages.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     heroImages.slice(1).forEach((src) => {
       const image = new Image();
       image.src = src;

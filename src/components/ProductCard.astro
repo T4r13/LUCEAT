@@ -1,8 +1,10 @@
 ---
+import OptimizedImage from './ui/OptimizedImage.astro';
 import { detectLocale, productPath } from '../i18n/routes';
 import { useTranslations } from '../i18n/ui';
 import { getProductContent } from '../i18n/product';
 import type { Product } from '../data/products';
+import { optimized } from '../data/images';
 
 interface Props {
   product: Product;
@@ -24,6 +26,9 @@ const imageMaxHeight: Record<NonNullable<Product['imageScale']>, string> = {
   wide: '100%',
 };
 const imageStyle = product.imageScale ? `max-height: ${imageMaxHeight[product.imageScale]}` : undefined;
+
+// Card watermark, drawn as a CSS background at 280px.
+const watermark = await optimized('/images/hero/tlogo.png', { width: 560 });
 ---
 
 <a href={href} class="group block overflow-hidden rounded-2xl border border-brand-blue/20 bg-gradient-to-br from-white via-white to-[#f0fafe] shadow-[0_8px_24px_-6px_rgba(12,47,69,0.08)] transition-all duration-500 hover:border-brand-blue/40 hover:shadow-[0_24px_48px_-12px_rgba(21,151,199,0.25)] hover:-translate-y-2 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2" data-reveal>
@@ -39,10 +44,10 @@ const imageStyle = product.imageScale ? `max-height: ${imageMaxHeight[product.im
       </div>
 
       {product.images?.[0] ? (
-        <img
+        <OptimizedImage
           src={product.images[0]}
           alt={content.name}
-          loading="lazy"
+          width={512}
           style={imageStyle}
           class="relative z-10 mx-auto h-auto max-h-full w-auto max-w-full object-contain transition-transform duration-700 ease-out group-hover:scale-105"
         />
@@ -54,7 +59,7 @@ const imageStyle = product.imageScale ? `max-height: ${imageMaxHeight[product.im
     </div>
   </div>
   
-  <div class="relative bg-gradient-to-b from-white to-[#f8fbfd] px-6 py-5 border-t border-brand-blue/10 overflow-hidden" style="background-image: url('/images/hero/tlogo.png'); background-size: 280px; background-position: bottom right; background-repeat: no-repeat; background-attachment: scroll;">
+  <div class="relative bg-gradient-to-b from-white to-[#f8fbfd] px-6 py-5 border-t border-brand-blue/10 overflow-hidden" style={`background-image: url('${watermark.src}'); background-size: 280px; background-position: bottom right; background-repeat: no-repeat; background-attachment: scroll;`}>
     {/* Semi-transparent overlay to ensure text readability */}
     <div class="absolute inset-0 bg-gradient-to-b from-white/80 via-white/75 to-[#f8fbfd]/70"></div>
 

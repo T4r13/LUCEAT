@@ -1,4 +1,5 @@
 ---
+import OptimizedImage from '../ui/OptimizedImage.astro';
 interface Props {
   title: string;
   class?: string;
@@ -12,7 +13,7 @@ const { title, class: className = '', headingClass = '', showMark = false } = As
   <div class="relative z-10">
     <div class="flex items-center gap-3">
       {showMark && (
-        <img src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="h-10 w-10 shrink-0 object-contain opacity-80" />
+        <OptimizedImage src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="h-10 w-10 shrink-0 object-contain opacity-80" width={80} />
       )}
       <h2 class={headingClass}>{title}</h2>
     </div>

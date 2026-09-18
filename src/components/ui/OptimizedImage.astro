@@ -1,0 +1,50 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import type { HTMLAttributes } from 'astro/types';
+import { imageFor } from '../../data/images';
+
+type Props = Omit<HTMLAttributes<'img'>, 'src' | 'width' | 'height' | 'alt'> & {
+  /** Either a legacy `/images/...` path from products.ts, or an imported asset. */
+  src: string | ImageMetadata;
+  alt: string;
+  /** Intrinsic width to emit; capped at the source width so we never upscale. */
+  width?: number;
+  /** Extra widths for a srcset. Requires `sizes`. */
+  widths?: number[];
+  sizes?: string;
+  format?: 'webp' | 'avif' | 'png' | 'jpeg';
+  quality?: number;
+};
+
+const {
+  src,
+  alt,
+  width = 800,
+  widths,
+  sizes,
+  format = 'webp',
+  quality = 75,
+  loading = 'lazy',
+  ...attributes
+} = Astro.props;
+
+const image = typeof src === 'string' ? imageFor(src) : src;
+const outputWidth = Math.min(width, image.width);
+// Never ask sharp to upscale — a wider variant than the source is pure bytes.
+const responsiveWidths = widths?.filter((value) => value <= image.width);
+const useSrcset = Boolean(responsiveWidths?.length && sizes);
+---
+
+<Image
+  {...attributes}
+  src={image}
+  alt={alt}
+  width={outputWidth}
+  widths={useSrcset ? responsiveWidths : undefined}
+  sizes={useSrcset ? sizes : undefined}
+  loading={loading}
+  decoding={loading === 'eager' ? 'sync' : 'async'}
+  format={format}
+  quality={quality}
+/>

@@ -7,6 +7,7 @@ export const en = {
     skipToContent: 'Skip to main content',
   },
   nav: {
+    homeLink: 'LUCEAT® — Home',
     home: 'Home',
     products: 'Our products',
     about: 'About us',
@@ -34,6 +35,7 @@ export const en = {
     eyebrow: 'Dermo-cosmetic laboratory',
     title: "Expert gentleness for baby's skin",
     subtitle: 'Care designed to protect, soothe, and support the most delicate skin from the very first days.',
+    logoAlt: 'LUCEAT — dermo-cosmetic laboratory',
     imageAlt: 'Smiling baby, embodying the gentleness of LUCEAT care',
   },
   trust: {

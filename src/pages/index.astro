@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import IntroSection from '../components/IntroSection.astro';
 import ProductCard from '../components/ProductCard.astro';
+import OptimizedImage from '../components/ui/OptimizedImage.astro';
 import Icon from '../components/ui/Icon.astro';
 import IconBadge from '../components/ui/IconBadge.astro';
 import BotanicalLineArt from '../components/decorations/BotanicalLineArt.astro';
@@ -68,7 +69,7 @@ const features = [
       <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
         {features.map((feature, index) => (
           <div class="group relative overflow-hidden rounded-sm border border-border-subtle bg-surface-white p-6 transition duration-300 hover:-translate-y-1 hover:border-white hover:shadow-[0_16px_34px_rgba(255,255,255,0.42)]" data-reveal style={`--reveal-delay: ${index * 110}ms`}>
-            <img src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="pointer-events-none absolute left-1/2 top-1/2 w-[28rem] max-w-none -translate-x-1/2 -translate-y-1/2 select-none opacity-[0.18]" />
+            <OptimizedImage src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="pointer-events-none absolute left-1/2 top-1/2 w-[28rem] max-w-none -translate-x-1/2 -translate-y-1/2 select-none opacity-[0.18]" width={560} />
             <div class="relative z-10">
               <IconBadge size="lg" class="transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 group-hover:bg-[#007fc6] group-hover:text-white">
                 <Icon name={feature.icon} size={26} />
@@ -85,7 +86,7 @@ const features = [
 
   <section class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
     <div class="relative isolate overflow-hidden rounded-xl bg-[linear-gradient(135deg,#007fc6_0%,#1597c7_54%,#7cdcf1_100%)] p-8 text-center sm:p-10 lg:p-14" data-reveal>
-      <img src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="pointer-events-none absolute -bottom-16 -right-24 w-[36rem] max-w-none select-none opacity-[0.18]" />
+      <OptimizedImage src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="pointer-events-none absolute -bottom-16 -right-24 w-[36rem] max-w-none select-none opacity-[0.18]" width={720} />
       <div class="relative z-10">
         <h2 class="type-section-title text-white">{t.adviceCta.heading}</h2>
         <p class="type-subtitle mx-auto mt-4 max-w-2xl text-white/90">
@@ -100,10 +101,12 @@ const features = [
 
   <section class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
     <div class="flex flex-col items-center gap-5 py-6 text-center" data-reveal>
-      <img
+      <OptimizedImage
         src="/images/brand/gentle-care.png"
-        alt="Gentle care"
+        alt=""
+        aria-hidden="true"
         class="signature-mark h-14 w-auto object-contain sm:h-16"
+        width={760}
       />
       <span class="signature-underline block h-px w-0 bg-gradient-to-r from-transparent via-brand-blue/50 to-transparent" aria-hidden="true"></span>
     </div>

@@ -7,6 +7,7 @@ export const fr = {
     skipToContent: 'Aller au contenu principal',
   },
   nav: {
+    homeLink: 'LUCEAT® — Accueil',
     home: 'Accueil',
     products: 'Nos produits',
     about: 'À propos',
@@ -34,6 +35,7 @@ export const fr = {
     eyebrow: 'Laboratoire dermo-cosmétique',
     title: 'La douceur experte pour la peau de bébé',
     subtitle: 'Des soins conçus pour protéger, apaiser et accompagner les peaux les plus délicates dès les premiers jours.',
+    logoAlt: 'LUCEAT — Laboratoire dermo-cosmétique',
     imageAlt: 'Bébé souriant, incarnant la douceur des soins LUCEAT',
   },
   trust: {

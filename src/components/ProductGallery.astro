@@ -1,4 +1,5 @@
 ---
+import OptimizedImage from './ui/OptimizedImage.astro';
 import { detectLocale } from '../i18n/routes';
 import { useTranslations } from '../i18n/ui';
 import type { ProductGalleryImagePresentation } from '../data/products';
@@ -42,10 +43,12 @@ const getScale = (scale?: number): number =>
             'mx-auto flex h-[420px] max-w-[520px] justify-center rounded-xl overflow-hidden relative',
             hasCustomPresentation ? 'items-end' : 'items-center',
           ]} data-zoom-container>
-            <img
+            <OptimizedImage
               src={image}
               alt={`${altPrefix} - photo ${index + 1}`}
-              loading="lazy"
+              width={768}
+              loading={index === 0 ? 'eager' : 'lazy'}
+              fetchpriority={index === 0 ? 'high' : undefined}
               class:list={[
                 'max-w-full object-contain transition-transform duration-200 ease-out',
                 hasImagePresentation ? 'w-auto' : 'h-full w-full',

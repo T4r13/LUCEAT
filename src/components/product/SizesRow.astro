@@ -1,4 +1,5 @@
 ---
+import OptimizedImage from '../ui/OptimizedImage.astro';
 interface Props {
   sizes: string[];
   label: string;
@@ -22,7 +23,7 @@ const {
 <div class={`flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6 ${className}`}>
   <div class="flex shrink-0 items-center gap-3">
     {showMark && (
-      <img src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="h-9 w-9 shrink-0 object-contain opacity-80" />
+      <OptimizedImage src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="h-9 w-9 shrink-0 object-contain opacity-80" width={72} />
     )}
     <h2 class={headingClass}>{label}</h2>
   </div>

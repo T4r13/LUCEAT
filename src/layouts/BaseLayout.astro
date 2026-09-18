@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import LuceatPageBackground from '../components/decorations/LuceatPageBackground.astro';
 import { canonicalPath, detectLocale, getAlternateUrl } from '../i18n/routes';
 import { useTranslations } from '../i18n/ui';
+import { optimized } from '../data/images';
 
 interface Props {
   title: string;
@@ -20,7 +21,11 @@ const ogLocale = locale === 'fr' ? 'fr_TN' : 'en_TN';
 const canonicalUrl = new URL(canonicalPath(Astro.url.pathname), Astro.site);
 const frAlternate = new URL(getAlternateUrl(Astro.url.pathname, 'fr'), Astro.site);
 const enAlternate = new URL(getAlternateUrl(Astro.url.pathname, 'en'), Astro.site);
-const ogImage = new URL('/images/logo/logo-luceat.jpg', Astro.site);
+// Social scrapers are least surprising with PNG, and the logo has real
+// transparency that a JPEG would flatten to black.
+const ogSource = await optimized('/images/logo/logo-luceat.jpg', { width: 1200, format: 'png' });
+const ogImage = new URL(ogSource.src, Astro.site);
+const favicon = await optimized('/images/hero/tlogo.png', { width: 64, format: 'png' });
 ---
 
 <html lang={locale}>
@@ -28,7 +33,7 @@ const ogImage = new URL('/images/logo/logo-luceat.jpg', Astro.site);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/png" href="/images/hero/tlogo.png" />
+    <link rel="icon" type="image/png" href={favicon.src} />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#0B2C4F" />
@@ -44,8 +49,8 @@ const ogImage = new URL('/images/logo/logo-luceat.jpg', Astro.site);
     <meta property="og:type" content="website" />
     {!is404 && <meta property="og:url" content={canonicalUrl} />}
     <meta property="og:image" content={ogImage} />
-    <meta property="og:image:width" content="1536" />
-    <meta property="og:image:height" content="1024" />
+    <meta property="og:image:width" content={String(ogSource.width)} />
+    <meta property="og:image:height" content={String(ogSource.height)} />
     <meta property="og:image:alt" content={t.meta.ogImageAlt} />
     <script is:inline>document.documentElement.classList.add('js');</script>
     <title>{title}</title>
