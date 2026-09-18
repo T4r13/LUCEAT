@@ -34,9 +34,9 @@ export const en = {
   },
   hero: {
     eyebrow: 'Dermo-cosmetic laboratory',
-    title: "Expert gentleness for baby's skin",
+    title: "Expert gentleness for baby’s skin",
     subtitle: 'Care designed to protect, soothe, and support the most delicate skin from the very first days.',
-    logoAlt: 'LUCEAT — dermo-cosmetic laboratory',
+    logoAlt: 'LUCEAT® — dermo-cosmetic laboratory',
     imageAlt: 'Smiling baby, embodying the gentleness of LUCEAT care',
   },
   trust: {
@@ -56,12 +56,12 @@ export const en = {
   },
   why: {
     eyebrow: 'Why choose LUCEAT',
-    heading: "Care designed for baby's sensitive skin",
+    heading: "Care designed for baby’s sensitive skin",
     cards: {
-      sensitiveSkin: { title: 'Gentleness for sensitive skin', description: "Care formulated to respect the fragility of babies' and children's skin." },
-      gentleHygiene: { title: 'Gentle, everyday hygiene', description: "Gentle cleansing gestures, designed for little ones' daily routines." },
+      sensitiveSkin: { title: 'Gentleness for sensitive skin', description: "Care formulated to respect the fragility of babies’ and children’s skin." },
+      gentleHygiene: { title: 'Gentle, everyday hygiene', description: "Gentle cleansing routines, designed for little ones’ daily routines." },
       labExpertise: { title: 'Laboratory expertise', description: 'Care developed by a specialist dermo-cosmetic laboratory.' },
-      skinBalance: { title: "Respect for skin's balance", description: "Close attention paid to the skin's hydrolipidic balance and comfort." },
+      skinBalance: { title: "Respect for skin’s balance", description: "Close attention paid to the skin’s hydrolipidic balance and comfort." },
     },
   },
   adviceCta: {
@@ -87,18 +87,18 @@ export const en = {
     sizesComingSoon: 'Sizes coming soon',
     composition: 'What the kit contains',
     freeItem: 'Free',
-    pendingNotice: "This product's full listing is being translated and reviewed. The content below is shown in French pending validation.",
+    pendingNotice: "This product’s full listing is being translated and reviewed. The content below is shown in French pending validation.",
   },
   about: {
     eyebrow: 'About',
-    heading: 'LUCEAT, dedicated to the comfort of the most sensitive skin',
+    heading: 'LUCEAT®, dedicated to the comfort of the most sensitive skin',
     intro: "LUCEAT develops gentle, reassuring care suited to the daily lives of babies and children, with particular attention to hydration and skin balance.",
     pendingNotice: 'This section is being translated and reviewed. The content below is shown in French pending validation.',
   },
   contact: {
     eyebrow: 'Contact',
-    heading: "We're here to listen",
-    intro: "For any question about a product, how to use it, or your baby's needs, feel free to contact us directly using the details below.",
+    heading: "We’re here to listen",
+    intro: "For any question about a product, how to use it, or your baby’s needs, feel free to contact us directly using the details below.",
     emailLabel: 'Email:',
     phoneLabel: 'Phone:',
     addressLabel: 'Address:',
@@ -138,7 +138,7 @@ export const en = {
   notFound: {
     title: 'Page not found – LUCEAT',
     eyebrow: 'Error 404',
-    heading: "This page can't be found",
+    heading: "This page can’t be found",
     text: 'The link may have been moved or removed.',
   },
 } as const;

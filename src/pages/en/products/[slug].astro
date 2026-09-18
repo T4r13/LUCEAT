@@ -24,6 +24,11 @@ const headingClass = 'type-card-title text-brand-navy';
 
 // A kit bundles finished products, so the usage / ingredients / sizes cards —
 // all of which describe a single formula — are replaced by its composition.
+// Some products carry "LUCEAT®" in their manufacturer-supplied copy, which
+// then outranks the footer as the page's first prominent mention. Detect it
+// rather than duplicating the mark.
+const brandMarkShown = JSON.stringify(content).includes('LUCEAT®');
+
 const kitItems = (product.kit ?? []).map((item) => {
   const source = getProductBySlug(item.slug);
   return {
@@ -35,7 +40,7 @@ const kitItems = (product.kit ?? []).map((item) => {
 });
 ---
 
-<BaseLayout title={`${content.name} – LUCEAT`} description={content.shortDescription}>
+<BaseLayout title={`${content.name} – LUCEAT`} description={content.shortDescription} brandMarkShown={brandMarkShown}>
   <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
     <div class="mb-8">
       <a href={path('products', locale)} class="type-button inline-flex items-center gap-2 rounded-full border border-border-subtle bg-white px-4 py-2 text-text-primary transition hover:bg-surface-ivory hover:text-brand-navy">

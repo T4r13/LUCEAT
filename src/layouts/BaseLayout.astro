@@ -11,8 +11,10 @@ interface Props {
   title: string;
   description: string;
   is404?: boolean;
+  /** Page already shows LUCEAT® earlier, so the footer leaves it off. */
+  brandMarkShown?: boolean;
 }
-const { title, description, is404 = false } = Astro.props;
+const { title, description, is404 = false, brandMarkShown = false } = Astro.props;
 
 const locale = detectLocale(Astro.url.pathname);
 const t = useTranslations(locale);
@@ -62,7 +64,7 @@ const favicon = await optimized('/images/hero/tlogo.png', { width: 64, format: '
       <LuceatPageBackground />
       <slot />
     </main>
-    <Footer />
+    <Footer brandMarkShown={brandMarkShown} />
     <script>
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const revealItems = document.querySelectorAll<HTMLElement>('[data-reveal]');

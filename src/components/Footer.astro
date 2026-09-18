@@ -23,6 +23,16 @@ const partnerPages = Array.from({ length: Math.ceil(partnerLogos.length / 2) }, 
   partnerLogos[page * 2 + 1] ? { logo: partnerLogos[page * 2 + 1], name: partnerNames[page * 2 + 1] } : null,
 ]);
 
+interface Props {
+  /**
+   * Set when the page already shows LUCEAT® in a more prominent spot (the
+   * homepage hero logo, the about-page h1). The mark belongs on the first
+   * prominent mention per page, not on every occurrence.
+   */
+  brandMarkShown?: boolean;
+}
+const { brandMarkShown = false } = Astro.props;
+
 const currentYear = new Date().getFullYear();
 ---
 
@@ -182,7 +192,7 @@ const currentYear = new Date().getFullYear();
             <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10">
               <Icon name="map-pin" size={16} class="shrink-0" />
             </span>
-            <span class="pt-2">{site.address.formatted}</span>
+            <span class="pt-2">{site.address.formatted[locale]}</span>
           </li>
           <li>
             <a
@@ -220,7 +230,7 @@ const currentYear = new Date().getFullYear();
   <div class="relative z-10 mt-10 border-t border-white/10 lg:mt-12">
     <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
       <p class="type-caption text-center text-white/75">
-        &copy; {currentYear} {site.name}. {t.footer.rightsReserved}
+        &copy; {currentYear} {site.name}{brandMarkShown ? '' : '®'}. {t.footer.rightsReserved}
       </p>
     </div>
   </div>

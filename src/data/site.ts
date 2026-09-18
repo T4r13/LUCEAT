@@ -16,8 +16,15 @@ export const site = {
     city: 'Sidi Thabet',
     postalCode: '2020',
     governorate: 'Ariana',
-    country: 'Tunisie',
-    formatted: 'Cité El Bokri, Sidi Thabet 2020, Ariana, Tunisie',
+    // Street, city and governorate are proper nouns and read the same in both
+    // locales; only the country name is translated. The Google Maps queries
+    // below deliberately keep the French spelling, which is what the mapping
+    // data indexes this address under.
+    country: { fr: 'Tunisie', en: 'Tunisia' },
+    formatted: {
+      fr: 'Cité El Bokri, Sidi Thabet 2020, Ariana, Tunisie',
+      en: 'Cité El Bokri, Sidi Thabet 2020, Ariana, Tunisia',
+    },
   },
   social: {
     facebook: 'https://www.facebook.com/luceat.tn/',
