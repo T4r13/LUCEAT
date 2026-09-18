@@ -1,0 +1,21 @@
+# Cloudflare Pages response headers.
+#
+# The policy below carries a single placeholder token which scripts/postbuild.mjs
+# replaces with a sha256 hash for every distinct inline <script> Astro emitted,
+# so the policy tracks the build instead of drifting out of date. Edit the policy
+# here, never in dist/_headers.
+#
+# style-src keeps 'unsafe-inline' on purpose. The build emits 91 inline style
+# attributes carrying real layout (background images, per-card reveal delays,
+# product image scaling), and a hash-based style-src cannot cover attributes
+# without 'unsafe-hashes' plus a hash per distinct value, which would break
+# silently the first time a delay is recalculated. script-src stays strict,
+# which is where the protection that matters actually lives.
+#
+# frame-src allows only www.google.com, for the Maps embed on the contact page.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' __SCRIPT_HASHES__; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-src https://www.google.com; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

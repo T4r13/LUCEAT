@@ -1,4 +1,5 @@
-import { copyFile, readdir, readFile, rm, stat } from 'node:fs/promises';
+import { copyFile, readdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
@@ -73,3 +74,50 @@ console.log(
     ? `Pruned ${removed} unreferenced source image(s) from dist/_astro (${(bytes / 1048576).toFixed(2)} MB).`
     : 'No unreferenced images to prune from dist/_astro.',
 );
+
+/*
+ * Fill in the CSP script hashes. Astro inlines the component scripts, so the
+ * policy in public/_headers ships a SCRIPT_HASHES placeholder and the real
+ * sha256 digests are computed here, after the bundles that produced them
+ * exist. Hashing the exact bytes between the script tags is what the CSP spec
+ * requires, so any change to a component script updates the policy with it.
+ */
+const headersFile = path.join(distDir, '_headers');
+const htmlFiles = allFiles.filter((file) => path.extname(file).toLowerCase() === '.html');
+
+const inlineScripts = new Set();
+for (const file of htmlFiles) {
+  const html = await readFile(file, 'utf8');
+  for (const match of html.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g)) {
+    if (/\ssrc=/.test(match[1])) continue;
+    inlineScripts.add(match[2]);
+  }
+}
+
+const hashes = [...inlineScripts]
+  .map((body) => `'sha256-${createHash('sha256').update(body, 'utf8').digest('base64')}'`)
+  .sort();
+
+let headers;
+try {
+  headers = await readFile(headersFile, 'utf8');
+} catch {
+  headers = undefined;
+}
+
+const PLACEHOLDER = '__SCRIPT_HASHES__';
+
+if (headers === undefined) {
+  console.warn('No dist/_headers found - skipped CSP hash injection.');
+} else {
+  // Guard the count: a plain String.replace would quietly patch only the first
+  // occurrence, which is exactly how a policy ends up shipping its placeholder.
+  const occurrences = headers.split(PLACEHOLDER).length - 1;
+  if (occurrences !== 1) {
+    throw new Error(
+      `Expected exactly one ${PLACEHOLDER} in dist/_headers, found ${occurrences}.`,
+    );
+  }
+  await writeFile(headersFile, headers.replace(PLACEHOLDER, hashes.join(' ')), 'utf8');
+  console.log(`Wrote CSP with ${hashes.length} inline-script hash(es) to dist/_headers.`);
+}
