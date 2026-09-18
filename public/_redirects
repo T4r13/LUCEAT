@@ -1,4 +1,2 @@
-# Cloudflare Pages custom error pages — locale-aware 404s.
-# Unmatched /en/* paths get the English 404; everything else gets the French one.
-/en/*  /en/404/  404
-/*     /404.html  404
+# Cloudflare Pages discovers the closest 404.html automatically.
+# scripts/postbuild.mjs places the English fallback at /en/404.html.

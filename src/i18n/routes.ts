@@ -7,9 +7,9 @@ type RouteKey = 'home' | 'products' | 'about' | 'contact';
 
 const staticRoutes: Record<RouteKey, Record<Locale, string>> = {
   home: { fr: '/', en: '/en/' },
-  products: { fr: '/produits', en: '/en/products' },
-  about: { fr: '/a-propos', en: '/en/about' },
-  contact: { fr: '/contact', en: '/en/contact' },
+  products: { fr: '/produits/', en: '/en/products/' },
+  about: { fr: '/a-propos/', en: '/en/about/' },
+  contact: { fr: '/contact/', en: '/en/contact/' },
 };
 
 const productSlugPattern: Record<Locale, RegExp> = {
@@ -21,9 +21,7 @@ export function detectLocale(pathname: string): Locale {
   return pathname === '/en' || pathname.startsWith('/en/') ? 'en' : 'fr';
 }
 
-// Astro.url.pathname carries a trailing slash for directory-style static
-// routes (e.g. "/produits/"), but the route map below is defined without
-// one — normalize so exact-match lookups don't silently miss.
+// Accept incoming URLs with or without their canonical trailing slash.
 function normalize(pathname: string): string {
   return pathname.length > 1 && pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
 }
@@ -33,7 +31,11 @@ export function path(route: RouteKey, locale: Locale): string {
 }
 
 export function productPath(slug: string, locale: Locale): string {
-  return locale === 'fr' ? `/produits/${slug}` : `/en/products/${slug}`;
+  return locale === 'fr' ? `/produits/${slug}/` : `/en/products/${slug}/`;
+}
+
+export function canonicalPath(pathname: string): string {
+  return `${normalize(pathname).replace(/\/$/, '')}/`;
 }
 
 /**

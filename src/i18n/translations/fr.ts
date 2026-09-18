@@ -1,6 +1,7 @@
 export const fr = {
   meta: {
     siteName: 'LUCEAT',
+    ogImageAlt: 'Logo du laboratoire LUCEAT',
   },
   a11y: {
     skipToContent: 'Aller au contenu principal',

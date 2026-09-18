@@ -7,12 +7,20 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "postbuild": "node scripts/postbuild.mjs",
+    "check": "astro check",
     "preview": "astro preview"
+  },
+  "allowScripts": {
+    "esbuild": true,
+    "sharp": true
   },
   "dependencies": {
     "astro": "^5.0.0"
   },
   "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@astrojs/sitemap": "3.7.4",
     "@astrojs/tailwind": "^5.0.0",
     "@fontsource/manrope": "^5.3.0",
     "lucide-static": "^1.28.0",

@@ -43,12 +43,15 @@ const fillIcons = {
 export type IconName = keyof typeof strokeIcons | keyof typeof fillIcons;
 
 interface Props {
-  name: IconName;
+  name: string;
   size?: number;
   class?: string;
 }
 const { name, size = 24, class: className = '' } = Astro.props;
-const isFill = name in fillIcons;
+if (!Object.hasOwn(strokeIcons, name) && !Object.hasOwn(fillIcons, name)) {
+  throw new Error(`Unknown icon: ${name}`);
+}
+const isFill = Object.hasOwn(fillIcons, name);
 const markup = isFill ? fillIcons[name as keyof typeof fillIcons] : strokeIcons[name as keyof typeof strokeIcons];
 ---
 

@@ -7,7 +7,7 @@ const locale = 'fr' as const;
 const t = useTranslations(locale);
 ---
 
-<BaseLayout title={t.notFound.title} description={t.notFound.text}>
+<BaseLayout title={t.notFound.title} description={t.notFound.text} is404>
   <section class="mx-auto flex max-w-3xl flex-col items-center px-4 py-24 text-center sm:px-6 lg:px-8">
     <p class="type-label text-[#8ca9b8]">{t.notFound.eyebrow}</p>
     <h1 class="type-page-title mt-4 text-[#4d4a47]">{t.notFound.heading}</h1>
