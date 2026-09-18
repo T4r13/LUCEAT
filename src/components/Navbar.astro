@@ -89,7 +89,17 @@ const isActive = (href: string) => (href === homeHref ? currentPath === href : c
     openBtn?.setAttribute('aria-expanded', 'false');
     // Drop inert before moving focus, or the target is still unfocusable.
     setBackgroundInert(false);
-    if (restoreFocus) (lastFocused ?? openBtn)?.focus();
+    if (restoreFocus) {
+      // lastFocused is whatever was focused when the menu opened, which is
+      // <body> when the opener was never focused - iOS Safari does not focus a
+      // button on tap. Calling focus() on <body> silently does nothing and
+      // drops the user at the top of the document, so fall back to the opener.
+      const target =
+        lastFocused && lastFocused !== document.body && lastFocused.isConnected
+          ? lastFocused
+          : openBtn;
+      target?.focus();
+    }
     lastFocused = null;
   };
 

@@ -39,6 +39,9 @@ const favicon = await optimized('/images/hero/tlogo.png', { width: 64, format: '
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#0B2C4F" />
+    {/* The 404 route is also emitted as a real page at /404/ and /en/404/,
+        which are crawlable and would otherwise index as soft 404s. */}
+    {is404 && <meta name="robots" content="noindex" />}
     {!is404 && <>
       <link rel="canonical" href={canonicalUrl} />
       <link rel="alternate" hreflang="fr" href={frAlternate} />

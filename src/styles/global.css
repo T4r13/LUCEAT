@@ -94,12 +94,27 @@ p {
   }
 }
 
-/* Visible, brand-colored focus ring on every interactive element,
-   restricted to keyboard use so mouse clicks stay quiet. */
+/* Visible focus ring on every interactive element, restricted to keyboard use
+   so mouse clicks stay quiet.
+
+   Two-tone on purpose. A single brand-blue ring was fine on white but all but
+   disappeared once the AA pass darkened the blue surfaces - 1.22:1 on the
+   footer, 1.50:1 on buttons and the homepage gradient panels. Pairing a white
+   outline with a dark halo means one of the two always carries the contrast:
+   the halo is what you see on light backgrounds, the white outline on dark
+   ones. The outline (rather than a pure box-shadow ring) is what survives
+   Windows High Contrast, where colours are overridden. */
 :focus-visible {
-  outline: 2px solid theme('colors.state.focus');
-  outline-offset: 3px;
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px theme('colors.state.focus');
   border-radius: 4px;
+}
+
+@media (forced-colors: active) {
+  :focus-visible {
+    outline-color: Highlight;
+  }
 }
 
 .skip-link {

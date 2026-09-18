@@ -13,12 +13,14 @@ const t = useTranslations(locale);
 // at build time so the client swaps between optimized WebPs rather than the
 // original PNGs, and hand the list to the script through a data attribute
 // (an inline define:vars block would need its own CSP hash on every page).
-const heroSlides = await Promise.all(
-  ['/images/hero/x1.png', '/images/hero/x2.png', '/images/hero/x3.png', '/images/hero/x4.png'].map(
-    (src) => optimized(src, { width: 1366 }),
-  ),
+const heroSources = ['/images/hero/x1.png', '/images/hero/x2.png', '/images/hero/x3.png', '/images/hero/x4.png'];
+const heroSlides = await Promise.all(heroSources.map((src) => optimized(src, { width: 1366 })));
+// Matching PNGs so the <img> inside <picture> stays decodable without WebP.
+const heroFallbacks = await Promise.all(
+  heroSources.map((src) => optimized(src, { width: 1366, format: 'png' })),
 );
 const [firstSlide] = heroSlides;
+const [firstFallback] = heroFallbacks;
 ---
 
 <section class="relative isolate overflow-hidden bg-transparent">
@@ -33,18 +35,26 @@ const [firstSlide] = heroSlides;
       fetchpriority="high"
     />
     <div class="relative overflow-hidden shadow-lift" data-reveal style="width: 100vw; margin-left: calc(50% - 50vw);">
-      <img
-        src={firstSlide.src}
-        alt={t.hero.imageAlt}
-        class="h-[250px] w-full object-cover opacity-70 transition-transform duration-700 ease-out sm:h-[300px] lg:h-auto"
-        data-hero-slideshow
-        data-hero-slides={JSON.stringify(heroSlides.map((slide) => slide.src))}
-        width={firstSlide.width}
-        height={firstSlide.height}
-        loading="eager"
-        fetchpriority="high"
-        decoding="sync"
-      />
+      <picture style="display: contents">
+        <source
+          data-hero-source
+          type="image/webp"
+          srcset={firstSlide.src}
+          data-hero-slides={JSON.stringify(heroSlides.map((slide) => slide.src))}
+        />
+        <img
+          src={firstFallback.src}
+          alt={t.hero.imageAlt}
+          class="h-[250px] w-full object-cover opacity-70 transition-transform duration-700 ease-out sm:h-[300px] lg:h-auto"
+          data-hero-slideshow
+          data-hero-fallbacks={JSON.stringify(heroFallbacks.map((slide) => slide.src))}
+          width={firstSlide.width}
+          height={firstSlide.height}
+          loading="eager"
+          fetchpriority="high"
+          decoding="sync"
+        />
+      </picture>
       <div aria-hidden="true" class="absolute inset-y-0 left-0 w-1/2 bg-brand-navy/70"></div>
       <div class="absolute inset-y-0 left-0 flex w-1/2 items-center px-6 sm:px-10 lg:px-16">
         <h1 class="type-display text-white">
@@ -66,7 +76,9 @@ const [firstSlide] = heroSlides;
 
 <script>
   const heroImage = document.querySelector<HTMLImageElement>('[data-hero-slideshow]');
-  const heroImages: string[] = JSON.parse(heroImage?.dataset.heroSlides ?? '[]');
+  const heroSource = document.querySelector<HTMLSourceElement>('[data-hero-source]');
+  const heroImages: string[] = JSON.parse(heroSource?.dataset.heroSlides ?? '[]');
+  const heroFallbacks: string[] = JSON.parse(heroImage?.dataset.heroFallbacks ?? '[]');
 
   if (heroImage && heroImages.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     heroImages.slice(1).forEach((src) => {
@@ -78,7 +90,10 @@ const [firstSlide] = heroSlides;
     window.setInterval(() => {
       currentImage = (currentImage + 1) % heroImages.length;
       heroImage.classList.add('translate-x-full');
-      heroImage.src = heroImages[currentImage];
+      // The <source> is what a WebP-capable browser actually honours, so both
+      // it and the fallback <img> have to move together.
+      if (heroSource) heroSource.srcset = heroImages[currentImage];
+      heroImage.src = heroFallbacks[currentImage] ?? heroImages[currentImage];
       window.requestAnimationFrame(() => {
         heroImage.classList.remove('translate-x-full');
       });

@@ -108,16 +108,66 @@ try {
 const PLACEHOLDER = '__SCRIPT_HASHES__';
 
 if (headers === undefined) {
-  console.warn('No dist/_headers found - skipped CSP hash injection.');
-} else {
-  // Guard the count: a plain String.replace would quietly patch only the first
-  // occurrence, which is exactly how a policy ends up shipping its placeholder.
-  const occurrences = headers.split(PLACEHOLDER).length - 1;
-  if (occurrences !== 1) {
-    throw new Error(
-      `Expected exactly one ${PLACEHOLDER} in dist/_headers, found ${occurrences}.`,
-    );
-  }
-  await writeFile(headersFile, headers.replace(PLACEHOLDER, hashes.join(' ')), 'utf8');
-  console.log(`Wrote CSP with ${hashes.length} inline-script hash(es) to dist/_headers.`);
+  // Warning-and-continue here used to mean a missing public/_headers shipped a
+  // green build with no CSP, no Permissions-Policy and no nosniff at all.
+  throw new Error(
+    'dist/_headers is missing, so this build would deploy with no security ' +
+      'headers. public/_headers should have been copied into dist/ by the build.',
+  );
 }
+
+// Guard the count: a plain String.replace would quietly patch only the first
+// occurrence, which is exactly how a policy ends up shipping its placeholder.
+const occurrences = headers.split(PLACEHOLDER).length - 1;
+if (occurrences !== 1) {
+  throw new Error(
+    `Expected exactly one ${PLACEHOLDER} in dist/_headers, found ${occurrences}.`,
+  );
+}
+
+const written = headers.replace(PLACEHOLDER, hashes.join(' '));
+await writeFile(headersFile, written, 'utf8');
+
+/*
+ * Re-read what was actually written and confirm the policy line covers every
+ * inline script still present in the output. This catches a substitution that
+ * silently no-ops, a policy line that lost its hashes, and any later step that
+ * edits HTML after the hashes were computed - each of which would otherwise
+ * surface as a blank page in production rather than as a failed build.
+ *
+ * It checks the Content-Security-Policy line specifically, not the whole file,
+ * because the surrounding comment block also mentions hashes.
+ */
+const policyLine = written
+  .split(/\r?\n/)
+  .find((line) => line.includes('Content-Security-Policy'));
+
+if (!policyLine) {
+  throw new Error('dist/_headers has no Content-Security-Policy line to verify.');
+}
+
+const uncovered = [];
+for (const file of htmlFiles) {
+  const html = await readFile(file, 'utf8');
+  for (const match of html.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g)) {
+    if (/\ssrc=/.test(match[1])) continue;
+    const digest = createHash('sha256').update(match[2], 'utf8').digest('base64');
+    if (!policyLine.includes(`'sha256-${digest}'`)) {
+      uncovered.push(
+        `${path.relative(distDir, file)}: ${match[2].slice(0, 70).replace(/\s+/g, ' ')}`,
+      );
+    }
+  }
+}
+
+if (uncovered.length > 0) {
+  throw new Error(
+    `CSP would block ${uncovered.length} inline script(s) - the policy has no ` +
+      `matching hash:\n  ${uncovered.join('\n  ')}`,
+  );
+}
+
+console.log(
+  `Wrote CSP with ${hashes.length} inline-script hash(es) to dist/_headers; ` +
+    'verified every inline script in the output is covered.',
+);
