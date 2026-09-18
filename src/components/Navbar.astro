@@ -25,31 +25,117 @@ const isActive = (href: string) => (href === homeHref ? currentPath === href : c
     </a>
 
     <nav aria-label={t.nav.mainNav} class="type-nav hidden items-center gap-1 rounded-full border border-[#c6e6f5] bg-white/80 p-1 text-brand-navy shadow-[0_4px_18px_rgba(0,127,198,0.08)] lg:flex">
-      {links.map((link) => <a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined} class:list={['rounded-full px-4 py-2 transition-all duration-200', isActive(link.href) ? 'bg-[#007fc6] text-white shadow-sm' : 'hover:bg-[#eaf7fb] hover:text-[#007fc6]']}>{link.label}</a>)}
+      {links.map((link) => <a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined} class:list={['rounded-full px-4 py-2 transition-all duration-200', isActive(link.href) ? 'bg-brand-blue-bg text-white shadow-sm' : 'hover:bg-[#eaf7fb] hover:text-brand-navy']}>{link.label}</a>)}
       <LanguageSwitcher class="ml-1 rounded-full bg-[#eef8fb] px-2 py-1" />
     </nav>
 
-    <button type="button" id="menu-open" class="flex h-11 w-11 items-center justify-center rounded-full border border-[#c6e6f5] bg-white/80 text-[#007fc6] shadow-sm transition hover:bg-[#eaf7fb] lg:hidden" aria-label={t.nav.openMenu} aria-expanded="false" aria-controls="mobile-menu"><Icon name="menu" size={23} /></button>
+    <button type="button" id="menu-open" class="flex h-11 w-11 items-center justify-center rounded-full border border-[#c6e6f5] bg-white/80 text-brand-navy shadow-sm transition hover:bg-[#eaf7fb] lg:hidden" aria-label={t.nav.openMenu} aria-expanded="false" aria-controls="mobile-menu"><Icon name="menu" size={23} /></button>
   </div>
 </header>
 
 <div id="mobile-menu" class="fixed inset-0 z-[60] hidden flex-col bg-[#fbfdfe]/95 backdrop-blur-xl lg:!hidden" role="dialog" aria-modal="true" aria-label={t.nav.menuDialog}>
   <div class="flex items-center justify-between border-b border-[#c6e6f5] px-4 py-2.5 sm:px-6">
     <a href={homeHref} class="shrink-0" aria-label={t.nav.homeLink}><OptimizedImage src="/images/brand/gentle-care.png" alt="" aria-hidden="true" class="h-10 w-auto max-w-[240px] -translate-x-3 object-contain object-left" width={480} /></a>
-    <button type="button" id="menu-close" class="flex h-11 w-11 items-center justify-center rounded-full border border-[#c6e6f5] bg-white text-[#007fc6] shadow-sm" aria-label={t.nav.closeMenu}><Icon name="x" size={23} /></button>
+    <button type="button" id="menu-close" class="flex h-11 w-11 items-center justify-center rounded-full border border-[#c6e6f5] bg-white text-brand-navy shadow-sm" aria-label={t.nav.closeMenu}><Icon name="x" size={23} /></button>
   </div>
-  <nav aria-label={t.nav.mainNav} class="flex flex-1 flex-col gap-2 overflow-y-auto px-4 py-6 sm:px-6">{links.map((link) => <a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined} class:list={['type-nav flex min-h-[52px] items-center rounded-xl px-4 transition-colors', isActive(link.href) ? 'bg-[#007fc6] text-white shadow-sm' : 'text-brand-navy hover:bg-[#eaf7fb] hover:text-[#007fc6]']}>{link.label}</a>)}<LanguageSwitcher class="mt-5 min-h-[44px] rounded-full bg-[#eef8fb] px-3 py-2" /></nav>
+  <nav aria-label={t.nav.mainNav} class="flex flex-1 flex-col gap-2 overflow-y-auto px-4 py-6 sm:px-6">{links.map((link) => <a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined} class:list={['type-nav flex min-h-[52px] items-center rounded-xl px-4 transition-colors', isActive(link.href) ? 'bg-brand-blue-bg text-white shadow-sm' : 'text-brand-navy hover:bg-[#eaf7fb] hover:text-brand-navy']}>{link.label}</a>)}<LanguageSwitcher class="mt-5 min-h-[44px] rounded-full bg-[#eef8fb] px-3 py-2" /></nav>
 </div>
 
 <script>
   const header = document.getElementById('site-header');
   window.addEventListener('scroll', () => header?.classList.toggle('shadow-lift', window.scrollY > 8), { passive: true });
+
   const openBtn = document.getElementById('menu-open') as HTMLButtonElement | null;
   const closeBtn = document.getElementById('menu-close') as HTMLButtonElement | null;
   const menu = document.getElementById('mobile-menu') as HTMLDivElement | null;
-  const openMenu = () => { menu?.classList.replace('hidden', 'flex'); document.body.style.overflow = 'hidden'; openBtn?.setAttribute('aria-expanded', 'true'); closeBtn?.focus(); };
-  const closeMenu = () => { menu?.classList.replace('flex', 'hidden'); document.body.style.overflow = ''; openBtn?.setAttribute('aria-expanded', 'false'); openBtn?.focus(); };
-  openBtn?.addEventListener('click', openMenu); closeBtn?.addEventListener('click', closeMenu);
-  menu?.querySelectorAll('nav a').forEach((link) => link.addEventListener('click', closeMenu));
-  document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && menu?.classList.contains('flex')) closeMenu(); });
+  const desktop = window.matchMedia('(min-width: 1024px)');
+
+  const FOCUSABLE =
+    'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+  let lastFocused: HTMLElement | null = null;
+
+  const isOpen = () => Boolean(menu?.classList.contains('flex'));
+
+  // The dialog is a direct child of <body>, so everything beside it is
+  // background content while the menu is open.
+  const setBackgroundInert = (inert: boolean) => {
+    for (const child of Array.from(document.body.children)) {
+      if (child === menu) continue;
+      if (inert) child.setAttribute('inert', '');
+      else child.removeAttribute('inert');
+    }
+  };
+
+  const focusableItems = () =>
+    Array.from(menu?.querySelectorAll<HTMLElement>(FOCUSABLE) ?? []).filter(
+      (el) => el.offsetParent !== null || el === document.activeElement,
+    );
+
+  const openMenu = () => {
+    if (!menu || isOpen()) return;
+    lastFocused = document.activeElement as HTMLElement | null;
+    menu.classList.replace('hidden', 'flex');
+    document.body.style.overflow = 'hidden';
+    openBtn?.setAttribute('aria-expanded', 'true');
+    setBackgroundInert(true);
+    closeBtn?.focus();
+  };
+
+  const closeMenu = ({ restoreFocus = true } = {}) => {
+    if (!menu || !isOpen()) return;
+    menu.classList.replace('flex', 'hidden');
+    document.body.style.overflow = '';
+    openBtn?.setAttribute('aria-expanded', 'false');
+    // Drop inert before moving focus, or the target is still unfocusable.
+    setBackgroundInert(false);
+    if (restoreFocus) (lastFocused ?? openBtn)?.focus();
+    lastFocused = null;
+  };
+
+  openBtn?.addEventListener('click', openMenu);
+  closeBtn?.addEventListener('click', () => closeMenu());
+  menu?.querySelectorAll('nav a').forEach((link) =>
+    // Navigating away: let the new page decide what gets focus.
+    link.addEventListener('click', () => closeMenu({ restoreFocus: false })),
+  );
+
+  document.addEventListener('keydown', (event) => {
+    if (!isOpen()) return;
+
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeMenu();
+      return;
+    }
+
+    if (event.key !== 'Tab') return;
+
+    const items = focusableItems();
+    if (items.length === 0) return;
+
+    const first = items[0];
+    const last = items[items.length - 1];
+    const active = document.activeElement as HTMLElement | null;
+
+    // Wrap at both ends so focus can never reach the inert background.
+    if (event.shiftKey && (active === first || !menu?.contains(active))) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && (active === last || !menu?.contains(active))) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+
+  // Crossing into the desktop layout hides the dialog via CSS, so tear the
+  // open state down too — otherwise body scroll and inert stay stuck on.
+  const syncToBreakpoint = (matches: boolean) => {
+    if (!matches) return;
+    if (isOpen()) closeMenu({ restoreFocus: false });
+    document.body.style.overflow = '';
+    setBackgroundInert(false);
+  };
+  desktop.addEventListener('change', (event) => syncToBreakpoint(event.matches));
+  syncToBreakpoint(desktop.matches);
 </script>

@@ -74,7 +74,7 @@ p {
   }
 
   .type-label {
-    @apply text-label font-medium uppercase text-brand-blue;
+    @apply text-label font-medium uppercase text-brand-navy;
   }
 
   .type-nav {

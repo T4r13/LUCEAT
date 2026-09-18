@@ -46,7 +46,7 @@ const {
               class="flex h-full items-center gap-4 rounded-xl border border-brand-blue/20 bg-surface-ivory px-5 py-4 transition hover:border-brand-blue/40 hover:bg-white hover:shadow-sm"
             >
               <span class="shrink-0 rounded-full bg-brand-blue/10 p-2.5">
-                <Icon name={item.free ? 'gift' : 'droplet'} size={20} class="text-brand-blue" />
+                <Icon name={item.free ? 'gift' : 'droplet'} size={20} class="text-brand-blue-bg" />
               </span>
               <span class="min-w-0 flex-1">
                 <span class="type-body-sm block font-semibold text-text-primary">{item.name}</span>
@@ -55,7 +55,7 @@ const {
                     {item.size}
                   </span>
                   {item.free && (
-                    <span class="type-caption rounded-full bg-brand-blue px-3 py-0.5 font-semibold text-white">
+                    <span class="type-caption rounded-full bg-brand-blue-bg px-3 py-0.5 font-semibold text-white">
                       {freeLabel}
                     </span>
                   )}

@@ -8,8 +8,14 @@ import { optimized } from '../data/images';
 
 interface Props {
   product: Product;
+  /**
+   * The catalog lists cards directly under the page h1, so there they are h2.
+   * On the homepage they sit inside an h2 section, so they stay h3.
+   */
+  headingLevel?: 2 | 3;
 }
-const { product } = Astro.props;
+const { product, headingLevel = 3 } = Astro.props;
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
 const locale = detectLocale(Astro.url.pathname);
 const t = useTranslations(locale);
 const content = getProductContent(product, locale);
@@ -66,9 +72,9 @@ const watermark = await optimized('/images/hero/tlogo.png', { width: 560 });
     {/* Top border gradient */}
     <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-blue/20 to-transparent"></div>
     
-    <h3 class="type-product-card-title relative z-10 min-h-[3.1rem] line-clamp-2 text-brand-navy transition-colors duration-300 group-hover:text-brand-blue">
+    <Heading class="type-product-card-title relative z-10 min-h-[3.1rem] line-clamp-2 text-brand-navy transition-colors duration-300 group-hover:text-brand-blue-bg">
       {content.name}
-    </h3>
+    </Heading>
     <p class="type-body-sm relative z-10 mt-2 min-h-12 line-clamp-2 text-text-body/80 transition-colors duration-300 group-hover:text-text-body">
       {content.shortDescription}
     </p>

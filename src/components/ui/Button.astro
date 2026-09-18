@@ -10,8 +10,8 @@ const { href, variant = 'primary', type = 'button', class: className = '' } = As
 const base =
   'type-button inline-flex min-h-[44px] items-center justify-center gap-2 rounded-sm px-6 py-3 transition-all duration-200 hover:-translate-y-0.5 hover:scale-[1.03] hover:shadow-lift active:translate-y-0 active:scale-[0.98]';
 const variants = {
-  primary: 'bg-[#007fc6] text-text-inverse hover:bg-[#006fae]',
-  secondary: 'border border-[#007fc6] bg-surface-white text-[#007fc6] hover:bg-[#eaf7fb]',
+  primary: 'bg-brand-blue-bg text-text-inverse hover:bg-brand-navy',
+  secondary: 'border border-brand-blue-bg bg-surface-white text-brand-navy hover:bg-[#eaf7fb]',
 };
 const classes = `${base} ${variants[variant]} ${className}`;
 ---

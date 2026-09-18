@@ -19,7 +19,8 @@ export const en = {
   },
   languageSwitcher: {
     label: 'Switch language',
-    switchTo: (lang: string) => `Switch to ${lang}`,
+    switchTo: { fr: 'Switch to French', en: 'Switch to English' },
+    current: { fr: 'Current language: French', en: 'Current language: English' },
   },
   buttons: {
     discoverProducts: 'Discover our products',
@@ -118,6 +119,9 @@ export const en = {
     nextPartners: 'View next partners',
     partnerAlt: 'LUCEAT partner',
     goToPartnerPage: (page: number) => `Go to partner group ${page}`,
+    partnersCarousel: 'Our partners carousel',
+    pausePartners: 'Pause the carousel',
+    resumePartners: 'Resume the carousel',
     rightsReserved: 'All rights reserved.',
   },
   form: {

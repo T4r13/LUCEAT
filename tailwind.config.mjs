@@ -12,6 +12,10 @@ export default {
           // Color-picked from the source logo file itself (public/images/logo/logo-luceat.jpg),
           // not eyeballed — the true LUCEAT mark is a rich navy-blue, not a cyan/teal.
           blue: '#1597C7',
+          // #1597C7 is only 3.34:1 on white and #007fc6 only 4.33:1, so neither
+          // clears 4.5:1 for normal-size text. Blue text uses brand-navy and
+          // blue surfaces behind white text use blue-bg (6.19:1 with white).
+          'blue-bg': '#00669E',
           'blue-dark': '#063A70',
           navy: '#063A70',
           silver: '#CFCECC',
@@ -28,7 +32,7 @@ export default {
         text: {
           primary: '#17364F',
           body: '#496778',
-          muted: '#7C8791',
+          muted: '#68737D', // 4.84:1 on white (#7C8791 was 3.66:1)
           inverse: '#FFFFFF',
         },
         border: {

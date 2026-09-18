@@ -19,7 +19,7 @@ const t = useTranslations(locale);
         <div class="mt-8 space-y-1 rounded-xl border border-[#e7e1db] bg-white p-8 shadow-sm">
           <a
             href={`mailto:${site.email}`}
-            class="type-body flex min-h-[44px] items-center gap-3 text-[#5f6770] hover:text-[#8ca9b8]"
+            class="type-body flex min-h-[44px] items-center gap-3 text-[#5f6770] hover:text-brand-navy"
             aria-label={t.contact.emailAria(site.email)}
           >
             <Icon name="mail" size={20} class="shrink-0 text-[#4d4a47]" />
@@ -33,7 +33,7 @@ const t = useTranslations(locale);
                 {site.phones.map((phone, index) => (
                   <>
                     {index > 0 && <span class="text-[#8ca9b8]" aria-hidden="true">/</span>}
-                    <a href={`tel:${phone.href}`} class="hover:text-[#8ca9b8]" aria-label={t.contact.phoneAria(phone.display)}>
+                    <a href={`tel:${phone.href}`} class="hover:text-brand-navy" aria-label={t.contact.phoneAria(phone.display)}>
                       {phone.display}
                     </a>
                   </>
@@ -55,7 +55,7 @@ const t = useTranslations(locale);
             target="_blank"
             rel="noopener noreferrer"
             aria-label={t.contact.facebookAria}
-            class="type-body flex min-h-[44px] items-center gap-3 text-[#5f6770] hover:text-[#8ca9b8]"
+            class="type-body flex min-h-[44px] items-center gap-3 text-[#5f6770] hover:text-brand-navy"
           >
             <Icon name="facebook" size={20} class="shrink-0 text-[#4d4a47]" />
             <span><span class="font-semibold text-[#4d4a47]">{t.contact.facebookLabel}</span> LUCEAT</span>
@@ -65,7 +65,7 @@ const t = useTranslations(locale);
             target="_blank"
             rel="noopener noreferrer"
             aria-label={t.contact.instagramAria}
-            class="type-body flex min-h-[44px] items-center gap-3 text-[#5f6770] hover:text-[#8ca9b8]"
+            class="type-body flex min-h-[44px] items-center gap-3 text-[#5f6770] hover:text-brand-navy"
           >
             <Icon name="instagram" size={20} class="shrink-0 text-[#4d4a47]" />
             <span><span class="font-semibold text-[#4d4a47]">{t.contact.instagramLabel}</span> LUCEAT</span>

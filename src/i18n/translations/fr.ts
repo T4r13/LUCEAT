@@ -19,7 +19,10 @@ export const fr = {
   },
   languageSwitcher: {
     label: 'Changer de langue',
-    switchTo: (lang: string) => `Passer au ${lang}`,
+    // Written out per target locale rather than composed, so French elision
+    // (“au français” vs “à l’anglais”) stays correct.
+    switchTo: { fr: 'Passer au français', en: 'Passer à l’anglais' },
+    current: { fr: 'Langue actuelle : français', en: 'Langue actuelle : anglais' },
   },
   buttons: {
     discoverProducts: 'Découvrir nos produits',
@@ -116,6 +119,9 @@ export const fr = {
     nextPartners: 'Voir les partenaires suivants',
     partnerAlt: 'Partenaire LUCEAT',
     goToPartnerPage: (page: number) => `Aller au groupe de partenaires ${page}`,
+    partnersCarousel: 'Carrousel de nos partenaires',
+    pausePartners: 'Mettre le carrousel en pause',
+    resumePartners: 'Reprendre le carrousel',
     rightsReserved: 'Tous droits réservés.',
   },
   form: {

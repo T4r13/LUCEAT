@@ -9,11 +9,11 @@ const t = useTranslations(locale);
 
 <BaseLayout title={t.notFound.title} description={t.notFound.text} is404>
   <section class="mx-auto flex max-w-3xl flex-col items-center px-4 py-24 text-center sm:px-6 lg:px-8">
-    <p class="type-label text-[#8ca9b8]">{t.notFound.eyebrow}</p>
+    <p class="type-label text-text-body">{t.notFound.eyebrow}</p>
     <h1 class="type-page-title mt-4 text-[#4d4a47]">{t.notFound.heading}</h1>
     <p class="type-subtitle mt-6 text-[#5f6770]">{t.notFound.text}</p>
     <div class="mt-8 flex flex-wrap justify-center gap-4">
-      <a href={path('home', locale)} class="type-button inline-flex rounded-full bg-[#8ca9b8] px-6 py-3 text-white transition hover:bg-[#7695a3]">
+      <a href={path('home', locale)} class="type-button inline-flex rounded-full bg-brand-blue-bg px-6 py-3 text-white transition hover:bg-brand-navy">
         {t.buttons.backToHome}
       </a>
       <a href={path('products', locale)} class="type-button inline-flex rounded-full border border-[#d7cfc5] bg-white px-6 py-3 text-[#4d4a47] transition hover:border-[#8ca9b8]">

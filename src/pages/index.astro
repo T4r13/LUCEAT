@@ -43,10 +43,10 @@ const features = [
     <div class="relative z-10 mx-auto max-w-7xl" data-reveal>
     <div class="mb-10 flex items-end justify-between gap-4">
       <div>
-        <p class="type-label text-brand-blue">{t.featured.eyebrow}</p>
-        <h2 class="type-section-title mt-2 text-[#007fc6]">{t.featured.heading}</h2>
+        <p class="type-label text-brand-navy">{t.featured.eyebrow}</p>
+        <h2 class="type-section-title mt-2 text-brand-navy">{t.featured.heading}</h2>
       </div>
-      <a href={path('products', locale)} class="type-button inline-flex items-center text-brand-blue transition-all duration-200 hover:translate-x-1 hover:text-brand-navy">{t.buttons.seeAllProducts}</a>
+      <a href={path('products', locale)} class="type-button inline-flex items-center text-brand-navy transition-all duration-200 hover:translate-x-1 hover:text-brand-navy">{t.buttons.seeAllProducts}</a>
     </div>
     <div class="grid gap-6 md:grid-cols-3">
       {featuredProducts.map((product, index) => (
@@ -59,11 +59,11 @@ const features = [
   </section>
 
   <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-    <div class="relative isolate overflow-hidden rounded-xl bg-[linear-gradient(135deg,#007fc6_0%,#1597c7_54%,#7cdcf1_100%)] p-8 sm:p-10 lg:p-14" data-reveal>
+    <div class="relative isolate overflow-hidden rounded-xl bg-[linear-gradient(135deg,#063A70_0%,#00558C_54%,#00669E_100%)] p-8 sm:p-10 lg:p-14" data-reveal>
       <BotanicalLineArt variant="leaves" class="absolute -left-28 -top-24 h-72 w-72 opacity-[0.08] sm:-left-20 sm:h-96 sm:w-96" />
       <div class="relative z-10">
       <div class="mb-10 max-w-2xl">
-        <p class="type-label text-white/80">{t.why.eyebrow}</p>
+        <p class="type-label text-white/90">{t.why.eyebrow}</p>
         <h2 class="type-section-title mt-2 text-white">{t.why.heading}</h2>
       </div>
       <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
@@ -71,7 +71,7 @@ const features = [
           <div class="group relative overflow-hidden rounded-sm border border-border-subtle bg-surface-white p-6 transition duration-300 hover:-translate-y-1 hover:border-white hover:shadow-[0_16px_34px_rgba(255,255,255,0.42)]" data-reveal style={`--reveal-delay: ${index * 110}ms`}>
             <OptimizedImage src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="pointer-events-none absolute left-1/2 top-1/2 w-[28rem] max-w-none -translate-x-1/2 -translate-y-1/2 select-none opacity-[0.18]" width={560} />
             <div class="relative z-10">
-              <IconBadge size="lg" class="transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 group-hover:bg-[#007fc6] group-hover:text-white">
+              <IconBadge size="lg" class="transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 group-hover:bg-brand-blue-bg group-hover:text-white">
                 <Icon name={feature.icon} size={26} />
               </IconBadge>
               <h3 class="type-product-card-title mt-4">{feature.title}</h3>
@@ -85,14 +85,14 @@ const features = [
   </section>
 
   <section class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
-    <div class="relative isolate overflow-hidden rounded-xl bg-[linear-gradient(135deg,#007fc6_0%,#1597c7_54%,#7cdcf1_100%)] p-8 text-center sm:p-10 lg:p-14" data-reveal>
+    <div class="relative isolate overflow-hidden rounded-xl bg-[linear-gradient(135deg,#063A70_0%,#00558C_54%,#00669E_100%)] p-8 text-center sm:p-10 lg:p-14" data-reveal>
       <OptimizedImage src="/images/hero/tlogo.png" alt="" aria-hidden="true" class="pointer-events-none absolute -bottom-16 -right-24 w-[36rem] max-w-none select-none opacity-[0.18]" width={720} />
       <div class="relative z-10">
         <h2 class="type-section-title text-white">{t.adviceCta.heading}</h2>
         <p class="type-subtitle mx-auto mt-4 max-w-2xl text-white/90">
           {t.adviceCta.text}
         </p>
-        <a href={path('contact', locale)} class="type-button mt-8 inline-flex rounded-full bg-brand-navy px-6 py-3 text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-blue hover:shadow-lift active:translate-y-0">
+        <a href={path('contact', locale)} class="type-button mt-8 inline-flex rounded-full bg-brand-navy px-6 py-3 text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-blue-bg hover:shadow-lift active:translate-y-0">
           {t.buttons.contactUs}
         </a>
       </div>

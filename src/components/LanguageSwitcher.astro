@@ -22,16 +22,17 @@ const { class: className = '' } = Astro.props;
     <>
       {index > 0 && <span class="text-border-soft" aria-hidden="true">/</span>}
       {option.code === locale ? (
-        <span aria-current="true" class="rounded-sm px-1.5 py-1 text-brand-blue">
-          {option.label}
+        <span aria-current="true" aria-label={t.languageSwitcher.current[option.code]} class="rounded-sm px-1.5 py-1 text-brand-navy">
+          <span lang={option.code}>{option.label}</span>
         </span>
       ) : (
         <a
           href={getAlternateUrl(Astro.url.pathname, option.code)}
+          hreflang={option.code}
           class="rounded-sm px-1.5 py-1 text-text-muted transition-colors hover:text-brand-navy"
-          aria-label={t.languageSwitcher.switchTo(option.label)}
+          aria-label={t.languageSwitcher.switchTo[option.code]}
         >
-          {option.label}
+          <span lang={option.code}>{option.label}</span>
         </a>
       )}
     </>

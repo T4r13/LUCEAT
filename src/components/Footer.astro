@@ -26,7 +26,7 @@ const partnerPages = Array.from({ length: Math.ceil(partnerLogos.length / 2) }, 
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="relative isolate overflow-hidden border-t border-[#007fc6] bg-[#007fc6]">
+<footer class="relative isolate overflow-hidden border-t border-brand-navy bg-brand-navy">
   <BotanicalLineArt variant="leaves" class="absolute -bottom-32 -right-28 h-80 w-80 opacity-[0.1] sm:-right-12 sm:h-[440px] sm:w-[440px]" />
   <BotanicalLineArt variant="flower" class="absolute -left-24 -top-24 hidden h-72 w-72 opacity-[0.07] lg:block" />
 
@@ -35,17 +35,17 @@ const currentYear = new Date().getFullYear();
       <!-- Partners -->
       <div class="min-w-0 md:col-span-2 lg:col-span-1">
         <div class="mb-6 flex flex-col items-center text-center lg:items-start lg:text-left">
-          <h3 class="type-footer-heading">{t.footer.partnersHeading}</h3>
+          <h2 class="type-footer-heading">{t.footer.partnersHeading}</h2>
           <span class="mt-2 block h-0.5 w-8 rounded-full bg-[#9CCFE5]" aria-hidden="true"></span>
         </div>
 
-        <div class="mx-auto max-w-md lg:mx-0" data-partners-root>
+        <div class="mx-auto max-w-md lg:mx-0" data-partners-root role="group" aria-roledescription="carousel" aria-label={t.footer.partnersCarousel}>
           <div class="flex items-center justify-center gap-3">
             <button
               type="button"
               data-partners-previous
               aria-label={t.footer.previousPartners}
-              class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/25 text-white/80 transition hover:border-white hover:bg-white hover:text-[#007fc6] focus-visible:border-white"
+              class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/25 text-white/80 transition hover:border-white hover:bg-white hover:text-brand-navy focus-visible:border-white"
             >
               <Icon name="chevron-left" size={16} />
             </button>
@@ -81,21 +81,43 @@ const currentYear = new Date().getFullYear();
               type="button"
               data-partners-next
               aria-label={t.footer.nextPartners}
-              class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/25 text-white/80 transition hover:border-white hover:bg-white hover:text-[#007fc6] focus-visible:border-white"
+              class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/25 text-white/80 transition hover:border-white hover:bg-white hover:text-brand-navy focus-visible:border-white"
             >
               <Icon name="chevron-right" size={16} />
             </button>
           </div>
 
-          <div data-partners-dots class="mt-4 flex items-center justify-center gap-2">
-            {partnerPages.map((_, index) => (
-              <button
-                type="button"
-                data-partners-dot
-                aria-label={t.footer.goToPartnerPage(index + 1)}
-                class="h-1.5 w-1.5 rounded-full bg-white/35 transition-all hover:bg-white/70 focus-visible:bg-white"
-              />
-            ))}
+          <div class="mt-2 flex items-center justify-center gap-1">
+            <div data-partners-dots class="flex items-center justify-center">
+              {partnerPages.map((_, index) => (
+                <button
+                  type="button"
+                  data-partners-dot
+                  aria-label={t.footer.goToPartnerPage(index + 1)}
+                  aria-current={index === 0 ? 'true' : undefined}
+                  class="flex h-11 w-11 items-center justify-center rounded-full"
+                >
+                  {/* 44x44 hit area; the visible dot stays small. */}
+                  <span
+                    data-partners-dot-mark
+                    aria-hidden="true"
+                    class="h-1.5 w-1.5 rounded-full bg-white/35 transition-all"
+                  />
+                </button>
+              ))}
+            </div>
+            <button
+              type="button"
+              data-partners-toggle
+              aria-label={t.footer.pausePartners}
+              data-label-pause={t.footer.pausePartners}
+              data-label-resume={t.footer.resumePartners}
+              aria-pressed="false"
+              class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white/80 transition hover:text-white focus-visible:text-white"
+            >
+              <span data-partners-toggle-icon><Icon name="pause" size={16} /></span>
+              <span data-partners-toggle-icon-play hidden><Icon name="play" size={16} /></span>
+            </button>
           </div>
         </div>
       </div>
@@ -103,7 +125,7 @@ const currentYear = new Date().getFullYear();
       <!-- Navigation -->
       <div class="min-w-0 lg:border-l lg:border-white/15 lg:pl-12">
         <div class="mb-5">
-          <h3 class="type-footer-heading">{t.footer.navHeading}</h3>
+          <h2 class="type-footer-heading">{t.footer.navHeading}</h2>
           <span class="mt-2 block h-0.5 w-8 rounded-full bg-[#9CCFE5]" aria-hidden="true"></span>
         </div>
         <ul class="type-body-sm space-y-3 text-white/85">
@@ -121,7 +143,7 @@ const currentYear = new Date().getFullYear();
       <!-- Contact -->
       <div class="min-w-0 md:border-l md:border-white/15 md:pl-8 lg:pl-12">
         <div class="mb-5">
-          <h3 class="type-footer-heading">{t.footer.contactHeading}</h3>
+          <h2 class="type-footer-heading">{t.footer.contactHeading}</h2>
           <span class="mt-2 block h-0.5 w-8 rounded-full bg-[#9CCFE5]" aria-hidden="true"></span>
         </div>
         <ul class="type-body-sm space-y-3 text-white/90">
@@ -197,7 +219,7 @@ const currentYear = new Date().getFullYear();
 
   <div class="relative z-10 mt-10 border-t border-white/10 lg:mt-12">
     <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-      <p class="type-caption text-center text-white/60">
+      <p class="type-caption text-center text-white/75">
         &copy; {currentYear} {site.name}. {t.footer.rightsReserved}
       </p>
     </div>
@@ -205,12 +227,15 @@ const currentYear = new Date().getFullYear();
 </footer>
 
 <script>
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   document.querySelectorAll<HTMLElement>('[data-partners-root]').forEach((root) => {
     const carousel = root.querySelector<HTMLElement>('[data-partners-carousel]');
     const previousBtn = root.querySelector<HTMLButtonElement>('[data-partners-previous]');
     const nextBtn = root.querySelector<HTMLButtonElement>('[data-partners-next]');
+    const toggleBtn = root.querySelector<HTMLButtonElement>('[data-partners-toggle]');
+    const pauseIcon = root.querySelector<HTMLElement>('[data-partners-toggle-icon]');
+    const playIcon = root.querySelector<HTMLElement>('[data-partners-toggle-icon-play]');
     const dots = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-partners-dot]'));
     if (!carousel) return;
 
@@ -218,10 +243,17 @@ const currentYear = new Date().getFullYear();
 
     const setActiveDot = (index: number) => {
       dots.forEach((dot, i) => {
-        dot.classList.toggle('bg-white', i === index);
-        dot.classList.toggle('w-4', i === index);
-        dot.classList.toggle('bg-white/35', i !== index);
-        dot.classList.toggle('w-1.5', i !== index);
+        const active = i === index;
+        // aria-current is what actually exposes the active slide; the classes
+        // below only style the 6px mark inside the 44x44 hit area.
+        if (active) dot.setAttribute('aria-current', 'true');
+        else dot.removeAttribute('aria-current');
+
+        const mark = dot.querySelector<HTMLElement>('[data-partners-dot-mark]');
+        mark?.classList.toggle('bg-white', active);
+        mark?.classList.toggle('w-4', active);
+        mark?.classList.toggle('bg-white/35', !active);
+        mark?.classList.toggle('w-1.5', !active);
       });
     };
 
@@ -229,18 +261,57 @@ const currentYear = new Date().getFullYear();
 
     const goToPage = (index: number) => {
       const clamped = ((index % pageCount) + pageCount) % pageCount;
-      carousel.scrollTo({ left: clamped * carousel.clientWidth, behavior: reducedMotion ? 'auto' : 'smooth' });
+      carousel.scrollTo({
+        left: clamped * carousel.clientWidth,
+        behavior: reducedMotion.matches ? 'auto' : 'smooth',
+      });
     };
 
     const movePage = (direction: number) => goToPage(currentPage() + direction);
 
+    // "paused" is the user's explicit choice and outranks hover/focus pausing,
+    // which is transient. Reduced motion means autoplay never starts at all.
+    let paused = reducedMotion.matches || pageCount <= 1;
     let autoplay: number | undefined;
-    const stopAutoplay = () => window.clearInterval(autoplay);
+
+    const stopAutoplay = () => {
+      window.clearInterval(autoplay);
+      autoplay = undefined;
+    };
+
     const startAutoplay = () => {
-      if (reducedMotion || pageCount <= 1) return;
+      if (paused) return;
       stopAutoplay();
       autoplay = window.setInterval(() => movePage(1), 6000);
     };
+
+    const syncToggle = () => {
+      if (!toggleBtn) return;
+      const label = paused
+        ? toggleBtn.dataset.labelResume ?? ''
+        : toggleBtn.dataset.labelPause ?? '';
+      toggleBtn.setAttribute('aria-label', label);
+      toggleBtn.setAttribute('aria-pressed', String(paused));
+      pauseIcon?.toggleAttribute('hidden', paused);
+      playIcon?.toggleAttribute('hidden', !paused);
+    };
+
+    toggleBtn?.addEventListener('click', () => {
+      paused = !paused;
+      if (paused) stopAutoplay();
+      else startAutoplay();
+      syncToggle();
+    });
+
+    // A newly expressed reduced-motion preference should stop a running
+    // slideshow, not wait for a reload.
+    reducedMotion.addEventListener('change', (event) => {
+      if (event.matches) {
+        paused = true;
+        stopAutoplay();
+      }
+      syncToggle();
+    });
 
     previousBtn?.addEventListener('click', () => { movePage(-1); startAutoplay(); });
     nextBtn?.addEventListener('click', () => { movePage(1); startAutoplay(); });
@@ -253,6 +324,7 @@ const currentYear = new Date().getFullYear();
     root.addEventListener('focusout', startAutoplay);
 
     setActiveDot(0);
+    syncToggle();
     startAutoplay();
   });
 </script>
