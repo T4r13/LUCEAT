@@ -108,7 +108,6 @@ p {
   outline: 2px solid #ffffff;
   outline-offset: 2px;
   box-shadow: 0 0 0 4px theme('colors.state.focus');
-  border-radius: 4px;
 }
 
 @media (forced-colors: active) {
